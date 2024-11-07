@@ -1,3 +1,4 @@
+// tailwind.config.js
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
@@ -9,14 +10,20 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.tsx',
     ],
-
+    darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            zIndex: {
+                '50': '50',
+                '60': '60',
+            },
+            spacing: {
+                '72px': '72px',
+            }
         },
     },
-
     plugins: [forms],
 };
