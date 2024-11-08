@@ -51,7 +51,8 @@ const Navbar = () => {
         { path: '/', icon: FaHome },
         { path: '/tentang',  icon: FaInfoCircle },
         { path: '/organizations', icon: FaBuilding }, 
-        { path: '/articles', icon: FaBlog },          
+        { path: '/articles', icon: FaBlog },     
+        { path: '/media', icon: FaFolder },     
         { path: '/contact', icon: FaEnvelope },    
     ];
 
@@ -204,12 +205,12 @@ const Navbar = () => {
                                     >
                                         Login
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                         href="/register"
                                         className="px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-all duration-200 shadow-lg"
                                     >
                                         Register
-                                    </Link>
+                                    </Link> */}
                                 </>
                             )}
                         </div>
@@ -254,7 +255,7 @@ const Navbar = () => {
                                 ? 'bg-gray-900/80 border-t border-gray-800'
                                 : 'bg-white/80'
                             } backdrop-blur-md shadow-lg`}>
-                            {navItems.map((item) => (
+                            {/* {navItems.map((item) => (
                                 <Link
                                     key={item.path}
                                     href={item.path}
@@ -272,7 +273,7 @@ const Navbar = () => {
                                         {item.label}
                                     </div>
                                 </Link>
-                            ))}
+                            ))} */}
 
                             {user ? (
                                 <>
@@ -324,12 +325,12 @@ const Navbar = () => {
                                     >
                                         Login
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                         href="/register"
                                         className="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
                                     >
                                         Register
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             )}
                         </div>
@@ -338,50 +339,87 @@ const Navbar = () => {
             </motion.nav>
 
             {/* Bottom Navigation (Mobile) */}
-            <div className="fixed bottom-0 left-0 right-0 md:hidden z-50">
-                <div className="mx-4 mb-4">
-                    <div className={`${
-                        isDark
-                            ? 'bg-gray-900/80 border-gray-700'
-                            : 'bg-white/80 border-gray-100'
-                        } backdrop-blur-md rounded-2xl shadow-lg border`}>
-                        <div className="flex justify-between items-center px-4">
-                            {bottomNavItems.map((item) => (
-                                <Link key={item.path}
-                                href={item.path}
-                                className="flex flex-col items-center py-3 px-2 transition-colors duration-200 relative"
-                            >
-                                {url === item.path && (
-                                    <motion.div 
-                                        layoutId="bottomNav"
-                                        className="absolute -top-1 w-10 h-1 bg-blue-600 rounded-full"
-                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                    />
-                                )}
-                                <div 
-                                    className={`p-2 rounded-xl transition-all duration-200 ${
-                                        url === item.path
-                                            ? isDark ? 'text-blue-400' : 'text-blue-600'
-                                            : isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-400 hover:text-blue-600'
-                                    }`}
-                                >
-                                    <item.icon className="h-5 w-5" />
-                                </div>
-                                <span 
-                                    className={`text-[10px] mt-1 font-medium ${
-                                        url === item.path
-                                            ? isDark ? 'text-blue-400' : 'text-blue-600'
-                                            : isDark ? 'text-gray-400' : 'text-gray-500'
-                                    }`}
-                                >
-                                    {item.label}
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+<div className="fixed bottom-0 left-0 right-0 md:hidden z-50">
+    <div className="mx-4 mb-4">
+        <div className={`
+            backdrop-blur-md rounded-2xl shadow-lg border
+            ${isDark 
+                ? 'bg-gradient-to-r from-gray-900/90 to-gray-800/90 border-gray-700' 
+                : 'bg-gradient-to-r from-white/90 to-gray-50/90 border-gray-200'
+            }
+        `}>
+            {/* Glass Morphism Effect */}
+            <div className="absolute inset-0 rounded-2xl bg-white/5 backdrop-blur-sm" />
+            
+            {/* Navigation Items */}
+            <div className="relative grid grid-cols-6 items-center px-2">
+                {bottomNavItems.map((item) => (
+                    <Link 
+                        key={item.path}
+                        href={item.path}
+                        className="flex flex-col items-center py-3 transition-all duration-300 relative group"
+                    >
+                        {url === item.path && (
+                            <motion.div 
+                                layoutId="bottomNav"
+                                className={`
+                                    absolute -top-1 w-8 h-1 rounded-full
+                                    bg-gradient-to-r from-blue-600 to-blue-400
+                                    shadow-lg shadow-blue-500/30
+                                `}
+                                transition={{ 
+                                    type: "spring", 
+                                    stiffness: 300, 
+                                    damping: 30 
+                                }}
+                            />
+                        )}
+                        
+                        <div className={`
+                            p-1.5 rounded-xl transition-all duration-300
+                            ${url === item.path
+                                ? isDark 
+                                    ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20'
+                                    : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20'
+                                : isDark
+                                    ? 'text-gray-400 hover:text-blue-400 group-hover:bg-gray-800/50'
+                                    : 'text-gray-500 hover:text-blue-600 group-hover:bg-gray-100/50'
+                            }
+                        `}>
+                            <item.icon className={`
+                                h-4 w-4 transition-transform duration-300
+                                ${url === item.path ? 'scale-110' : 'group-hover:scale-110'}
+                            `} />
+                        </div>
+                        
+                        <span className={`
+                            text-[9px] mt-0.5 font-medium transition-all duration-300
+                            ${url === item.path
+                                ? isDark
+                                    ? 'text-blue-400'
+                                    : 'text-blue-600'
+                                : isDark
+                                    ? 'text-gray-400 group-hover:text-blue-400'
+                                    : 'text-gray-500 group-hover:text-blue-600'
+                            }
+                        `}>
+                        </span>
+                        
+                        {/* Active/Hover Effect */}
+                        <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ 
+                                scale: url === item.path ? 1 : 0,
+                                opacity: url === item.path ? 1 : 0
+                            }}
+                            className="absolute inset-0 bg-blue-400/10 rounded-xl -z-10"
+                        />
+                    </Link>
+                ))}
             </div>
         </div>
+    </div>
+</div>
 
         {/* Click Away Listener for Profile Dropdown */}
         {isProfileOpen && (

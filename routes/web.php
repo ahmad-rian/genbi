@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\{
     PermissionController,
     AdminDashboardController
 };
+use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Operator\OperatorDashboardController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\TentangController;
@@ -22,6 +24,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
 Route::get('/organisasi', [OrganisasiController::class, 'index'])->name('organisasi');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel');
+Route::get('/media', [MediaController::class, 'index'])->name('media');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
