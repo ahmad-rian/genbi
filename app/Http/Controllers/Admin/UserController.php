@@ -5,99 +5,99 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;  // Tambahkan import ini
 use Inertia\Response;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        $users = User::with('roles')
-            ->when($request->search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
-            })
-            ->paginate(10)
-            ->withQueryString();
-
         return Inertia::render('Admin/Users/Index', [
-            'users' => $users,
-            'filters' => $request->only(['search']),
+            'users' => User::latest()->get()
         ]);
     }
 
     public function create(): Response
     {
-        return Inertia::render('Admin/Users/Create', [
-            'roles' => \Spatie\Permission\Models\Role::all(),
-        ]);
+        return Inertia::render('Admin/Users/Create');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', Rules\Password::defaults()],
-            'type' => 'required|in:admin,operator,user',
-            'role' => 'required|exists:roles,name',
-            'is_active' => 'boolean',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'min:8'],
+            'type' => ['required', 'string', 'in:admin,operator,user'],
+            'is_active' => ['required', 'boolean'],
         ]);
 
-        $user = User::create([
-            ...$validated,
-            'password' => bcrypt($validated['password']),
-        ]);
+        try {
+            User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'type' => $validated['type'],
+                'is_active' => $validated['is_active'],
+            ]);
 
-        $user->assignRole($validated['role']);
-
-        return redirect()->route('admin.users.index')
-            ->with('message', 'User created successfully');
+            return redirect()->route('admin.users.index')
+                ->with('message', 'User created successfully');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Failed to create user.'])->withInput();
+        }
     }
 
     public function edit(User $user): Response
     {
         return Inertia::render('Admin/Users/Edit', [
-            'user' => [
-                ...$user->toArray(),
-                'roles' => $user->getRoleNames(),
-            ],
-            'roles' => \Spatie\Permission\Models\Role::all(),
+            'user' => $user
         ]);
     }
 
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => $request->password ? ['required', Rules\Password::defaults()] : '',
-            'type' => 'required|in:admin,operator,user',
-            'role' => 'required|exists:roles,name',
-            'is_active' => 'boolean',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'type' => ['required', 'string', 'in:admin,operator,user'],
+            'is_active' => ['required', 'boolean'],
+            'password' => ['nullable', 'string', 'min:8'],
         ]);
 
-        $user->update(array_filter([
-            ...$validated,
-            'password' => $request->password ? bcrypt($request->password) : null,
-        ]));
+        try {
+            $updateData = [
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'type' => $validated['type'],
+                'is_active' => $validated['is_active'],
+            ];
 
-        $user->syncRoles([$validated['role']]);
+            if (!empty($validated['password'])) {
+                $updateData['password'] = Hash::make($validated['password']);
+            }
 
-        return redirect()->route('admin.users.index')
-            ->with('message', 'User updated successfully');
+            $user->update($updateData);
+
+            return redirect()->route('admin.users.index')
+                ->with('message', 'User updated successfully');
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors(['error' => 'Failed to update user.'])
+                ->withInput();
+        }
     }
 
     public function destroy(User $user)
     {
-        $user->delete();
-
-        return redirect()->route('admin.users.index')
-            ->with('message', 'User deleted successfully');
+        try {
+            $user->delete();
+            return redirect()->route('admin.users.index')
+                ->with('message', 'User deleted successfully');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Failed to delete user.']);
+        }
     }
 }

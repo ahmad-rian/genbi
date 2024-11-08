@@ -8,15 +8,33 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckUserRole
 {
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    /**
+     * Handle an incoming request.
+     */
+    public function handle(Request $request, Closure $next, ...$types): Response
     {
-        if (!$request->user() || !$request->user()->hasAnyRole($roles)) {
-            if ($request->expectsJson()) {
-                return response()->json(['message' => 'Unauthorized.'], 403);
-            }
-            abort(403, 'Unauthorized action.');
+        $user = $request->user();
+
+        if (!$user || !$user->is_active) {
+            return $this->handleUnauthorized($request, 'Account is inactive or unauthorized.');
+        }
+
+        if (!in_array($user->type, $types)) {
+            return $this->handleUnauthorized($request, 'Unauthorized action.');
         }
 
         return $next($request);
+    }
+
+    /**
+     * Handle unauthorized requests.
+     */
+    private function handleUnauthorized(Request $request, string $message): Response
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['message' => $message], 403);
+        }
+
+        return redirect()->route('dashboard')->with('error', $message);
     }
 }

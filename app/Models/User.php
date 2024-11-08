@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -27,22 +27,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
         'is_active' => 'boolean',
+        'password' => 'hashed',
     ];
-
-    public function isAdmin(): bool
-    {
-        return $this->type === 'admin' || $this->hasRole('admin');
-    }
-
-    public function isOperator(): bool
-    {
-        return $this->type === 'operator' || $this->hasRole('operator');
-    }
-
-    public function isUser(): bool
-    {
-        return $this->type === 'user' || $this->hasRole('user');
-    }
 }

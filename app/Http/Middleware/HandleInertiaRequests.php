@@ -15,7 +15,7 @@ class HandleInertiaRequests extends Middleware
     protected $rootView = 'app';
 
     /**
-     * Determine the current asset version.
+     * Determines the current asset version.
      */
     public function version(Request $request): ?string
     {
@@ -23,17 +23,40 @@ class HandleInertiaRequests extends Middleware
     }
 
     /**
-     * Define the props that are shared by default.
-     *
-     * @return array<string, mixed>
+     * Defines the props that are shared by default.
      */
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
+        return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? [
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
+                    'email' => $request->user()->email,
+                    'type' => $request->user()->type,
+                    'is_active' => $request->user()->is_active,
+                ] : null,
             ],
-        ];
+            'ziggy' => fn() => [
+                'url' => $request->url(),
+                'port' => $request->getPort(),
+                'defaults' => [],
+                'routes' => method_exists(\Illuminate\Support\Facades\Route::class, 'getRoutes')
+                    ? collect(\Illuminate\Support\Facades\Route::getRoutes()->getRoutesByName())
+                    ->map(function ($route) {
+                        return [
+                            'uri' => $route->uri(),
+                            'methods' => $route->methods(),
+                            'parameters' => $route->parameterNames(),
+                        ];
+                    })
+                    ->toArray()
+                    : [],
+            ],
+            'flash' => [
+                'message' => fn() => $request->session()->get('message'),
+                'error' => fn() => $request->session()->get('error'),
+            ],
+        ]);
     }
 }

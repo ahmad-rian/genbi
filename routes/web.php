@@ -49,26 +49,15 @@ Route::middleware('auth')->group(function () {
         Route::delete('/', 'destroy')->name('destroy');
     });
 
-    // Admin Routes
-    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-
-        // Users Management
+    Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('users', UserController::class);
-
-        // Roles Management
         Route::resource('roles', RoleController::class);
-
-        // Permissions Management (Read-only)
-        Route::resource('permissions', PermissionController::class)->except(['create', 'store', 'destroy']);
-
-        // Settings Page
-        Route::get('settings', [AdminDashboardController::class, 'settings'])->name('settings');
+        Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('settings');
     });
-
     // Operator Routes
-    Route::middleware('role:operator')->prefix('operator')->name('operator.')->group(function () {
-        Route::get('/', [OperatorDashboardController::class, 'index'])->name('dashboard');
+    Route::middleware(['auth', 'role:operator'])->prefix('operator')->name('operator.')->group(function () {
+        Route::get('/dashboard', [OperatorDashboardController::class, 'index'])->name('dashboard');
 
         // Limited User Management
         Route::resource('users', UserController::class)->only(['index', 'show', 'edit', 'update']);
@@ -76,6 +65,10 @@ Route::middleware('auth')->group(function () {
         // Reports Page
         Route::get('reports', [OperatorDashboardController::class, 'reports'])->name('reports');
     });
+});
+
+Route::middleware(['auth', 'role:admin,operator'])->group(function () {
+    // Routes accessible by both admin and operator
 });
 
 // Handle 404 Errors

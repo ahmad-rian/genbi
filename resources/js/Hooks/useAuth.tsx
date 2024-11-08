@@ -1,27 +1,48 @@
 import { usePage } from '@inertiajs/react';
 
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    type: 'admin' | 'operator' | 'user';
+    is_active: boolean;
+    roles?: string[];
+    permissions?: string[];
+}
+
+interface PageProps {
+    auth: {
+        user: User | null;
+    };
+}
 
 export function useAuth() {
-    const { auth } = usePage<PageProps>().props;
+    const { props } = usePage<PageProps>();
+    const auth = props.auth || { user: null };
 
     const hasRole = (role: string): boolean => {
-        return auth.user?.roles?.includes(role) ?? false;
+        if (!auth.user) return false;
+        return auth.user.type === role || auth.user.roles?.includes(role) || false;
     };
 
     const hasPermission = (permission: string): boolean => {
-        return auth.user?.permissions?.includes(permission) ?? false;
+        if (!auth.user) return false;
+        return auth.user.permissions?.includes(permission) || false;
     };
 
     const isAdmin = (): boolean => {
-        return auth.user?.type === 'admin' || hasRole('admin');
+        if (!auth.user) return false;
+        return auth.user.type === 'admin' || hasRole('admin');
     };
 
     const isOperator = (): boolean => {
-        return auth.user?.type === 'operator' || hasRole('operator');
+        if (!auth.user) return false;
+        return auth.user.type === 'operator' || hasRole('operator');
     };
 
     const isUser = (): boolean => {
-        return auth.user?.type === 'user' || hasRole('user');
+        if (!auth.user) return false;
+        return auth.user.type === 'user' || hasRole('user');
     };
 
     return {
