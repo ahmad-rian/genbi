@@ -1,7 +1,7 @@
-// components/Navbar.tsx
 import React, { useState, useEffect } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
     FaHome,
     FaInfoCircle,
@@ -349,206 +349,208 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile dropdown menu */}
-                {isMenuOpen && (
-                    <div className="md:hidden">
-                        <div className={`px-2 pt-2 pb-3 space-y-1 ${
-                            isDark
-                                ? 'bg-gray-900/80 border-t border-gray-800'
-                                : 'bg-white/80'
-                            } backdrop-blur-md shadow-lg`}>
-                            {/* {navItems.map((item) => (
-                                <Link
-                                    key={item.path}
-                                    href={item.path}
-                                    className={`block px-3 py-2 rounded-md text-base font-medium ${
-                                        url === item.path
-                                            ? 'text-blue-600 bg-blue-50'
-                                            : isDark
-                                                ? 'text-gray-300 hover:bg-gray-800'
-                                                : 'text-gray-700 hover:bg-gray-200'
-                                    }`}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    <div className="flex items-center">
-                                        <item.icon className="mr-2" />
-                                        {item.label}
-                                    </div>
-                                </Link>
-                            ))} */}
-
-                            {user ? (
-                                <>
-                                    {navItems.map((item) => (
-                                <div key={item.path}>
-                                    {/* Media dropdown on mobile */}
-                                    {item.label === 'Media' && (
-                                        <div>
-                                            <button
-                                                onClick={() => toggleDropdown('media')}
-                                                className={`w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center ${
-                                                    url === "/artikel" || url === "/podcast"
-                                                        ? 'text-blue-600 bg-blue-50'
-                                                        : isDark
-                                                            ? 'text-gray-300 hover:bg-gray-800'
-                                                            : 'text-gray-700 hover:bg-gray-200'
-                                                }`}
-                                            >
-                                                <item.icon className="mr-2" />
-                                                {item.label}
-                                            </button>
-
-                                            {activeDropdown === 'media' && (
-                                                <div className="">
-                                                    <Link
-                                                        href="/artikel"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <BookOpen className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Artikel</p>
-                                                    </Link>
-                                                    <Link
-                                                        href="/podcast"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaPodcast className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Podcast</p>
-                                                    </Link>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-
-                                    {item.label === 'Tentang Kami' && (
-                                        <div>
-                                            <button
-                                                onClick={() => toggleDropdown('tentang kami')}
-                                                className={`w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center ${
-                                                    url === "/artikel" || url === "/podcast"
-                                                        ? 'text-blue-600 bg-blue-50'
-                                                        : isDark
-                                                            ? 'text-gray-300 hover:bg-gray-800'
-                                                            : 'text-gray-700 hover:bg-gray-200'
-                                                }`}
-                                            >
-                                                <item.icon className="mr-2" />
-                                                {item.label}
-                                            </button>
-
-                                            {activeDropdown === 'tentang kami' && (
-                                                <div className="">
-                                                    <Link
-                                                        href="/genbi-point"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaStar className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">GenBI Point</p>
-                                                    </Link>
-                                                    <Link
-                                                        href="/tentang"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaInfoCircle className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Tentang GenBI Purwokerto</p>
-                                                    </Link>
-                                                    <Link
-                                                        href="/organisasi"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaBuilding className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Profile Organisasi</p>
-                                                    </Link>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-
-                                    {/* Non-dropdown items */}
-                                    {item.label !== 'Media' && item.label !== 'Tentang Kami' && (
-                                        <Link
-                                            href={item.path}
-                                            className={`px-3 py-2 rounded-md text-base font-medium flex items-center ${
-                                                url === item.path
-                                                    ? 'text-blue-600 bg-blue-50'
-                                                    : isDark
-                                                        ? 'text-gray-300 hover:bg-gray-800'
-                                                        : 'text-gray-700 hover:bg-gray-200'
-                                            }`}
+                {/* Mobile dropdown menu */}
+<AnimatePresence>
+    {isMenuOpen && (
+        <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden overflow-hidden"
+        >
+            <div className={`px-4 py-6 ${
+                isDark
+                    ? 'bg-gray-900/95 border-t border-gray-800'
+                    : 'bg-white/95'
+                } backdrop-blur-lg`}
+            >
+                <div className="space-y-6">
+                    {/* Menu Items */}
+                    <div className="space-y-2">
+                        {navItems.map((item) => (
+                            <div key={item.path}>
+                                {item.label === 'Media' || item.label === 'Tentang Kami' ? (
+                                    <div className="space-y-2">
+                                        <motion.button
+                                            onClick={() => toggleDropdown(item.label.toLowerCase())}
+                                            className={`w-full flex items-center justify-between p-3 rounded-xl ${
+                                                isDark
+                                                    ? 'text-gray-300 hover:bg-gray-800/60'
+                                                    : 'text-gray-700 hover:bg-gray-100'
+                                            } transition-all duration-200`}
                                         >
-                                            <item.icon className="mr-2" />
-                                            {item.label}
-                                        </Link>
-                                    )}
-                                </div>
-                            ))}
+                                            <div className="flex items-center space-x-3">
+                                                <div className={`size-9 rounded-xl flex items-center justify-center ${
+                                                    isDark ? 'bg-gray-800/80' : 'bg-gray-100'
+                                                }`}>
+                                                    <item.icon className="w-5 h-5" />
+                                                </div>
+                                                <span className="font-medium">{item.label}</span>
+                                            </div>
+                                            <motion.div
+                                                animate={{ rotate: activeDropdown === item.label.toLowerCase() ? 180 : 0 }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                <ChevronDown className="w-5 h-5" />
+                                            </motion.div>
+                                        </motion.button>
+
+                                        <AnimatePresence>
+                                            {activeDropdown === item.label.toLowerCase() && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: -10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -10 }}
+                                                    className="pl-12 space-y-2"
+                                                >
+                                                    {item.label === 'Media' ? (
+                                                        <>
+                                                            <MobileMenuItem
+                                                                href="/artikel"
+                                                                icon={BookOpen}
+                                                                label="Artikel"
+                                                                isDark={isDark}
+                                                                onClick={() => {
+                                                                    setActiveDropdown(null);
+                                                                    setIsMenuOpen(false);
+                                                                }}
+                                                            />
+                                                            <MobileMenuItem
+                                                                href="/podcast"
+                                                                icon={FaPodcast}
+                                                                label="Podcast"
+                                                                isDark={isDark}
+                                                                onClick={() => {
+                                                                    setActiveDropdown(null);
+                                                                    setIsMenuOpen(false);
+                                                                }}
+                                                            />
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <MobileMenuItem
+                                                                href="/genbi-point"
+                                                                icon={FaStar}
+                                                                label="GenBI Point"
+                                                                isDark={isDark}
+                                                                onClick={() => {
+                                                                    setActiveDropdown(null);
+                                                                    setIsMenuOpen(false);
+                                                                }}
+                                                            />
+                                                            <MobileMenuItem
+                                                                href="/tentang"
+                                                                icon={FaInfoCircle}
+                                                                label="Tentang GenBI Purwokerto"
+                                                                isDark={isDark}
+                                                                onClick={() => {
+                                                                    setActiveDropdown(null);
+                                                                    setIsMenuOpen(false);
+                                                                }}
+                                                            />
+                                                            <MobileMenuItem
+                                                                href="/organisasi"
+                                                                icon={FaBuilding}
+                                                                label="Profile Organisasi"
+                                                                isDark={isDark}
+                                                                onClick={() => {
+                                                                    setActiveDropdown(null);
+                                                                    setIsMenuOpen(false);
+                                                                }}
+                                                            />
+                                                        </>
+                                                    )}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                ) : (
                                     <Link
-                                        href="/dashboard"
-                                        className={`block px-3 py-2 rounded-md text-base font-medium ${
-                                            isDark
-                                                ? 'text-gray-300 hover:bg-gray-800'
-                                                : 'text-gray-700 hover:bg-gray-200'
-                                        }`}
+                                        href={item.path}
+                                        className={`flex items-center space-x-3 p-3 rounded-xl ${
+                                            url === item.path
+                                                ? 'bg-blue-600 text-white'
+                                                : isDark
+                                                    ? 'text-gray-300 hover:bg-gray-800/60'
+                                                    : 'text-gray-700 hover:bg-gray-100'
+                                        } transition-all duration-200`}
+                                        onClick={() => setIsMenuOpen(false)}
                                     >
-                                        <FaTachometerAlt className="inline-block mr-2" />
-                                        Dashboard
+                                        <div className={`size-9 rounded-xl flex items-center justify-center ${
+                                            url === item.path
+                                                ? 'bg-blue-500'
+                                                : isDark ? 'bg-gray-800/80' : 'bg-gray-100'
+                                        }`}>
+                                            <item.icon className="w-5 h-5" />
+                                        </div>
+                                        <span className="font-medium">{item.label}</span>
                                     </Link>
-                                    <Link
-                                        href="/profile"
-                                        className={`block px-3 py-2 rounded-md text-base font-medium ${
-                                            isDark
-                                                ? 'text-gray-300 hover:bg-gray-800'
-                                                : 'text-gray-700 hover:bg-gray-200'
-                                        }`}
-                                    >
-                                        <FaUser className="inline-block mr-2" />
-                                        Profile
-                                    </Link>
-                                    <Link
-                                        href="/logout"
-                                        method="post"
-                                        as="button"
-                                        className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-                                            isDark
-                                                ? 'text-red-400 hover:bg-red-900/30'
-                                                : 'text-red-600 hover:bg-red-50'
-                                        }`}
-                                    >
-                                        <FaSignOutAlt className="inline-block mr-2" />
-                                        Logout
-                                    </Link>
-                                </>
-                            ) : (
-                                <div className="pt-2 space-y-1">
-                                    <Link
-                                        href="/login"
-                                        className={`block px-3 py-2 rounded-md text-base font-medium ${
-                                            isDark
-                                                ? 'text-blue-400 hover:bg-gray-800'
-                                                : 'text-blue-600 hover:bg-gray-200'
-                                        }`}
-                                    >
-                                        Login
-                                    </Link>
-                                    {/* <Link
-                                        href="/register"
-                                        className="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
-                                    >
-                                        Register
-                                    </Link> */}
-                                </div>
-                            )}
-                        </div>
+                                )}
+                            </div>
+                        ))}
                     </div>
-                )}
+
+                    {/* Auth Section */}
+                    <div className={`pt-4 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'}`}>
+                        {user ? (
+                            <div className="space-y-2">
+                                <MobileMenuItem
+                                    href="/dashboard"
+                                    icon={FaTachometerAlt}
+                                    label="Dashboard"
+                                    isDark={isDark}
+                                    onClick={() => setIsMenuOpen(false)}
+                                />
+                                <MobileMenuItem
+                                    href="/profile"
+                                    icon={FaUser}
+                                    label="Profile"
+                                    isDark={isDark}
+                                    onClick={() => setIsMenuOpen(false)}
+                                />
+                                <Link
+                                    href="/logout"
+                                    method="post"
+                                    as="button"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className={`w-full flex items-center space-x-3 p-3 rounded-xl ${
+                                        isDark
+                                            ? 'text-red-400 hover:bg-red-900/20'
+                                            : 'text-red-600 hover:bg-red-50'
+                                    } transition-all duration-200`}
+                                >
+                                    <div className={`size-9 rounded-xl flex items-center justify-center ${
+                                        isDark ? 'bg-red-900/30' : 'bg-red-50'
+                                    }`}>
+                                        <FaSignOutAlt className="w-5 h-5" />
+                                    </div>
+                                    <span className="font-medium">Logout</span>
+                                </Link>
+                            </div>
+                        ) : (
+                            <Link
+                                href="/login"
+                                className={`flex items-center space-x-3 p-3 rounded-xl ${
+                                    isDark
+                                        ? 'text-blue-400 hover:bg-blue-900/20'
+                                        : 'text-blue-600 hover:bg-blue-50'
+                                } transition-all duration-200`}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <div className={`size-9 rounded-xl flex items-center justify-center ${
+                                    isDark ? 'bg-blue-900/30' : 'bg-blue-50'
+                                }`}>
+                                    <FaUser className="w-5 h-5" />
+                                </div>
+                                <span className="font-medium">Login</span>
+                            </Link>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    )}
+</AnimatePresence>
             </motion.nav>
 
             {/* Bottom Navigation (Mobile) */}

@@ -1,36 +1,51 @@
+// resources/js/Hooks/useTheme.ts
 import { useState, useEffect } from 'react';
 
 export function useTheme() {
-    const [isDark, setIsDark] = useState(false);
+    // Initialize with system preference or stored theme
+    const [isDark, setIsDark] = useState(() => {
+        if (typeof window !== 'undefined') {
+            // Check localStorage first
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                return savedTheme === 'dark';
+            }
+            // Fallback to system preference
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        return false;
+    });
 
     useEffect(() => {
-        // Check localStorage first
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme) {
-            setIsDark(savedTheme === 'dark');
-        } else {
-            // Check system preference
-            setIsDark(prefersDark);
-        }
-
-        // Apply theme on initial load
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            document.documentElement.classList.add('dark');
-        }
-    }, []);
-
-    useEffect(() => {
+        // Apply theme changes immediately
         if (isDark) {
             document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
+            document.documentElement.style.colorScheme = 'dark';
         } else {
             document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
+            document.documentElement.style.colorScheme = 'light';
         }
+        // Save to localStorage
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }, [isDark]);
 
-    const toggleTheme = () => setIsDark(!isDark);
+    // Listen for system theme changes
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (e: MediaQueryListEvent) => {
+            const hasPersistedPreference = localStorage.getItem('theme');
+            if (!hasPersistedPreference) {
+                setIsDark(e.matches);
+            }
+        };
+
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }, []);
+
+    const toggleTheme = () => {
+        setIsDark(prev => !prev);
+    };
 
     return { isDark, toggleTheme };
 }

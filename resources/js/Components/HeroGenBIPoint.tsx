@@ -26,14 +26,14 @@ const HeroGenBIPoint = () => (
                 </div>
                 <div className="row-span-2 h-[500px] rounded-md overflow-hidden">
                 <img
-                    src="./images/fajar.png"
+                    src="./images/nia.png"
                     alt=""
                     className="w-full h-full object-cover"
                 />
                 </div>
                 <div className="row-span-2 h-[500px] rounded-md overflow-hidden">
                 <img
-                    src="./images/fajar.png"
+                    src="./images/stevani.png"
                     alt=""
                     className="w-full h-full object-cover"
                 />
@@ -50,14 +50,14 @@ const HeroGenBIPoint = () => (
                 </div>
                 <div className="h-[240px] mt-5 rounded-md overflow-hidden">
                 <img
-                    src="./images/fajar.png"
+                    src="./images/nia.png"
                     alt=""
                     className="w-full h-full object-cover"
                 />
                 </div>
                 <div className="h-[240px] mt-5 rounded-md overflow-hidden">
                 <img
-                    src="./images/fajar.png"
+                    src="./images/stevani.png"
                     alt=""
                     className="w-full h-full object-cover"
                 />
