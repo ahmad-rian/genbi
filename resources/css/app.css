@@ -2,3 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.animate-scroll-to-t {
+    animation: animate-scroll-to-t 20s infinite;
+}
+
+@keyframes animate-scroll-to-t {
+    0% {
+        margin-top: -80px;
+    }
+
+    50% {
+        margin-top: -400px;
+    }
+
+    100% {
+        margin-top: -80px;
+    }
+}
+
+.animate-scroll-to-b {
+    animation: animate-scroll-to-b 20s infinite;
+}
+
+@keyframes animate-scroll-to-b {
+    0% {
+        margin-top: 0;
+    }
+
+    50% {
+        margin-top: 200px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}

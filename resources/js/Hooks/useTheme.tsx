@@ -6,11 +6,11 @@ export function useTheme() {
     useEffect(() => {
         // Check localStorage first
         const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (savedTheme) {
             setIsDark(savedTheme === 'dark');
         } else {
             // Check system preference
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             setIsDark(prefersDark);
         }
 

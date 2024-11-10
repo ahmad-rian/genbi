@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 
 const Hero = () => (
   <motion.div
-    className="relative pt-20 overflow-hidden"
+    className="relative overflow-hidden h-[100vh] flex items-center justify-center flex-col"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 0.5 }}
     style={{
-      backgroundImage: "url('/images/bg-homepage.jpeg')", 
+      backgroundImage: "url('/images/bg-homepage.jpeg')",
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat'
@@ -17,7 +17,7 @@ const Hero = () => (
     {/* Overlay gradasi untuk memastikan teks tetap terbaca */}
     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/90 via-white/80 to-blue-100/90"></div>
 
-    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-32">
+    <div className="relative max-w-7xl ">
       <div className="text-center">
         <motion.h1
           className="text-6xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-tight"

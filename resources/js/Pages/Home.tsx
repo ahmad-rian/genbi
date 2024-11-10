@@ -20,7 +20,7 @@ interface Props {
 
 export default function Home({ news }: Props) {
     const { isDark } = useTheme();
-    
+
     const presidentProfiles = [
         {
             name: "Stevani Aprilya Pratama",
@@ -34,7 +34,7 @@ export default function Home({ news }: Props) {
             name: "Mochamad Fajar Arianto",
             role: "Presiden GenBI Purwokerto",
             university: "Komisariat Univ. Jenderal Soedirman",
-            quote: "\"Definisi kesepian sebenarnya adalah hidup tanpa tanggung jawab sosial.\" – Goenawan Mohamad", 
+            quote: "\"Definisi kesepian sebenarnya adalah hidup tanpa tanggung jawab sosial.\" – Goenawan Mohamad",
             image: "../images/fajar.png",
             universityShort: "UNSOED"
         },
@@ -42,31 +42,7 @@ export default function Home({ news }: Props) {
             name: "Nia Nurmawati",
             role: "Presiden GenBI Purwokerto",
             university: "Komisariat Univ. Muhammadiyah Purwokerto",
-            quote: "\"Cara terbaik untuk memprediksi masa depan adalah dengan menciptakannya.\" – Abraham Lincoln", 
-            image: "../images/nia.png",
-            universityShort: "UMP"
-        },
-        {
-            name: "Stevani Aprilya Pratama",
-            role: "Presiden GenBI Purwokerto",
-            university: "Komisariat UIN Saifuddin Zuhri",
-            quote: "Adabmu, menyelamatkan hidupmu",
-            image: "../images/stevani.png",
-            universityShort: "UIN"
-        },
-        {
-            name: "Mochamad Fajar Arianto",
-            role: "Presiden GenBI Purwokerto",
-            university: "Komisariat Univ. Jenderal Soedirman",
-            quote: "\"Definisi kesepian sebenarnya adalah hidup tanpa tanggung jawab sosial.\" – Goenawan Mohamad", 
-            image: "../images/fajar.png",
-            universityShort: "UNSOED"
-        },
-        {
-            name: "Nia Nurmawati",
-            role: "Presiden GenBI Purwokerto",
-            university: "Komisariat Univ. Muhammadiyah Purwokerto",
-            quote: "\"Cara terbaik untuk memprediksi masa depan adalah dengan menciptakannya.\" – Abraham Lincoln", 
+            quote: "\"Cara terbaik untuk memprediksi masa depan adalah dengan menciptakannya.\" – Abraham Lincoln",
             image: "../images/nia.png",
             universityShort: "UMP"
         }
@@ -76,10 +52,31 @@ export default function Home({ news }: Props) {
         <MainLayout>
             <Hero />
 
+            <div className="pt-14 lg:pt-0 px-4 lg:px-16 lg:h-[70vh] flex items-center justify-center flex-col-reverse lg:flex-row">
+                <div className="w-full lg:w-1/2 mt-10 lg:mt-0">
+                    <h1 className="font-bold text-4xl lg:text-6xl text-gray-900 tracking-tight mb-4 leading-tight">GenBI Point</h1>
+                    <p className="text-slate-500 text-lg lg:text-xl leading-6 lg:leading-8">Sistem penghargaan yang memberikan apresiasi kepada anggota GenBI atas kontribusi aktif dan partisipasi mereka dalam komunitas.</p>
+
+                    <Link
+                        href="/genbi-point"
+                        className={`inline-block px-8 py-3 mt-10 rounded-full font-semibold transition duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${
+                            isDark
+                                ? 'bg-blue-600 text-white hover:bg-blue-500'
+                                : 'bg-blue-600 text-white hover:bg-blue-700'
+                        }`}
+                    >
+                        Lihat Selengkapnya
+                    </Link>
+                </div>
+                <div className="w-full lg:w-1/2 lg:ml-4 flex justify-center items-center">
+                    <img src="./images/Hero Image GenBI Point.svg" className="h-[250px] lg:h-fit"  alt="hero genbi point" />
+                </div>
+            </div>
+
             {/* Bagian Tentang Kami */}
             <section className="py-20 px-4 relative">
                 <div className={`absolute inset-0 ${
-                    isDark 
+                    isDark
                         ? 'bg-gradient-to-b from-transparent via-gray-800/30 to-transparent'
                         : 'bg-gradient-to-b from-transparent via-blue-50/30 to-transparent'
                 }`} />
@@ -118,7 +115,7 @@ export default function Home({ news }: Props) {
                             <motion.div
                                 key={index}
                                 className={`backdrop-blur-sm p-8 rounded-lg shadow-lg border ${
-                                    isDark 
+                                    isDark
                                         ? 'bg-gray-800/60 border-gray-700/50 hover:bg-gray-700/60'
                                         : 'bg-white/60 border-blue-100/50 hover:bg-white/80'
                                 } transition-all duration-300`}
@@ -145,7 +142,7 @@ export default function Home({ news }: Props) {
                         <Link
                             href="/tentang"
                             className={`inline-block px-8 py-3 rounded-full font-semibold transition duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${
-                                isDark 
+                                isDark
                                     ? 'bg-blue-600 text-white hover:bg-blue-500'
                                     : 'bg-blue-600 text-white hover:bg-blue-700'
                             }`}
@@ -159,7 +156,7 @@ export default function Home({ news }: Props) {
             {/* Company Profile Video Section */}
             <section className="py-20 px-4 relative">
                 <div className={`absolute inset-0 ${
-                    isDark 
+                    isDark
                         ? 'bg-gradient-to-b from-transparent via-gray-800/30 to-transparent'
                         : 'bg-gradient-to-b from-transparent via-blue-50/30 to-transparent'
                 }`} />
@@ -183,7 +180,7 @@ export default function Home({ news }: Props) {
                         className="max-w-4xl mx-auto"
                     >
                         <div className={`relative rounded-xl overflow-hidden shadow-2xl p-4 ${
-                            isDark 
+                            isDark
                                 ? 'bg-gray-800/70 backdrop-blur-sm'
                                 : 'bg-white/70 backdrop-blur-sm'
                         }`}>
@@ -202,13 +199,13 @@ export default function Home({ news }: Props) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 ${
-                                        isDark 
+                                        isDark
                                             ? 'bg-blue-600 text-white hover:bg-blue-500'
                                             : 'bg-blue-600 text-white hover:bg-blue-700'
                                     }`}
                                 >
                                     <Play size={20} />
-                                    Watch on YouTube
+                                    Tonton di YouTube
                                 </a>
                             </div>
                         </div>
@@ -219,7 +216,7 @@ export default function Home({ news }: Props) {
             {/* Pesan GenBI Section */}
             <section className="py-20 px-4 relative">
                 <div className={`absolute inset-0 ${
-                    isDark 
+                    isDark
                         ? 'bg-gradient-to-b from-transparent via-gray-800/30 to-transparent'
                         : 'bg-gradient-to-b from-transparent via-blue-50/30 to-transparent'
                 }`} />
@@ -245,8 +242,8 @@ export default function Home({ news }: Props) {
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
                                 className="relative group"
                             >
-                                <div className={`rounded-xl overflow-hidden shadow-lg border ${
-                                    isDark 
+                                <div className={`rounded-xl overflow-hidden shadow-lg border lg:h-[670px] ${
+                                    isDark
                                         ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700/50'
                                         : 'bg-white/70 backdrop-blur-sm border-blue-100/50'
                                 }`}>
@@ -298,7 +295,7 @@ export default function Home({ news }: Props) {
                 </div>
             </section>
 
-            
+
         </MainLayout>
     );
 }

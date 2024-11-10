@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import {
     FaHome,
     FaInfoCircle,
+    FaBlog,
     FaBuilding,
     FaTimes,
     FaBars,
@@ -15,20 +16,16 @@ import {
     FaTachometerAlt,
     FaSun,
     FaMoon,
-    FaFolder,
-    FaStar,
-    FaPodcast
+    FaFolder
 } from 'react-icons/fa';
 import { useAuth } from '@/Hooks/useAuth';
 import { useTheme } from '@/Hooks/useTheme';
-import { BookOpen } from 'lucide-react';
 
 const Navbar = () => {
     const { url } = usePage();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-    const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // Track the active dropdown
     const { user } = useAuth();
     const { isDark, toggleTheme } = useTheme();
 
@@ -43,26 +40,24 @@ const Navbar = () => {
 
     const navItems = [
         { path: '/', label: 'Beranda', icon: FaHome },
-        { path: '/', label: 'Tentang Kami', icon: FaInfoCircle },
-        { path: '/', label: 'Media', icon: FaFolder },
+        { path: '/tentang', label: 'Tentang', icon: FaInfoCircle },
+        { path: '/organisasi', label: 'Organisasi', icon: FaBuilding },
+        { path: '/articles', label: 'Artikel', icon: FaBlog },
+        { path: '/media', label: 'Media', icon: FaFolder },
         { path: '/contact', label: 'Kontak', icon: FaEnvelope },
     ];
 
     const bottomNavItems = [
-        // { path: '/', icon: FaHome },
-        // { path: '/tentang',  icon: FaInfoCircle },
-        // { path: '/organizations', icon: FaBuilding },
-        // { path: '/articles', icon: FaBlog },
-        // { path: '/media', icon: FaFolder },
-        // { path: '/contact', icon: FaEnvelope },
+        { path: '/', icon: FaHome },
+        { path: '/tentang',  icon: FaInfoCircle },
+        { path: '/organizations', icon: FaBuilding },
+        { path: '/articles', icon: FaBlog },
+        { path: '/media', icon: FaFolder },
+        { path: '/contact', icon: FaEnvelope },
     ];
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-    };
-
-    const toggleDropdown = (dropdown: string) => {
-        setActiveDropdown(activeDropdown === dropdown ? null : dropdown); // Toggle the dropdown, close others
     };
 
     return (
@@ -100,115 +95,20 @@ const Navbar = () => {
                                     : 'bg-white/80'
                                 } backdrop-blur-md rounded-full p-1 shadow-lg`}>
                                 {navItems.map((item) => (
-                                    <div key={item.path} className="relative">
-                                        {item.label === 'Media' && (
-                                            <div>
-                                                <button
-                                                    onClick={() => toggleDropdown('media')}
-                                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center ${
-                                                        url === "/artikel" || url === "/podcast"
-                                                            ? 'bg-blue-600 text-white'
-                                                            : isDark
-                                                                ? 'text-gray-300 hover:bg-gray-700'
-                                                                : 'text-gray-700 hover:bg-gray-200'
-                                                    }`}
-                                                >
-                                                    <item.icon className="mr-2" />
-                                                    {item.label}
-                                                </button>
-
-                                                {activeDropdown === 'media' && (
-                                                    <div className="absolute left-0 mt-2 bg-white shadow-md rounded-md w-48">
-                                                        <Link
-                                                            href="/artikel"
-                                                            className="px-4 py-2 text-sm flex items-center"
-                                                        >
-                                                            <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                                <BookOpen className="text-gray-700"/>
-                                                            </div>
-                                                            <p className="block text-gray-700 font-semibold">Artikel</p>
-                                                        </Link>
-                                                        <Link
-                                                            href="/podcast"
-                                                            className="px-4 py-2 text-sm flex items-center"
-                                                        >
-                                                            <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                                <FaPodcast className="text-gray-700"/>
-                                                            </div>
-                                                            <p className="block text-gray-700 font-semibold">Podcast</p>
-                                                        </Link>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {item.label === 'Tentang Kami' && (
-                                            <div>
-                                                <button
-                                                    onClick={() => toggleDropdown('tentang kami')}
-                                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center ${
-                                                        url === "/tentang" || url === "/organisasi"
-                                                            ? 'bg-blue-600 text-white'
-                                                            : isDark
-                                                                ? 'text-gray-300 hover:bg-gray-700'
-                                                                : 'text-gray-700 hover:bg-gray-200'
-                                                    }`}
-                                                >
-                                                    <item.icon className="mr-2" />
-                                                    {item.label}
-                                                </button>
-
-                                                {activeDropdown === 'tentang kami' && (
-                                                    <div className="absolute left-0 mt-2 bg-white shadow-md w-[300px] px-4 hover:bg-primary-50 group cursor-pointer gap-1 rounded-lg p-3 text-left font-medium">
-                                                        <Link
-                                                            href="/genbi-point"
-                                                            className="px-4 py-2 text-sm flex items-center"
-                                                        >
-                                                            <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                                <FaStar className="text-gray-700"/>
-                                                            </div>
-                                                            <p className="block text-gray-700 font-semibold">GenBI Point</p>
-                                                        </Link>
-                                                        <Link
-                                                            href="/tentang"
-                                                            className="px-4 py-2 text-sm flex items-center"
-                                                        >
-                                                            <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                                <FaInfoCircle className="text-gray-700"/>
-                                                            </div>
-                                                            <p className="block text-gray-700 font-semibold">Tentang GenBI Purwokerto</p>
-                                                        </Link>
-                                                        <Link
-                                                            href="/organisasi"
-                                                            className="px-4 py-2 text-sm flex items-center"
-                                                        >
-                                                            <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                                <FaBuilding className="text-gray-700"/>
-                                                            </div>
-                                                            <p className="block text-gray-700 font-semibold">Profile Organisasi</p>
-                                                        </Link>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* Dropdown for other items (Tentang, Organisasi, etc.) */}
-                                        {item.label !== 'Media' && item.label !== 'Tentang Kami' && (
-                                            <Link
-                                                href={item.path}
-                                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center ${
-                                                    url === item.path
-                                                        ? 'bg-blue-600 text-white'
-                                                        : isDark
-                                                            ? 'text-gray-300 hover:bg-gray-700'
-                                                            : 'text-gray-700 hover:bg-gray-200'
-                                                }`}
-                                            >
-                                                <item.icon className="mr-2" />
-                                                {item.label}
-                                            </Link>
-                                        )}
-                                    </div>
+                                    <Link
+                                        key={item.path}
+                                        href={item.path}
+                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center ${
+                                            url === item.path
+                                                ? 'bg-blue-600 text-white'
+                                                : isDark
+                                                    ? 'text-gray-300 hover:bg-gray-700'
+                                                    : 'text-gray-700 hover:bg-gray-200'
+                                        }`}
+                                    >
+                                        <item.icon className="mr-2" />
+                                        {item.label}
+                                    </Link>
                                 ))}
                             </div>
                         </div>
@@ -233,7 +133,6 @@ const Navbar = () => {
                             </button>
 
                             {user ? (
-
                                 <div className="relative">
                                     <div className="flex items-center space-x-4">
                                         <Link
@@ -378,118 +277,6 @@ const Navbar = () => {
 
                             {user ? (
                                 <>
-                                    {navItems.map((item) => (
-                                <div key={item.path}>
-                                    {/* Media dropdown on mobile */}
-                                    {item.label === 'Media' && (
-                                        <div>
-                                            <button
-                                                onClick={() => toggleDropdown('media')}
-                                                className={`w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center ${
-                                                    url === "/artikel" || url === "/podcast"
-                                                        ? 'text-blue-600 bg-blue-50'
-                                                        : isDark
-                                                            ? 'text-gray-300 hover:bg-gray-800'
-                                                            : 'text-gray-700 hover:bg-gray-200'
-                                                }`}
-                                            >
-                                                <item.icon className="mr-2" />
-                                                {item.label}
-                                            </button>
-
-                                            {activeDropdown === 'media' && (
-                                                <div className="">
-                                                    <Link
-                                                        href="/artikel"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <BookOpen className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Artikel</p>
-                                                    </Link>
-                                                    <Link
-                                                        href="/podcast"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaPodcast className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Podcast</p>
-                                                    </Link>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-
-                                    {item.label === 'Tentang Kami' && (
-                                        <div>
-                                            <button
-                                                onClick={() => toggleDropdown('tentang kami')}
-                                                className={`w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center ${
-                                                    url === "/artikel" || url === "/podcast"
-                                                        ? 'text-blue-600 bg-blue-50'
-                                                        : isDark
-                                                            ? 'text-gray-300 hover:bg-gray-800'
-                                                            : 'text-gray-700 hover:bg-gray-200'
-                                                }`}
-                                            >
-                                                <item.icon className="mr-2" />
-                                                {item.label}
-                                            </button>
-
-                                            {activeDropdown === 'tentang kami' && (
-                                                <div className="">
-                                                    <Link
-                                                        href="/genbi-point"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaStar className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">GenBI Point</p>
-                                                    </Link>
-                                                    <Link
-                                                        href="/tentang"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaInfoCircle className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Tentang GenBI Purwokerto</p>
-                                                    </Link>
-                                                    <Link
-                                                        href="/organisasi"
-                                                        className="px-4 py-2 text-sm flex items-center"
-                                                    >
-                                                        <div className="mr-3 size-8 bg-slate-300 rounded-lg flex justify-center p-[7px] items-center">
-                                                            <FaBuilding className="text-gray-700"/>
-                                                        </div>
-                                                        <p className="block text-gray-700 font-semibold">Profile Organisasi</p>
-                                                    </Link>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-
-                                    {/* Non-dropdown items */}
-                                    {item.label !== 'Media' && item.label !== 'Tentang Kami' && (
-                                        <Link
-                                            href={item.path}
-                                            className={`px-3 py-2 rounded-md text-base font-medium flex items-center ${
-                                                url === item.path
-                                                    ? 'text-blue-600 bg-blue-50'
-                                                    : isDark
-                                                        ? 'text-gray-300 hover:bg-gray-800'
-                                                        : 'text-gray-700 hover:bg-gray-200'
-                                            }`}
-                                        >
-                                            <item.icon className="mr-2" />
-                                            {item.label}
-                                        </Link>
-                                    )}
-                                </div>
-                            ))}
                                     <Link
                                         href="/dashboard"
                                         className={`block px-3 py-2 rounded-md text-base font-medium ${

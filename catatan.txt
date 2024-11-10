@@ -1,0 +1,290 @@
+// components/Navbar.tsx
+import React, { useState, useEffect } from 'react';
+import { Link, usePage } from '@inertiajs/react';
+import { motion } from 'framer-motion';
+import {
+    FaHome,
+    FaInfoCircle,
+    FaBlog,
+    FaBuilding,
+    FaTimes,
+    FaBars,
+    FaUserCircle,
+    FaFolder,
+    FaEnvelope
+} from 'react-icons/fa';
+import { useAuth } from '@/Hooks/useAuth';
+import { useTheme } from '@/Hooks/useTheme';
+
+const Navbar = () => {
+    const { url } = usePage();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // Track the active dropdown
+    const { user } = useAuth();
+    const { isDark, toggleTheme } = useTheme();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const navItems = [
+        { path: '/', label: 'Beranda', icon: FaHome },
+        { path: '/tentang', label: 'Tentang', icon: FaInfoCircle },
+        { path: '/organisasi', label: 'Organisasi', icon: FaBuilding },
+        { path: '/articles', label: 'Artikel', icon: FaBlog },
+        { path: '/media', label: 'Media', icon: FaFolder },
+        { path: '/contact', label: 'Kontak', icon: FaEnvelope },
+    ];
+
+    const bottomNavItems = [
+        { path: '/', icon: FaHome },
+        { path: '/tentang',  icon: FaInfoCircle },
+        { path: '/organizations', icon: FaBuilding },
+        { path: '/articles', icon: FaBlog },
+        { path: '/media', icon: FaFolder },
+        { path: '/contact', icon: FaEnvelope },
+    ];
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const toggleDropdown = (dropdown: string) => {
+        setActiveDropdown(activeDropdown === dropdown ? null : dropdown); // Toggle the dropdown, close others
+    };
+
+    return (
+        <>
+            <motion.nav
+                className={`fixed w-full z-50 top-0 transition-all duration-300 ${
+                    isScrolled
+                        ? isDark
+                            ? 'bg-gray-900/80 backdrop-blur-md shadow-md border-b border-gray-800'
+                            : 'bg-white/80 backdrop-blur-md shadow-md'
+                        : 'bg-transparent'
+                }`}
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-16 md:h-20">
+                        {/* Left - Logo */}
+                        <div className="flex-shrink-0">
+                            <Link href={route('home')} className="flex items-center">
+                                <img
+                                    src="/images/genbi-logo.png"
+                                    alt="GenBI Logo"
+                                    className="h-8 md:h-10 w-auto"
+                                />
+                            </Link>
+                        </div>
+
+                        {/* Center - Navigation (Desktop) */}
+                        <div className="hidden md:flex">
+                            <div className={`flex space-x-1 ${
+                                isDark
+                                    ? 'bg-gray-800/80'
+                                    : 'bg-white/80'
+                                } backdrop-blur-md rounded-full p-1 shadow-lg`}>
+                                {navItems.map((item) => (
+                                    <div key={item.path} className="relative">
+                                        {/* Dropdown for Media */}
+                                        {item.label === 'Media' && (
+                                            <div>
+                                                <button
+                                                    onClick={() => toggleDropdown('media')}
+                                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center ${
+                                                        url === item.path
+                                                            ? 'bg-blue-600 text-white'
+                                                            : isDark
+                                                                ? 'text-gray-300 hover:bg-gray-700'
+                                                                : 'text-gray-700 hover:bg-gray-200'
+                                                    }`}
+                                                >
+                                                    <item.icon className="mr-2" />
+                                                    {item.label}
+                                                </button>
+
+                                                {activeDropdown === 'media' && (
+                                                    <div className="absolute left-0 mt-2 bg-white shadow-md rounded-md w-48">
+                                                        <Link
+                                                            href="/media/artikel"
+                                                            className="block px-4 py-2 text-sm"
+                                                        >
+                                                            Artikel
+                                                        </Link>
+                                                        <Link
+                                                            href="/media/podcast"
+                                                            className="block px-4 py-2 text-sm"
+                                                        >
+                                                            Podcast
+                                                        </Link>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+
+                                        {/* Dropdown for other items (Tentang, Organisasi, etc.) */}
+                                        {item.label !== 'Media' && (
+                                            <Link
+                                                href={item.path}
+                                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center ${
+                                                    url === item.path
+                                                        ? 'bg-blue-600 text-white'
+                                                        : isDark
+                                                            ? 'text-gray-300 hover:bg-gray-700'
+                                                            : 'text-gray-700 hover:bg-gray-200'
+                                                }`}
+                                            >
+                                                <item.icon className="mr-2" />
+                                                {item.label}
+                                            </Link>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Right - Auth Section (Desktop) */}
+                        <div className="hidden md:flex items-center space-x-4">
+                            {/* Theme Toggle Button */}
+                            <button
+                                onClick={toggleTheme}
+                                className={`p-2 rounded-full transition-all duration-200 flex items-center justify-center ${
+                                    isDark
+                                        ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700 border border-gray-700'
+                                        : 'bg-white/80 text-blue-600 hover:bg-gray-100'
+                                } shadow-lg`}
+                                aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+                            >
+                                {isDark ? (
+                                    <FaSun className="w-5 h-5" />
+                                ) : (
+                                    <FaMoon className="w-5 h-5" />
+                                )}
+                            </button>
+
+                            {user ? (
+                                <div className="relative">
+                                    <div className="flex items-center space-x-4">
+                                        <Link
+                                            href={route('dashboard')}
+                                            className={`px-4 py-2 rounded-full text-sm font-medium ${
+                                                isDark
+                                                    ? 'bg-gray-800 text-gray-200 hover:bg-gray-700'
+                                                    : 'bg-white/80 text-gray-700 hover:bg-gray-100'
+                                            } backdrop-blur-md transition-all duration-200 shadow-lg flex items-center`}
+                                        >
+                                            <FaUserCircle className="mr-2" />
+                                            {user.name}
+                                        </Link>
+                                    </div>
+                                </div>
+                            ) : (
+                                <Link
+                                    href="/login"
+                                    className={`px-4 py-2 rounded-full text-sm font-medium ${
+                                        isDark
+                                            ? 'bg-gray-800 text-blue-400 hover:bg-gray-700'
+                                            : 'bg-white/80 text-blue-600 hover:bg-blue-50'
+                                    } transition-all duration-200 shadow-lg`}
+                                >
+                                    Login
+                                </Link>
+                            )}
+                        </div>
+
+                        {/* Mobile menu button */}
+                        <div className="md:hidden flex items-center space-x-2">
+                            <button
+                                onClick={toggleMenu}
+                                className={isDark ? 'text-gray-300' : 'text-gray-700'}
+                            >
+                                {isMenuOpen ? (
+                                    <FaTimes className="h-6 w-6" />
+                                ) : (
+                                    <FaBars className="h-6 w-6" />
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Mobile dropdown menu */}
+                {isMenuOpen && (
+                    <div className="md:hidden">
+                        <div className={`px-2 pt-2 pb-3 space-y-1 ${
+                            isDark
+                                ? 'bg-gray-900/80 border-t border-gray-800'
+                                : 'bg-white/80'
+                            } backdrop-blur-md shadow-lg`}>
+                            {navItems.map((item) => (
+                                <div key={item.path}>
+                                    {/* Media dropdown on mobile */}
+                                    {item.label === 'Media' && (
+                                        <div>
+                                            <button
+                                                onClick={() => toggleDropdown('media')}
+                                                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                                                    url === item.path
+                                                        ? 'text-blue-600 bg-blue-50'
+                                                        : isDark
+                                                            ? 'text-gray-300 hover:bg-gray-800'
+                                                            : 'text-gray-700 hover:bg-gray-200'
+                                                }`}
+                                            >
+                                                {item.label}
+                                            </button>
+
+                                            {activeDropdown === 'media' && (
+                                                <div className="pl-4">
+                                                    <Link
+                                                        href="/media/artikel"
+                                                        className="block px-3 py-2 text-base"
+                                                    >
+                                                        Artikel
+                                                    </Link>
+                                                    <Link
+                                                        href="/media/podcast"
+                                                        className="block px-3 py-2 text-base"
+                                                    >
+                                                        Podcast
+                                                    </Link>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Non-dropdown items */}
+                                    {item.label !== 'Media' && (
+                                        <Link
+                                            href={item.path}
+                                            className={`block px-3 py-2 rounded-md text-base font-medium ${
+                                                url === item.path
+                                                    ? 'text-blue-600 bg-blue-50'
+                                                    : isDark
+                                                        ? 'text-gray-300 hover:bg-gray-800'
+                                                        : 'text-gray-700 hover:bg-gray-200'
+                                            }`}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </motion.nav>
+        </>
+    );
+};
+
+export default Navbar;
