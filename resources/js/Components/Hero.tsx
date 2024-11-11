@@ -28,12 +28,12 @@ const Hero = () => (
           <span className="text-blue-600">GenBI </span>Purwokerto
         </motion.h1>
         <motion.p
-          className="mt-8 max-w-2xl mx-auto text-xl text-gray-600"
+          className="mt-8 max-w-2xl mx-auto text-xl text-black-600 font-bold"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          ENERGI UNTUK NEGERI - TOGETHER WE ARE STRONGER
+          #ENERGI UNTUK NEGERI - TOGETHER WE ARE STRONGER
         </motion.p>
         <motion.div
           className="mt-12 flex justify-center gap-6"

@@ -19,7 +19,7 @@ interface NewsItem {
 export default function Home() {
     const { isDark } = useTheme();
     return (
-        <MainLayout title="GenBI Point | GenBI Purwokerto">
+        <MainLayout title="GenBI Point">
             <HeroGenBIPoint />
 
             <div className="flex items-center justify-center flex-col py-16">

@@ -152,32 +152,7 @@ const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
 export default function Home({ news }: Props) {
     const { isDark } = useTheme();
 
-    const presidentProfiles = [
-        {
-            name: "Stevani Aprilya Pratama",
-            role: "Presiden GenBI Purwokerto",
-            university: "Komisariat UIN Saifuddin Zuhri",
-            quote: "Adabmu, menyelamatkan hidupmu",
-            image: "../images/stevani.png",
-            universityShort: "UIN"
-        },
-        {
-            name: "Mochamad Fajar Arianto",
-            role: "Presiden GenBI Purwokerto",
-            university: "Komisariat Univ. Jenderal Soedirman",
-            quote: "\"Definisi kesepian sebenarnya adalah hidup tanpa tanggung jawab sosial.\" – Goenawan Mohamad",
-            image: "../images/fajar.png",
-            universityShort: "UNSOED"
-        },
-        {
-            name: "Nia Nurmawati",
-            role: "Presiden GenBI Purwokerto",
-            university: "Komisariat Univ. Muhammadiyah Purwokerto",
-            quote: "\"Cara terbaik untuk memprediksi masa depan adalah dengan menciptakannya.\" – Abraham Lincoln",
-            image: "../images/nia.png",
-            universityShort: "UMP"
-        }
-    ];
+    
 
     return (
         <MainLayout>
@@ -334,89 +309,7 @@ export default function Home({ news }: Props) {
                 </div>
             </section>
 
-            {/* Pesan GenBI Section */}
-            <section className="py-20 px-4 relative">
-                <div className={`absolute inset-0 ${
-                    isDark
-                        ? 'bg-gradient-to-b from-transparent via-gray-800/30 to-transparent'
-                        : 'bg-gradient-to-b from-transparent via-blue-50/30 to-transparent'
-                }`} />
-                <div className="container mx-auto relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-16"
-                    >
-                        <h2 className={`text-4xl font-bold ${
-                            isDark ? 'text-white' : 'text-gray-900'
-                        }`}>PESAN GENBI</h2>
-                        <div className="w-16 h-1 bg-blue-500 mx-auto mt-4"></div>
-                    </motion.div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {presidentProfiles.map((profile, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.2 }}
-                                viewport={{ once: true }}
-                                className="relative group"
-                            >
-                                <div className={`rounded-xl overflow-hidden shadow-lg border lg:h-[670px] ${
-                                    isDark
-                                        ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700/50'
-                                        : 'bg-white/70 backdrop-blur-sm border-blue-100/50'
-                                }`}>
-                                    {/* Badge */}
-                                    <div className="absolute top-4 left-4 z-10">
-                                        <div className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md">
-                                            <p className="text-sm font-semibold">Presiden Komisariat</p>
-                                            <p className="text-xs">{profile.universityShort}</p>
-                                        </div>
-                                    </div>
-
-                                    {/* Profile Image with Gradient Overlay */}
-                                    <div className="relative h-[460px] overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                                        <img
-                                            src={profile.image}
-                                            alt={profile.name}
-                                            className="w-full h-full object-cover object-center"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
-                                    </div>
-
-                                    {/* Profile Info */}
-                                    <div className="p-6">
-                                        <h3 className={`text-xl font-bold mb-2 ${
-                                            isDark ? 'text-white' : 'text-gray-900'
-                                        }`}>
-                                            {profile.name}
-                                        </h3>
-                                        <p className={`text-sm mb-4 ${
-                                            isDark ? 'text-gray-400' : 'text-gray-600'
-                                        }`}>
-                                            {profile.role}
-                                            <br />
-                                            {profile.university}
-                                        </p>
-                                        <div className={`h-px my-4 ${
-                                            isDark ? 'bg-gray-700' : 'bg-gray-200'
-                                        }`}></div>
-                                        <p className={`italic text-sm ${
-                                            isDark ? 'text-gray-300' : 'text-gray-700'
-                                        }`}>
-                                            {profile.quote}
-                                        </p>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            
         </MainLayout>
     );
 }
