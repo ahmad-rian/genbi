@@ -1,4 +1,3 @@
-// resources/js/Contexts/ThemeContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface ThemeContextType {
@@ -8,26 +7,36 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+interface ThemeProviderProps {
+    children: React.ReactNode;
+}
+
+export function ThemeProvider({ children }: ThemeProviderProps) {
     const [isDark, setIsDark] = useState(() => {
         if (typeof window !== 'undefined') {
             const savedTheme = localStorage.getItem('theme');
-            return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (savedTheme) {
+                return savedTheme === 'dark';
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
         }
         return false;
     });
 
-    useEffect(() => {
-        const root = window.document.documentElement;
-        if (isDark) {
+    const applyTheme = (dark: boolean) => {
+        const root = document.documentElement;
+        if (dark) {
             root.classList.add('dark');
-            root.style.colorScheme = 'dark';
-            localStorage.setItem('theme', 'dark');
+            root.style.setProperty('color-scheme', 'dark');
         } else {
             root.classList.remove('dark');
-            root.style.colorScheme = 'light';
-            localStorage.setItem('theme', 'light');
+            root.style.setProperty('color-scheme', 'light');
         }
+    };
+
+    useEffect(() => {
+        applyTheme(isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }, [isDark]);
 
     const toggleTheme = () => {
