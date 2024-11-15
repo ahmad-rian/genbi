@@ -16,6 +16,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Operator\OperatorDashboardController;
 use App\Http\Controllers\OrganisasiController;
+use App\Http\Controllers\PodcastController;
 use App\Http\Controllers\TentangController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::get('/organisasi', [OrganisasiController::class, 'index'])->name('organis
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/genbi-point', [HomeController::class, 'genbiPoint'])->name('genbi-point');
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel');
+Route::get('/podcast', [PodcastController::class, 'index'])->name('podcast');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
