@@ -5,7 +5,7 @@ import { useTheme } from '@/Hooks/useTheme';
 
 const Tentang = () => {
   const { isDark } = useTheme();
-  
+
   const missionItems = [
     {
       icon: <FaRocket className="text-blue-500" />,
@@ -38,7 +38,7 @@ const Tentang = () => {
       <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
         {/* Hero Section with Visi */}
         <section className="relative mb-24">
-          <motion.div 
+          <motion.div
             className={`absolute inset-0 rounded-3xl ${
               isDark ? 'bg-gray-800' : 'bg-gray-100'
             }`}
@@ -47,20 +47,20 @@ const Tentang = () => {
             transition={{ duration: 0.6 }}
           />
           <div className="relative flex flex-col lg:flex-row items-center gap-12 p-8 md:p-12">
-            <motion.div 
+            <motion.div
               className="lg:w-1/3"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <img 
-                src="../images/logo.png" 
-                alt="Logo" 
+              <img
+                src="../images/logo.png"
+                alt="Logo"
                 className="w-48 h-48 object-contain mx-auto lg:mx-0 drop-shadow-lg"
               />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="lg:w-2/3"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -98,7 +98,7 @@ const Tentang = () => {
 
         {/* Misi Section */}
         <section className="mb-24">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ const Tentang = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {missionItems.map((item, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="group relative"
                 initial={{ opacity: 0, y: 20 }}
@@ -124,7 +124,7 @@ const Tentang = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
                 <div className={`relative p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border ${
-                  isDark 
+                  isDark
                     ? 'bg-gray-800 border-gray-700'
                     : 'bg-white border-gray-100'
                 }`}>

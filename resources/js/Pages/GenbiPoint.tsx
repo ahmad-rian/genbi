@@ -1,31 +1,199 @@
-// resources/js/Pages/Home.tsx
-import React from 'react';
+import { useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
 import { useTheme } from '@/Hooks/useTheme';
-import Hero from '@/Components/Hero';
 import HeroGenBIPoint from '@/Components/HeroGenBIPoint';
+import { IconCalendarDays, IconClipboard, IconListBullets, IconTrophy } from '@irsyadadl/paranoid';
+
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 
-interface NewsItem {
-    id: number;
-    title: string;
-    date: string;
-    image: string;
-}
-
-export default function Home() {
+export default function GenBIPoint() {
     const { isDark } = useTheme();
+    const [openLightboxDeputi, setOpenLightboxDeputi] = useState(false);
+    const [openLightboxStaff, setOpenLightboxStaff] = useState(false);
+
+    const SOTMDeputi = [
+        {
+            src:"./images/SOTM/DEPUTI/Juli.jpg"
+        },
+        {
+            src:"./images/SOTM/DEPUTI/Agustus.jpg"
+        },
+        {
+            src:"./images/SOTM/DEPUTI/September.jpg"
+        }
+    ]
+
+     const SOTMStaff = [
+        {
+            src:"./images/SOTM/STAFF/Juli.jpg"
+        },
+        {
+            src:"./images/SOTM/STAFF/Agustus.jpg"
+        },
+        {
+            src:"./images/SOTM/STAFF/September.jpg"
+        },
+        {
+            src:"./images/SOTM/STAFF/Oktober.jpg"
+        },
+    ]
+
+    const missionItems = [
+        {
+            icon:<IconListBullets className="w-10 h-10" />,
+            title: "Kegiatan",
+            description: "Fitur ini menyediakan informasi lengkap tentang kegiatan yang direncanakan atau telah dilaksanakan. Anggota dapat melihat jadwal, deskripsi kegiatan, dan laporan pelaksanaan, sehingga memudahkan koordinasi dan partisipasi.",
+            gradient: "from-blue-500 to-blue-600"
+        },
+        {
+            icon:<IconCalendarDays className="w-10 h-10" />,
+            title: "Penilaian Deputi",
+            description: "Fitur ini memungkinkan penilaian kinerja deputi secara objektif dan transparan. Deputi dapat dinilai berdasarkan parameter tertentu, dengan skor yang diperoleh digunakan untuk evaluasi performa.",
+            gradient: "from-blue-500 to-blue-600"
+        },
+        {
+            icon:<IconClipboard className="w-10 h-10"/>,
+            title: "Absensi",
+            description: "Fitur absensi dirancang untuk mencatat kehadiran anggota pada setiap kegiatan atau rapat. Data kehadiran ini berguna untuk evaluasi keaktifan anggota dan memastikan partisipasi optimal dalam komunitas.",
+            gradient: "from-blue-500 to-blue-600"
+        },
+        {
+            icon:<IconTrophy className="w-10 h-10"/>,
+            title: "Ranking (Deputi dan Staff)",
+            description: "Fitur ini menampilkan peringkat deputi dan staf berdasarkan skor penilaian atau pencapaian mereka. Ranking ini diupdate secara otomatis dan dapat digunakan untuk memberikan apresiasi kepada anggota dengan performa terbaik.",
+            gradient: "from-blue-500 to-blue-600"
+        }
+    ];
+
     return (
         <MainLayout title="GenBI Point">
             <HeroGenBIPoint />
 
-            <div className="flex items-center justify-center flex-col py-16">
-                <h1 className='text-4xl'>PENJELASAN GENBI POINT DAN SOTM RENCANANYA</h1>
-                <p>PENJELASAN GENBI POINT DAN SOTM dikerjain setelah aku ngajuin outline di hari selasa</p>
-            </div>
+            <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+                <section className="mb-24">
+                    <motion.div
+                        className="text-center mb-16"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h2 className={`text-3xl font-bold inline-flex items-center gap-4 ${
+                        isDark ? 'text-blue-400' : 'text-blue-800'
+                        }`}>
+                        <div className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full" />
+                        Fitur
+                        <div className="h-1 w-12 bg-gradient-to-r from-blue-500 to-transparent rounded-full" />
+                        </h2>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {missionItems.map((item, index) => (
+                            <motion.div
+                                key={index}
+                                className="group relative"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                                <div className={`relative p-8 rounded-2xl md:min-h-[350px] shadow-md hover:shadow-lg transition-all duration-300 border ${
+                                isDark
+                                    ? 'bg-gray-800 border-gray-700'
+                                    : 'bg-white border-gray-100'
+                                }`}>
+                                    <div className="text-4xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        {item.icon}
+                                    </div>
+                                    <h3 className={`text-xl font-semibold mb-4 ${
+                                        isDark ? 'text-white' : 'text-gray-800'
+                                    }`}>{item.title}</h3>
+                                    <p className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+                                        {item.description}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
+
+                <section className="mb-24">
+                    <motion.div
+                        className="text-center mb-16"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h2 className={`text-3xl font-bold inline-flex items-center gap-4 ${
+                        isDark ? 'text-blue-400' : 'text-blue-800'
+                        }`}>
+                        <div className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full" />
+                        SOTM Deputi
+                        <div className="h-1 w-12 bg-gradient-to-r from-blue-500 to-transparent rounded-full" />
+                        </h2>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {SOTMDeputi.map((item, index) => (
+                            <div
+                            key={index}
+                            onClick={() => setOpenLightboxDeputi(true)}
+                            className="flex justify-center items-center cursor-pointer"
+                            >
+                                <img
+                                    src={item.src}
+                                    className="rounded-xl lg:h-[500px] h-[350px] w-full object-cover bg-gray-300"
+                                />
+                            </div>
+                        ))}
+                        <Lightbox
+                        open={openLightboxDeputi}
+                        close={() => setOpenLightboxDeputi(false)}
+                        slides={SOTMDeputi}
+                        />
+                    </div>
+                </section>
+
+                <section className="mb-24">
+                    <motion.div
+                        className="text-center mb-16"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h2 className={`text-3xl font-bold inline-flex items-center gap-4 ${
+                        isDark ? 'text-blue-400' : 'text-blue-800'
+                        }`}>
+                        <div className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full" />
+                        SOTM Staff
+                        <div className="h-1 w-12 bg-gradient-to-r from-blue-500 to-transparent rounded-full" />
+                        </h2>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {SOTMStaff.map((item, index) => (
+                            <div
+                            key={index}
+                            onClick={() => setOpenLightboxStaff(true)}
+                            className="flex justify-center items-center cursor-pointer"
+                            >
+                                <img
+                                    src={item.src}
+                                    className="rounded-xl lg:h-[500px] h-[350px] w-full object-cover bg-gray-300"
+                                />
+                            </div>
+                        ))}
+                        <Lightbox
+                        open={openLightboxStaff}
+                        close={() => setOpenLightboxStaff(false)}
+                        slides={SOTMStaff}
+                        />
+                    </div>
+                </section>
+            </main>
+
 
         </MainLayout>
     )

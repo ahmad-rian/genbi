@@ -32,10 +32,10 @@ export const ScrollToTop = () => {
                     exit={{ opacity: 0, scale: 0.3 }}
                     onClick={scrollToTop}
                     className={`
-                        fixed bottom-[72px] right-4 md:bottom-8 md:right-8 z-50 
-                        p-3 rounded-full shadow-lg cursor-pointer 
+                        fixed bottom-[25px] lg:bottom-[75px] right-4 md:bottom-8 md:right-8 z-50
+                        p-3 rounded-full shadow-lg cursor-pointer
                         transition-all duration-300 ease-in-out group
-                        ${isDark 
+                        ${isDark
                             ? 'bg-gray-800 hover:bg-gray-700 border border-gray-700'
                             : 'bg-blue-600 hover:bg-blue-700'
                         }
@@ -45,8 +45,8 @@ export const ScrollToTop = () => {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    <ChevronUp 
-                        className={`h-6 w-6 transition-transform duration-300 
+                    <ChevronUp
+                        className={`h-6 w-6 transition-transform duration-300
                             group-hover:-translate-y-1
                             ${isDark ? 'text-blue-400' : 'text-white'}`}
                     />

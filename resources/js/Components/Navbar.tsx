@@ -11,6 +11,7 @@ import {
 import { useAuth } from '@/Hooks/useAuth';
 import { useTheme } from '@/Hooks/useTheme';
 import { BookOpen } from 'lucide-react';
+import { IconGallery } from '@irsyadadl/paranoid';
 
 const NAV_ITEMS = [
     { path: '/', label: 'Beranda', icon: FaHome },
@@ -30,7 +31,8 @@ const NAV_ITEMS = [
         icon: FaFolder,
         dropdown: [
             { path: '/artikel', label: 'Artikel', icon: BookOpen },
-            { path: '/podcast', label: 'Podcast', icon: FaPodcast }
+            { path: '/podcast', label: 'Podcast', icon: FaPodcast },
+            { path: '/gallery', label: 'Galeri', icon: IconGallery }
         ]
     },
     { path: '/contact', label: 'Kontak', icon: FaEnvelope }
@@ -225,7 +227,7 @@ const DesktopNavItem = memo(({ item, isActive, isDark, activeDropdown, onDropdow
 //                         animate={{ opacity: 1, y: 0 }}
 //                         exit={{ opacity: 0, y: 10 }}
 //                         className={`
-//                             absolute bottom-full mb-16 left-1/2 -translate-x-1/2 w-48 
+//                             absolute bottom-full mb-16 left-1/2 -translate-x-1/2 w-48
 //                             rounded-xl shadow-lg overflow-hidden border
 //                             ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'}
 //                         `}
@@ -353,7 +355,7 @@ const Navbar = () => {
                                     <DesktopNavItem
                                         key={item.id || item.path}
                                         item={item}
-                                        isActive={item.dropdown 
+                                        isActive={item.dropdown
                                             ? isDropdownItemActive(item.dropdown)
                                             : isPathActive(item.path)
                                         }
@@ -371,10 +373,10 @@ const Navbar = () => {
                             <button
                                 onClick={toggleTheme}
                                 className={`p-2 rounded-full transition-all duration-200 ${
-                                    isDark 
+                                    isDark
                                         ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700 border border-gray-700'
                                         : 'bg-white/80 text-blue-600 hover:bg-gray-100'
-                                } shadow-lg`}                                
+                                } shadow-lg`}
                                 aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
                             >
                                 {isDark ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
@@ -658,7 +660,7 @@ const Navbar = () => {
                                 <BottomNavItem
                                     key={item.id || item.path}
                                     item={item}
-                                    isActive={item.dropdown 
+                                    isActive={item.dropdown
                                         ? isDropdownItemActive(item.dropdown)
                                         : isPathActive(item.path)
                                     }
@@ -671,7 +673,7 @@ const Navbar = () => {
                 </div>
             </div> */}
 
-            
+
 
             {/* Click Away Listener */}
             {(isProfileOpen || isMenuOpen || activeDropdown) && (
