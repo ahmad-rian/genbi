@@ -34,20 +34,20 @@ const SCHOLARSHIP_DATA: ScholarshipData[] = [
 ];
 
 const UNIVERSITIES: University[] = [
-  { 
+  {
     name: 'UIN Prof. K.H. Saifuddin Zuhri',
-    shortName: 'UIN SAIZU', 
-    logo: 'https://perpus.unsoed.ac.id/wp-content/uploads/2024/03/Universitas-Jendral-Soedirman-Logo.png'  
+    shortName: 'UIN SAIZU',
+    logo: './images/Logo/UIN.png'
   },
-  { 
+  {
     name: 'Universitas Jenderal Soedirman',
-    shortName: 'UNSOED', 
-    logo: 'https://uinsaizu.ac.id/images/LOGO-UIN.png'  
+    shortName: 'UNSOED',
+    logo: './images/Logo/UNSOED.png'
   },
-  { 
+  {
     name: 'Universitas Muhammadiyah Purwokerto',
-    shortName: 'UMP', 
-    logo: '/images/logo-ump.png' 
+    shortName: 'UMP',
+    logo: './images/Logo/UMP.png'
   }
 ];
 
@@ -88,15 +88,7 @@ const PRESIDENT_PROFILES: PresidentProfile[] = [
     universityShort: "UIN",
     type: "secretary"
   },
-  {
-    name: "Ani Shabrina",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "\"Anda mungkin bisa menunda, tapi waktu tidak akan menunggu.\" – Benjamin Franklin",
-    image: "/images/sekum-uin-2.png",
-    universityShort: "UIN",
-    type: "secretary"
-  },
+
   {
     name: "Putri Amaliyah",
     role: "Sekretaris Umum",
@@ -122,15 +114,6 @@ const PRESIDENT_PROFILES: PresidentProfile[] = [
     quote: "Teruslah melangkah sampai semua harapan menjadi nyata",
     image: "/images/sekum-unsoed-1.png",
     universityShort: "UIN",
-    type: "secretary"
-  },
-  {
-    name: "Fiqih Ega Pratama",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "\"Stand tall, stand proud, and stand alone if you must. Independence starts from within.\"",
-    image: "/images/sekum-unsoed-2.png",
-    universityShort: "UMP",
     type: "secretary"
   },
   {
@@ -236,7 +219,7 @@ const AnimatedCount: React.FC<{ count: number; university: string }> = ({ count,
 
 const UniversityCard: React.FC<{ university: University; index: number }> = ({ university, index }) => {
   const { isDark } = useTheme();
-  
+
   return (
     <motion.div
       className={`p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 ${
@@ -249,9 +232,9 @@ const UniversityCard: React.FC<{ university: University; index: number }> = ({ u
     >
       <div className="h-32 flex items-center justify-center mb-4">
         {/* Next.js Image optimization */}
-        <img 
-          src={university.logo} 
-          alt={university.name} 
+        <img
+          src={university.logo}
+          alt={university.name}
           className="max-h-full max-w-[180px] object-contain"
         />
       </div>
@@ -271,7 +254,7 @@ const UniversityCard: React.FC<{ university: University; index: number }> = ({ u
 
 const ProfileCard: React.FC<{ profile: PresidentProfile; index: number }> = ({ profile, index }) => {
   const { isDark } = useTheme();
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -287,7 +270,7 @@ const ProfileCard: React.FC<{ profile: PresidentProfile; index: number }> = ({ p
       }`}>
         <div className="absolute top-4 left-4 z-10">
           <div className={`px-4 py-2 rounded-lg shadow-md ${
-            profile.type === 'president' 
+            profile.type === 'president'
               ? 'bg-blue-600 text-white'
               : 'bg-blue-600 text-white'
           }`}>
@@ -341,7 +324,7 @@ const Organization: React.FC = () => {
   return (
     <MainLayout title="Organisasi">
       <div className={isDark ? 'bg-gray-900 min-h-screen' : 'bg-gray-50 min-h-screen'}>
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 pb-16 pt-16 lg:pt-32">
           {/* Header Section */}
           <div className="text-center mb-16">
             <motion.h1
@@ -431,7 +414,7 @@ const Organization: React.FC = () => {
                 ? 'bg-gradient-to-b from-transparent via-gray-800/30 to-transparent'
                 : 'bg-gradient-to-b from-transparent via-blue-50/30 to-transparent'
             }`} />
-            
+
             <div className="container mx-auto relative z-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -463,10 +446,10 @@ const Organization: React.FC = () => {
                   {PRESIDENT_PROFILES
                     .filter(profile => profile.type === 'president')
                     .map((profile, index) => (
-                      <ProfileCard 
-                        key={`${profile.universityShort}-president`} 
-                        profile={profile} 
-                        index={index} 
+                      <ProfileCard
+                        key={`${profile.universityShort}-president`}
+                        profile={profile}
+                        index={index}
                       />
                     ))}
                 </div>
@@ -488,15 +471,15 @@ const Organization: React.FC = () => {
                   {PRESIDENT_PROFILES
                     .filter(profile => profile.type === 'secretary')
                     .map((profile, index) => (
-                      <ProfileCard 
-                        key={`${profile.universityShort}-secretary`} 
-                        profile={profile} 
-                        index={index} 
+                      <ProfileCard
+                        key={`${profile.universityShort}-secretary`}
+                        profile={profile}
+                        index={index}
                       />
                     ))}
                 </div>
               </div>
-                
+
               {/* Treasurer Section */}
               <div>
                 <motion.h3
@@ -513,15 +496,15 @@ const Organization: React.FC = () => {
                   {PRESIDENT_PROFILES
                     .filter(profile => profile.type === 'treasure')
                     .map((profile, index) => (
-                      <ProfileCard 
-                        key={`${profile.universityShort}-treasure`} 
-                        profile={profile} 
-                        index={index} 
+                      <ProfileCard
+                        key={`${profile.universityShort}-treasure`}
+                        profile={profile}
+                        index={index}
                       />
                     ))}
                 </div>
               </div>
-              
+
             </div>
           </section>
         </div>

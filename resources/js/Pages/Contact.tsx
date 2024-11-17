@@ -19,22 +19,22 @@ const Contact = () => {
   return (
     <MainLayout title="Contact">
       <div className={`min-h-screen ${darkModeClasses.bg}`}>
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
+
             {/* Left Column - Contact Info & Social Media */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="space-y-8"
+              className="space-y-8 lg:mt-12 lg:ml-10"
             >
-              <h1 className={`text-3xl font-bold mb-8 ${darkModeClasses.textPrimary}`}>Contact Us</h1>
-              
+              <h1 className={`text-3xl font-bold mb-8 ${darkModeClasses.textPrimary}`}>Kontak Kami</h1>
+
               {/* Address */}
               <div className="flex items-start gap-3 mb-4">
                 <FaMapMarkerAlt className="text-blue-500 text-xl flex-shrink-0 mt-1" />
-                <a 
+                <a
                   href="https://maps.app.goo.gl/9iGh4hGHk8z4L2vy8"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -47,8 +47,8 @@ const Contact = () => {
               {/* Email */}
               <div className="flex items-center gap-3 mb-4">
                 <FaEnvelope className="text-blue-500 text-xl" />
-                <a 
-                  href="mailto:genbipurwokerto22@gmail.com" 
+                <a
+                  href="mailto:genbipurwokerto22@gmail.com"
                   className={`hover:text-blue-500 transition-colors ${darkModeClasses.textSecondary}`}
                 >
                   genbipurwokerto22@gmail.com
@@ -58,8 +58,8 @@ const Contact = () => {
               {/* Phone */}
               <div className="flex items-center gap-3">
                 <FaPhone className="text-blue-500 text-xl" />
-                <a 
-                  href="tel:+6289667443651" 
+                <a
+                  href="tel:+6289667443651"
                   className={`hover:text-blue-500 transition-colors ${darkModeClasses.textSecondary}`}
                 >
                   +62 89667443651
@@ -69,20 +69,20 @@ const Contact = () => {
               {/* Social Media */}
               <h2 className={`text-2xl font-bold mb-4 ${darkModeClasses.textPrimary}`}>Follow Us</h2>
               <div className="flex gap-4">
-                <a href="https://www.instagram.com/genbipurwokerto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-2xl text-[#E4405F] hover:opacity-80 transition-opacity">
-                  <FaInstagram />
+                <a href="https://www.instagram.com/genbipurwokerto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-3 rounded-full bg-white border border-slate-400 text-2xl text-[#E4405F] hover:opacity-80 transition-opacity">
+                        <FaInstagram />
                 </a>
-                <a href="https://www.youtube.com/@genbipurwokerto1177" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-2xl text-[#FF0000] hover:opacity-80 transition-opacity">
+                <a href="https://www.youtube.com/@genbipurwokerto1177" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="p-3 rounded-full bg-white border border-slate-400 text-2xl text-[#FF0000] hover:opacity-80 transition-opacity">
                   <FaYoutube />
                 </a>
-                <a href="https://www.tiktok.com/@genbipurwokerto" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className={`text-2xl hover:opacity-80 transition-opacity ${isDark ? 'text-white' : 'text-[#000000]'}`}>
+                <a href="https://www.tiktok.com/@genbipurwokerto" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className={`p-3 rounded-full bg-white border border-slate-400 text-2xl hover:opacity-80 transition-opacity ${isDark ? 'text-white' : 'text-[#000000]'}`}>
                   <FaTiktok />
                 </a>
               </div>
             </motion.div>
 
             {/* Right Column - Contact Form */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -92,7 +92,7 @@ const Contact = () => {
                 {/* Name Input */}
                 <div>
                   <label htmlFor="name" className={`block text-sm font-medium mb-1 ${darkModeClasses.textSecondary}`}>
-                    Your Name <span className="text-blue-500">*</span>
+                    Nama Kamu <span className="text-blue-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -118,7 +118,7 @@ const Contact = () => {
                 {/* Subject Input */}
                 <div>
                   <label htmlFor="subject" className={`block text-sm font-medium mb-1 ${darkModeClasses.textSecondary}`}>
-                    Subject <span className="text-blue-500">*</span>
+                    Judul <span className="text-blue-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -131,7 +131,7 @@ const Contact = () => {
                 {/* Message Input */}
                 <div>
                   <label htmlFor="message" className={`block text-sm font-medium mb-1 ${darkModeClasses.textSecondary}`}>
-                    Your Message <span className="text-blue-500">*</span>
+                    Pesan Kamu <span className="text-blue-500">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -143,14 +143,14 @@ const Contact = () => {
 
                 {/* Submit Button */}
                 <button type="submit" className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition-colors font-medium">
-                  Send Message
+                  Kirim Pesan
                 </button>
               </form>
             </motion.div>
           </div>
 
           {/* Map Section */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
