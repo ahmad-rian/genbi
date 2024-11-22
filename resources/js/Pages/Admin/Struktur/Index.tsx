@@ -9,11 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/Components/ui/table';
-import { 
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger 
+  DropdownMenuTrigger
 } from '@/Components/ui/dropdown-menu';
 import { MoreHorizontal, Plus, Pencil, Trash, User } from 'lucide-react';
 import { toast } from 'sonner';
@@ -67,7 +67,7 @@ export default function Index({ struktur, filters }: Props) {
 
     return (
       <div className="w-12 h-12">
-        <img 
+        <img
           src={item.foto_url}
           alt={item.nama_lengkap}
           className="w-full h-full object-cover rounded-lg"
@@ -133,8 +133,8 @@ export default function Index({ struktur, filters }: Props) {
                   <TableCell>{item.komisariat}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${
-                      item.is_active 
-                        ? 'bg-green-100 text-green-800' 
+                      item.is_active
+                        ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
                     }`}>
                       {item.is_active ? 'Active' : 'Inactive'}
@@ -151,7 +151,7 @@ export default function Index({ struktur, filters }: Props) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
-                          <Link 
+                          <Link
                             href={route('admin.struktur.edit', item.id)}
                             className="flex items-center"
                           >
@@ -159,7 +159,7 @@ export default function Index({ struktur, filters }: Props) {
                             Edit
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
                           onClick={() => handleDelete(item.id)}
                           className="text-red-600 cursor-pointer"
                         >
@@ -173,8 +173,8 @@ export default function Index({ struktur, filters }: Props) {
               ))}
               {struktur.length === 0 && (
                 <TableRow>
-                  <TableCell 
-                    colSpan={9} 
+                  <TableCell
+                    colSpan={9}
                     className="h-24 text-center text-muted-foreground"
                   >
                     Tidak ada data pengurus

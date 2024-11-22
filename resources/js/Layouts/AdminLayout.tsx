@@ -1,14 +1,16 @@
 import { useAuth } from '@/Hooks/useAuth'
 import Sidebar from '@/Components/ui/sidebar'
 import { Button } from '@/Components/ui/button'
-import { 
-  LayoutDashboard, 
-  Users, 
-  Shield, 
-  LogOut
+import {
+  LayoutDashboard,
+  Users,
+  Shield,
+  LogOut,
+  BookOpen
 } from 'lucide-react'
 import { Link, useForm } from '@inertiajs/react'
 import { cn } from '@/lib/utils'
+import { IconLayers } from '@irsyadadl/paranoid'
 
 export default function AdminLayout({
   children,
@@ -28,6 +30,21 @@ export default function AdminLayout({
       name: 'Dashboard',
       href: route('admin.dashboard'),
       icon: LayoutDashboard
+    },
+    {
+      name: 'Struktur',
+      href: route('admin.struktur.index'),
+      icon: IconLayers
+    },
+    {
+      name: 'Kategori Artikel',
+      href: route('admin.kategori-artikel.index'),
+      icon: BookOpen
+    },
+    {
+      name: 'Artikel',
+      href: route('admin.artikel.index'),
+      icon: BookOpen
     },
     {
       name: 'Users',

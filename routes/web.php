@@ -10,7 +10,10 @@ use App\Http\Controllers\Admin\{
     UserController,
     RoleController,
     PermissionController,
-    AdminDashboardController
+    AdminDashboardController,
+    ArtikelController as AdminArtikelController,
+    KategoriArtikelController,
+    StrukturController
 };
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\MediaController;
@@ -54,6 +57,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('users', UserController::class);
+        Route::resource('artikel', AdminArtikelController::class);
+        Route::resource('kategori-artikel', KategoriArtikelController::class);
+        Route::resource('struktur', StrukturController::class);
         Route::resource('roles', RoleController::class);
         Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('settings');
     });

@@ -386,7 +386,7 @@ const Navbar = () => {
                                 <div className="relative">
                                     <div className="flex items-center space-x-4">
                                         <Link
-                                            href={route('dashboard')}
+                                            href={route('admin.dashboard')}
                                             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center ${
                                                 isDark
                                                     ? 'bg-gray-800 text-gray-200 hover:bg-gray-700'
