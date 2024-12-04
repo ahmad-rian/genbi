@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\{
     StrukturController
 };
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Operator\OperatorDashboardController;
 use App\Http\Controllers\OrganisasiController;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
 Route::get('/organisasi', [OrganisasiController::class, 'index'])->name('organisasi');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');

@@ -6,7 +6,9 @@ import {
     FaHome, FaInfoCircle, FaBuilding, FaTimes, FaBars,
     FaUser, FaEnvelope, FaUserCircle, FaSignOutAlt,
     FaTachometerAlt, FaSun, FaMoon, FaFolder,
-    FaStar, FaPodcast
+    FaStar, FaPodcast,
+    FaNetworkWired,
+    FaHistory
 } from 'react-icons/fa';
 import { useAuth } from '@/Hooks/useAuth';
 import { useTheme } from '@/Hooks/useTheme';
@@ -15,6 +17,7 @@ import { IconGallery } from '@irsyadadl/paranoid';
 
 const NAV_ITEMS = [
     { path: '/', label: 'Beranda', icon: FaHome },
+    { path: '/event', label: 'Event', icon: FaNetworkWired },
     {
         id: 'about',
         label: 'Tentang Kami',
@@ -22,7 +25,8 @@ const NAV_ITEMS = [
         dropdown: [
             { path: '/genbi-point', label: 'GenBI Point', icon: FaStar },
             { path: '/tentang', label: 'Tentang GenBI', icon: FaInfoCircle },
-            { path: '/organisasi', label: 'Organisasi', icon: FaBuilding }
+            { path: '/organisasi', label: 'Organisasi', icon: FaBuilding },
+            { path: '/sejarah', label: 'Sejarah GenBI', icon: FaHistory }
         ]
     },
     {

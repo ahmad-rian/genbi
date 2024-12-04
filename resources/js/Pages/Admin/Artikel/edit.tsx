@@ -6,23 +6,19 @@ import { Editor } from '@tinymce/tinymce-react';
 
 export default function Edit({ artikel, kategori }) {
   const { data, setData, put, processing, errors } = useForm({
-    title: artikel.title || '',
-    content: artikel.content || '',
-    kategori_id: artikel.kategori_id || '',
-    excerpt: artikel.excerpt || '',
-    is_published: artikel.is_published || false,
-    thumbnail: artikel.thumbnail || null,  // Handle thumbnail separately
+    title: artikel.title,
+    slug: artikel.slug,
+    content: artikel.content,
+    kategori_id: artikel.kategori_id,
+    excerpt: artikel.excerpt,
+    is_published: artikel.is_published,
+    thumbnail: artikel.thumbnail,
   });
-
-  useEffect(() => {
-    // Set initial thumbnail if exists
-    setData('thumbnail', artikel.thumbnail);
-  }, [artikel]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    put(route('admin.artikel.update', artikel.id), {
+    put(route('admin.artikel.update', artikel.id),  {
       onSuccess: () => {
         Inertia.visit(route('admin.artikel.index'));
       },
@@ -32,6 +28,7 @@ export default function Edit({ artikel, kategori }) {
   const handleFileChange = (e) => {
     setData('thumbnail', e.target.files[0]);
   };
+
 
   const handleEditorChange = (content, editor) => {
     setData('content', content);
@@ -44,7 +41,7 @@ export default function Edit({ artikel, kategori }) {
         <h1 className="text-2xl font-semibold mb-4">Edit Artikel</h1>
 
         {/* Edit Form */}
-        <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+        <form onSubmit={handleSubmit} method="post" className="space-y-4" encType="multipart/form-data">
             {/* Title */}
             <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">Judul Artikel</label>

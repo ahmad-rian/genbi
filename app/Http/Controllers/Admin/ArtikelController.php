@@ -31,7 +31,7 @@ class ArtikelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'required|min:5|max:255',
             'content' => 'required',
             'kategori_id' => 'required|exists:kategori_artikels,id',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -50,7 +50,7 @@ class ArtikelController extends Controller
         if ($request->hasFile('thumbnail')) {
             // Validasi dan proses upload gambar
             $file = $request->file('thumbnail');
-            $fileName = time() . '-' . $file->getClientOriginalName(); // Menambahkan waktu agar nama file unik
+            $fileName = uniqid() . '-' . $file->getClientOriginalName(); // Menambahkan waktu agar nama file unik
             $path = $file->storeAs('thumbnailArtikel', $fileName, 'public'); // Menyimpan file ke storage public
 
             // Menyimpan path gambar ke dalam data artikel
@@ -76,21 +76,30 @@ class ArtikelController extends Controller
     // Method untuk mengupdate artikel (optional, jika ingin membuat fitur update)
     public function update(Request $request, Artikel $artikel)
     {
-        // dd($request);
         $request->validate([
-            'title' => 'min:10|max:255',
+            'title' => 'min:5|max:255',
             'content' => 'min:200',
             'kategori_id' => 'min:1|exists:kategori_artikels,id',
             'excerpt' => 'nullable',
             'is_published' => 'nullable|boolean',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Mengambil data dan mengupdate artikel
         $data = $request->all();
-        $data['slug'] = Str::slug($request->title); // Update slug jika judul diubah
+
+        // Cek apakah judul diubah
+        if ($request->filled('title') && $artikel->title !== $request->title) {
+            $data['slug'] = Str::slug($request->title); // Update slug hanya jika judul berubah
+        } else {
+            $data['slug'] = $artikel->slug; // Pertahankan slug lama jika judul tidak berubah
+        }
+
 
         // Jika ada file thumbnail yang di-upload
-        if ($request->hasFile('thumbnail')) {
+        dd($request);
+        if ($request->file('thumbnail')) {
+            dd("JANCOK");
 
             $request->validate([
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -103,15 +112,19 @@ class ArtikelController extends Controller
 
             // Validasi dan proses upload gambar
             $file = $request->file('thumbnail');
-            $fileName = time() . '-' . $file->getClientOriginalName(); // Menambahkan waktu agar nama file unik
+            $fileName = uniqid() . '-' . $file->getClientOriginalName(); // Menambahkan waktu agar nama file unik
             $path = $file->storeAs('thumbnailArtikel', $fileName, 'public'); // Menyimpan file ke storage public
 
             // Menyimpan path gambar ke dalam data artikel
             $data['thumbnail'] = $fileName;
+
+            // Update artikel
+            $artikel->update($data);
+        }else{
+            // Update artikel
+            $artikel->update($data);
         }
 
-        // Update artikel
-        $artikel->update($data);
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil diperbarui!');
     }

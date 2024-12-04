@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/Hooks/useTheme';
@@ -13,33 +13,55 @@ export default function GenBIPoint() {
     const { isDark } = useTheme();
     const [openLightboxDeputi, setOpenLightboxDeputi] = useState(false);
     const [openLightboxStaff, setOpenLightboxStaff] = useState(false);
+    const [SOTMDeputi, setSOTMDeputi] = useState();
+    const [SOTMStaff, setSOTMStaff] = useState();
+    const [lightboxDeputi, setLightboxDeputi] = useState([]);
+    const [lightboxStaff, setLightboxStaff] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const SOTMDeputi = [
-        {
-            src:"./images/SOTM/DEPUTI/Juli.jpg"
-        },
-        {
-            src:"./images/SOTM/DEPUTI/Agustus.jpg"
-        },
-        {
-            src:"./images/SOTM/DEPUTI/September.jpg"
+    useEffect(() => {
+    // Fungsi untuk fetch data
+    const fetchData = async () => {
+        try {
+            const response = await fetch("http://genbi-data.test/api/sotm");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            // Pisahkan data berdasarkan jenis
+            const deputi = data.data.filter((item) => item.jenis === "deputi");
+            const staff = data.data.filter((item) => item.jenis === "staff");
+
+            // Proses data ke dalam format yang diinginkan
+            const deputiImages = data.data
+            .filter((item) => item.jenis === "deputi")
+            .map((item) => ({ src: `http://genbi-data.test/storage/${item.image}` }));
+
+            const staffImages = data.data
+            .filter((item) => item.jenis === "staff")
+            .map((item) => ({ src: `http://genbi-data.test/storage/${item.image}` }));
+
+            // Simpan ke state
+            setLightboxDeputi(deputiImages);
+            setLightboxStaff(staffImages);
+
+            setSOTMDeputi(deputi);
+            setSOTMStaff(staff);
+        } catch (err) {
+            setError(err.message); // Tangkap error jika ada
+        } finally {
+            setLoading(false); // Hentikan loading
         }
-    ]
+    };
 
-     const SOTMStaff = [
-        {
-            src:"./images/SOTM/STAFF/Juli.jpg"
-        },
-        {
-            src:"./images/SOTM/STAFF/Agustus.jpg"
-        },
-        {
-            src:"./images/SOTM/STAFF/September.jpg"
-        },
-        {
-            src:"./images/SOTM/STAFF/Oktober.jpg"
-        },
-    ]
+    fetchData();
+    }, []); // Array kosong memastikan ini hanya dijalankan sekali
+
+    if (loading) return <p>Loading...</p>;
+
+    if (error) return <p>Error: {error}</p>;
+
 
     const missionItems = [
         {
@@ -67,6 +89,7 @@ export default function GenBIPoint() {
             gradient: "from-blue-500 to-blue-600"
         }
     ];
+
 
     return (
         <MainLayout title="GenBI Point">
@@ -143,7 +166,7 @@ export default function GenBIPoint() {
                             className="flex justify-center items-center cursor-pointer"
                             >
                                 <img
-                                    src={item.src}
+                                    src={"http://genbi-data.test/storage/" + item.image}
                                     className="rounded-xl lg:h-[500px] h-[350px] w-full object-cover bg-gray-300"
                                 />
                             </div>
@@ -151,7 +174,7 @@ export default function GenBIPoint() {
                         <Lightbox
                         open={openLightboxDeputi}
                         close={() => setOpenLightboxDeputi(false)}
-                        slides={SOTMDeputi}
+                        slides={lightboxDeputi}
                         />
                     </div>
                 </section>
@@ -180,7 +203,7 @@ export default function GenBIPoint() {
                             className="flex justify-center items-center cursor-pointer"
                             >
                                 <img
-                                    src={item.src}
+                                    src={"http://genbi-data.test/storage/" + item.image}
                                     className="rounded-xl lg:h-[500px] h-[350px] w-full object-cover bg-gray-300"
                                 />
                             </div>
@@ -188,7 +211,7 @@ export default function GenBIPoint() {
                         <Lightbox
                         open={openLightboxStaff}
                         close={() => setOpenLightboxStaff(false)}
-                        slides={SOTMStaff}
+                        slides={lightboxStaff}
                         />
                     </div>
                 </section>
