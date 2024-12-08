@@ -26,7 +26,7 @@ const NAV_ITEMS = [
             { path: '/genbi-point', label: 'GenBI Point', icon: FaStar },
             { path: '/tentang', label: 'Tentang GenBI', icon: FaInfoCircle },
             { path: '/organisasi', label: 'Organisasi', icon: FaBuilding },
-            { path: '/sejarah', label: 'Sejarah GenBI', icon: FaHistory }
+            { path: '/sejarah-kepengurusan', label: 'Sejarah Kepengurusan', icon: FaHistory }
         ]
     },
     {
@@ -552,7 +552,7 @@ const Navbar = () => {
                                                                     initial={{ opacity: 0, y: -10 }}
                                                                     animate={{ opacity: 1, y: 0 }}
                                                                     exit={{ opacity: 0, y: -10 }}
-                                                                    className="pl-12 space-y-2"
+                                                                    className="pl-5 space-y-2"
                                                                 >
                                                                     {item.dropdown.map((dropItem) => (
                                                                         <MobileMenuItem

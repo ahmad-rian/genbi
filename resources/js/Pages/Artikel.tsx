@@ -40,9 +40,9 @@ const Artikel = () => {
 
                 const data = await response.json();
 
-                setIsLoading(true);
                 if (data.success) {
                     const allArtikel = data.data.data;
+
                     // Periksa tipe data
                     if (!Array.isArray(allArtikel)) {
                         throw new Error("Artikel data is not an array");
@@ -59,7 +59,6 @@ const Artikel = () => {
                     setCurrentPage(data.data.current_page);
                     setLastPage(data.data.last_page);
                 }
-                setIsLoading(false);
             }
             catch(error) {
                 setEror(error)
@@ -107,9 +106,12 @@ const Artikel = () => {
             }
         };
 
+
+        setIsLoading(true);
         fetchTrendingArtikel(); // Panggil fungsi fetch
         fetchArtikel();
         fetchRekomendasi();
+        setIsLoading(false);
     }, []);
 
     // Load more artikel
@@ -120,9 +122,9 @@ const Artikel = () => {
     };
 
 
-    // if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <p>Loading...</p>;
 
-    // if (eror) return <p>Error: {eror}</p>;
+    if (eror) return <p>Error: {eror}</p>;
 
 
   return (
@@ -170,7 +172,7 @@ const Artikel = () => {
                 {artikelBaru.map((item) => (
                     <div key={item.id}>
                         <img
-                        src={`http://genbi-data.test/storage/${item.thumbnail}`}
+                        src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                         alt={item.title}
                         className="bg-gray-300 rounded-xl h-[200px] object-cover"
                         />
@@ -202,7 +204,7 @@ const Artikel = () => {
                             {artikelTrending.map((item, index) => (
                                 <div key={index}>
                                     <img
-                                        src={`http://genbi-data.test/storage/${item.thumbnail}`}
+                                        src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                                         alt={item.title}
                                         className="bg-gray-300 rounded-xl h-[200px] object-cover"
                                     />
@@ -228,7 +230,7 @@ const Artikel = () => {
                         >
                             <div className="md:col-span-2">
                                 <img
-                                src={`http://genbi-data.test/storage/${item.thumbnail}`}
+                                src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                                 className="bg-gray-300 w-full h-[250px] rounded object-cover"
                                 alt={item.title}
                                 />
@@ -261,7 +263,19 @@ const Artikel = () => {
                 </div>
 
                     {/* PAGINATION */}
-                    <div className="flex gap-1 justify-center mt-10">
+                    {/* Tombol Muat Lebih Banyak */}
+                    {currentPage < lastPage && (
+                        <div className="text-center my-5">
+                        <button
+                            onClick={loadMore}
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Memuat..." : "Muat Lebih Banyak"}
+                        </button>
+                        </div>
+                    )}
+                    {/* <div className="flex gap-1 justify-center mt-10">
                         <a
                         href="#"
                         className="text-black py-1 md:px-4 px-3 md:text-base text-sm rounded hover:text-white hover:bg-red-400 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-red-400"
@@ -310,7 +324,7 @@ const Artikel = () => {
                         >
                         &raquo;
                         </a>
-                    </div>
+                    </div> */}
                 </div>
 
 
@@ -320,7 +334,7 @@ const Artikel = () => {
                     {artikelRekomendasi.map((item) => (
                         <div key={item.id} className="mb-10">
                             <img
-                            src={`http://genbi-data.test/storage/${item.thumbnail}`}
+                            src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                             alt={item.title}
                             className="bg-gray-300 rounded-xl h-[200px] object-cover"
                             />

@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '@/Layouts/MainLayout';
 import { useTheme } from '@/Hooks/useTheme';
+import { Link } from '@inertiajs/react';
+
+
+
 
 // Types
 interface ScholarshipData {
@@ -51,126 +55,7 @@ const UNIVERSITIES: University[] = [
   }
 ];
 
-const PRESIDENT_PROFILES: PresidentProfile[] = [
-  {
-    name: "Stevani Aprilya Pratama",
-    role: "Presiden GenBI Purwokerto",
-    university: "Komisariat UIN Prof. K.H. Saifuddin Zuhri",
-    quote: "Semua yang ada didepan itu bukan suatu kebetulan, beradablah dan terus bersungguh-sungguh dalam memulai sesuatu",
-    image: "/images/stevani.png",
-    universityShort: "UIN",
-    type: "president"
-  },
-  {
-    name: "Mochamad Fajar Arianto",
-    role: "Presiden GenBI Purwokerto",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "Percayalah bahwa walau hanya dengan sedikit langkah akan banyak memberi perubahan ke arah lebih cerah",
-    image: "/images/fajar.png",
-    universityShort: "UNSOED",
-    type: "president"
-  },
-  {
-    name: "Nia Nurmawati",
-    role: "Presiden GenBI Purwokerto",
-    university: "Komisariat Univ. Muhammadiyah Purwokerto",
-    quote: "\"Tidak semua menjadi komandan, tentu harus ada prajuritnya, bukan besar kecil tugas yang menjadikan tinggi rendahnya nilai dirimu, jadilah dirimu sebaik-baik dirimu sendiri\" – SHK",
-    image: "/images/nia.png",
-    universityShort: "UMP",
-    type: "president"
-  },
-  {
-    name: "Asih Saferia Meilani",
-    role: "Sekretaris Umum",
-    university: "Komisariat UIN Prof. K.H. Saifuddin Zuhri",
-    quote: "Jadilah pribadi yang bermanfaat dan teruslah berbuat kebaikan",
-    image: "/images/sekum-uin-1.png",
-    universityShort: "UIN",
-    type: "secretary"
-  },
 
-  {
-    name: "Putri Amaliyah",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Muhammadiyah Purwokerto",
-    quote: "---",
-    image: "/images/sekum-ump.png",
-    universityShort: "UMP",
-    type: "secretary"
-  },
-  {
-    name: "Vitriyah Arafah Surachman",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Muhammadiyah Purwokerto",
-    quote: "\"Man Jadda Wa Jada\", Barangsiapa yang bersungguh-sungguh pasti akan berhasil",
-    image: "/images/sekum-ump-2.png",
-    universityShort: "UMP",
-    type: "secretary"
-  },
-  {
-    name: "Maya Amalia Kurniati",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "Teruslah melangkah sampai semua harapan menjadi nyata",
-    image: "/images/sekum-unsoed-1.png",
-    universityShort: "UIN",
-    type: "secretary"
-  },
-  {
-    name: "Dewi Fatimah",
-    role: "Bendahara Umum",
-    university: "Komisariat UIN Prof. K.H. Saifuddin Zuhri",
-    quote: "لَا تَحْتَقِرْ مَنْ دُوْنَكَ فَلِكُلِّ شَىءٍ مَزِيَّةٌ Janganlah menghina orang yang lebih rendah darimu, karena setiap sesuatu memiliki kelebihan.",
-    image: "/images/bendum-uin-1.png",
-    universityShort: "UIN",
-    type: "treasure"
-  },
-  {
-    name: "Fiqih Ega Pratama",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "\"Stand tall, stand proud, and stand alone if you must. Independence starts from within.\"",
-    image: "/images/sekum-unsoed-2.png",
-    universityShort: "UMP",
-    type: "treasure"
-  },
-  {
-    name: "Fiqih Ega Pratama",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "\"Stand tall, stand proud, and stand alone if you must. Independence starts from within.\"",
-    image: "/images/sekum-unsoed-2.png",
-    universityShort: "UMP",
-    type: "treasure"
-  },
-  {
-    name: "Fiqih Ega Pratama",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "\"Stand tall, stand proud, and stand alone if you must. Independence starts from within.\"",
-    image: "/images/sekum-unsoed-2.png",
-    universityShort: "UMP",
-    type: "treasure"
-  },
-  {
-    name: "Fiqih Ega Pratama",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "\"Stand tall, stand proud, and stand alone if you must. Independence starts from within.\"",
-    image: "/images/sekum-unsoed-2.png",
-    universityShort: "UMP",
-    type: "treasure"
-  },
-  {
-    name: "Fiqih Ega Pratama",
-    role: "Sekretaris Umum",
-    university: "Komisariat Univ. Jenderal Soedirman",
-    quote: "\"Stand tall, stand proud, and stand alone if you must. Independence starts from within.\"",
-    image: "/images/sekum-unsoed-2.png",
-    universityShort: "UMP",
-    type: "treasure"
-  },
-];
 
 // Components
 const AnimatedCount: React.FC<{ count: number; university: string }> = ({ count, university }) => {
@@ -252,74 +137,132 @@ const UniversityCard: React.FC<{ university: University; index: number }> = ({ u
   );
 };
 
-const ProfileCard: React.FC<{ profile: PresidentProfile; index: number }> = ({ profile, index }) => {
+const ProfileCard: React.FC<{ profile, index: number }> = ({ profile, index }) => {
   const { isDark } = useTheme();
 
+  if (profile.type === "president") {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+            className="relative group"
+        >
+            <div className={`rounded-xl overflow-hidden shadow-lg border h-full ${
+            isDark
+                ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700/50'
+                : 'bg-white/70 backdrop-blur-sm border-blue-100/50'
+            }`}>
+
+            <div className="relative h-[460px] overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                <img
+                src={`http://genbi-data.test/storage/${profile.foto}`}
+                alt={profile.nama_lengkap}
+                className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+            </div>
+
+            <div className="p-6">
+                <h3 className={`text-xl font-bold mb-2 ${
+                isDark ? 'text-white' : 'text-gray-900'
+                }`}>
+                {profile.nama_lengkap}
+                </h3>
+                <p className={`text-sm mb-4 ${
+                isDark ? 'text-gray-400' : 'text-gray-600'
+                }`}>
+                {profile.jabatan}
+                <br />
+                {profile.university}
+                </p>
+                <div className={`h-px my-4 ${
+                isDark ? 'bg-gray-700' : 'bg-gray-200'
+                }`} />
+                <p className={`italic text-sm ${
+                isDark ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                {profile.quote}
+                </p>
+            </div>
+            </div>
+        </motion.div>
+    )
+  }
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="relative group"
-    >
-      <div className={`rounded-xl overflow-hidden shadow-lg border h-full ${
-        isDark
-          ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700/50'
-          : 'bg-white/70 backdrop-blur-sm border-blue-100/50'
-      }`}>
-        <div className="absolute top-4 left-4 z-10">
-          <div className={`px-4 py-2 rounded-lg shadow-md ${
-            profile.type === 'president'
-              ? 'bg-blue-600 text-white'
-              : 'bg-blue-600 text-white'
-          }`}>
-            <p className="text-sm font-semibold">
-              {profile.type === 'president' ? 'Presiden Komisariat' : 'Sekretaris Umum'}
+    <Link href={`/organisasi/struktur/${profile.periode}/${profile.jabatan}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.2 }}
+        className="relative group"
+      >
+        <div className={`rounded-xl overflow-hidden shadow-lg border h-full ${
+          isDark
+            ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700/50'
+            : 'bg-white/70 backdrop-blur-sm border-blue-100/50'
+        }`}>
+
+          <div className="relative h-[460px] overflow-hidden group-hover:scale-105 transition-transform duration-500">
+            <img
+              src={`http://genbi-data.test/storage/${profile.foto}`}
+              alt={profile.nama_lengkap}
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+          </div>
+
+          <div className="p-6">
+            <h3 className={`text-xl font-bold mb-2 ${
+              isDark ? 'text-white' : 'text-gray-900'
+            }`}>
+              {profile.nama_lengkap}
+            </h3>
+            <p className={`text-sm mb-4 ${
+              isDark ? 'text-gray-400' : 'text-gray-600'
+            }`}>
+              {profile.jabatan}
+              <br />
+              {profile.university}
             </p>
-            <p className="text-xs">{profile.universityShort}</p>
+            <div className={`h-px my-4 ${
+              isDark ? 'bg-gray-700' : 'bg-gray-200'
+            }`} />
+            <p className={`italic text-sm ${
+              isDark ? 'text-gray-300' : 'text-gray-700'
+            }`}>
+              {profile.quote}
+            </p>
           </div>
         </div>
-
-        <div className="relative h-[460px] overflow-hidden group-hover:scale-105 transition-transform duration-500">
-          <img
-            src={profile.image}
-            alt={profile.name}
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-        </div>
-
-        <div className="p-6">
-          <h3 className={`text-xl font-bold mb-2 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}>
-            {profile.name}
-          </h3>
-          <p className={`text-sm mb-4 ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}>
-            {profile.role}
-            <br />
-            {profile.university}
-          </p>
-          <div className={`h-px my-4 ${
-            isDark ? 'bg-gray-700' : 'bg-gray-200'
-          }`} />
-          <p className={`italic text-sm ${
-            isDark ? 'text-gray-300' : 'text-gray-700'
-          }`}>
-            {profile.quote}
-          </p>
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 };
 
 // Main Component
 const Organization: React.FC = () => {
-  const { isDark } = useTheme();
+    const { isDark } = useTheme();
+    const [struktur, setStruktur] = useState([]);
+
+    useEffect(() => {
+        const fetchStruktur = async () => {
+            try {
+                const response = await fetch("http://genbi-data.test/api/struktur");
+                const result = await response.json();
+                if (result.success) {
+                setStruktur(result.data);
+                } else {
+                console.error("Failed to fetch struktur:", result.message);
+                }
+            } catch (error) {
+                console.error("Error fetching struktur:", error);
+            }
+        };
+        fetchStruktur();
+    }, []);
 
   return (
     <MainLayout title="Organisasi">
@@ -433,7 +376,7 @@ const Organization: React.FC = () => {
               {/* Presidents Section */}
               <div className="mb-16">
                 <motion.h3
-                  className={`text-2xl font-semibold text-center mb-8 ${
+                  className={`text-2xl font-semibold text-center my-8 ${
                     isDark ? 'text-white' : 'text-gray-800'
                   }`}
                   initial={{ opacity: 0, y: 20 }}
@@ -443,11 +386,11 @@ const Organization: React.FC = () => {
                   Presiden Komisariat
                 </motion.h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {PRESIDENT_PROFILES
+                  {struktur
                     .filter(profile => profile.type === 'president')
                     .map((profile, index) => (
                       <ProfileCard
-                        key={`${profile.universityShort}-president`}
+                        key={profile.id}
                         profile={profile}
                         index={index}
                       />
@@ -458,7 +401,7 @@ const Organization: React.FC = () => {
               {/* Secretaries Section */}
               <div>
                 <motion.h3
-                  className={`text-2xl font-semibold text-center mb-8 ${
+                  className={`text-2xl font-semibold text-center my-8 ${
                     isDark ? 'text-white' : 'text-gray-800'
                   }`}
                   initial={{ opacity: 0, y: 20 }}
@@ -468,11 +411,11 @@ const Organization: React.FC = () => {
                   Sekretaris Umum
                 </motion.h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {PRESIDENT_PROFILES
+                  {struktur
                     .filter(profile => profile.type === 'secretary')
                     .map((profile, index) => (
                       <ProfileCard
-                        key={`${profile.universityShort}-secretary`}
+                        key={profile.id}
                         profile={profile}
                         index={index}
                       />
@@ -483,7 +426,7 @@ const Organization: React.FC = () => {
               {/* Treasurer Section */}
               <div>
                 <motion.h3
-                  className={`text-2xl font-semibold text-center mb-8 ${
+                  className={`text-2xl font-semibold text-center my-8 ${
                     isDark ? 'text-white' : 'text-gray-800'
                   }`}
                   initial={{ opacity: 0, y: 20 }}
@@ -493,11 +436,36 @@ const Organization: React.FC = () => {
                   Bendahara Umum
                 </motion.h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {PRESIDENT_PROFILES
+                  {struktur
                     .filter(profile => profile.type === 'treasure')
                     .map((profile, index) => (
                       <ProfileCard
-                        key={`${profile.universityShort}-treasure`}
+                        key={profile.id}
+                        profile={profile}
+                        index={index}
+                      />
+                    ))}
+                </div>
+              </div>
+
+              {/* Treasurer Section */}
+              <div>
+                <motion.h3
+                  className={`text-2xl font-semibold text-center my-8 ${
+                    isDark ? 'text-white' : 'text-gray-800'
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  Deputi
+                </motion.h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {struktur
+                    .filter(profile => profile.type === 'deputy')
+                    .map((profile, index) => (
+                      <ProfileCard
+                        key={profile.id}
                         profile={profile}
                         index={index}
                       />

@@ -58,12 +58,13 @@ const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
             }`} />
 
             <div className="container mx-auto px-4 lg:px-16 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
+                        className='order-2 lg:order-1'
                     >
                         <div className="space-y-6">
                             <div className="inline-block">
@@ -143,7 +144,7 @@ const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="relative"
+                        className="relative order-1 lg:order-2"
                     >
                         <div className={`absolute inset-0 rounded-3xl ${
                             isDark
