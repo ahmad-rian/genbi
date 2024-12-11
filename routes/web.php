@@ -30,9 +30,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
 Route::get('/organisasi', [OrganisasiController::class, 'index'])->name('organisasi');
-Route::get('/organisasi/struktur', [OrganisasiController::class, 'sejarahKepengurusan'])->name('sejarah-kepengurusan');
-Route::get('/organisasi/struktur/{periode}', [OrganisasiController::class, 'perKepengurusan'])->name('perperiode-sejarah-kepengurusan');
+
+Route::get('/sejarah-kepengurusan', [OrganisasiController::class, 'sejarahKepengurusan'])->name('sejarah-kepengurusan');
+Route::get('/sejarah-kepengurusan/{periode}', [OrganisasiController::class, 'perKepengurusan'])->name('perperiode-sejarah-kepengurusan');
 Route::get('/organisasi/struktur/{periode}/{bidang}', [OrganisasiController::class, 'detailBidang'])->name('detailBidang');
+
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/genbi-point', [HomeController::class, 'genbiPoint'])->name('genbi-point');
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel');

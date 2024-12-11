@@ -26,7 +26,7 @@ const NAV_ITEMS = [
             { path: '/genbi-point', label: 'GenBI Point', icon: FaStar },
             { path: '/tentang', label: 'Tentang GenBI', icon: FaInfoCircle },
             { path: '/organisasi', label: 'Organisasi', icon: FaBuilding },
-            { path: '/organisasi/struktur', label: 'Sejarah Kepengurusan', icon: FaHistory }
+            { path: '/sejarah-kepengurusan', label: 'Sejarah Kepengurusan', icon: FaHistory }
         ]
     },
     {

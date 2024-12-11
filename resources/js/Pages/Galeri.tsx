@@ -79,6 +79,8 @@ const Galeri = () => {
         </div>
     );
 
+    if (error) return <p>Error: {error}</p>;
+
   return (
     <MainLayout title="Galeri">
         <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">

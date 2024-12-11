@@ -102,7 +102,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
         </div>
     );
 
-    if (error) return <p>Error: {eror}</p>;
+    if (error) return <p>Error: {error}</p>;
 
   return (
     <MainLayout title={artikel.title ? artikel.title : "Detail Artikel"}>

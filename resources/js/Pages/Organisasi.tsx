@@ -247,6 +247,7 @@ const Organization: React.FC = () => {
     const { isDark } = useTheme();
     const [struktur, setStruktur] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
 
     useEffect(() => {
         const fetchStruktur = async () => {
@@ -259,6 +260,7 @@ const Organization: React.FC = () => {
                 console.error("Failed to fetch struktur:", result.message);
                 }
             } catch (error) {
+                setError(error)
                 console.error("Error fetching struktur:", error);
             }finally{
                 setLoading(false)
@@ -280,6 +282,9 @@ const Organization: React.FC = () => {
             </div>
         </div>
     );
+
+
+    if (error) return <p>Error: {error}</p>;
 
   return (
     <MainLayout title="Organisasi">

@@ -332,13 +332,13 @@ const Artikel = () => {
                     <h2 className='text-red-500 text-xl font-semibold mb-10'>REKOMENDASI</h2>
                     {/* Artikel Rekomendasi */}
                     {artikelRekomendasi.map((item) => (
-                        <Link href={`/artikel/${item.slug}`} key={item.id} className="mb-10">
+                        <Link href={`/artikel/${item.slug}`} key={item.id}>
                             <img
                             src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                             alt={item.title}
                             className="bg-gray-300 rounded-xl h-[200px] object-cover"
                             />
-                            <h3 className="font-bold mt-2 line-clamp-2 dark:text-gray-200">{item.title}</h3>
+                            <h3 className="font-bold mt-2 line-clamp-2 dark:text-gray-200 mb-10">{item.title}</h3>
                         </Link>
                     ))}
                 </div>

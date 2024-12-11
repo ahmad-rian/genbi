@@ -12,9 +12,11 @@ class OrganisasiController extends Controller
         return Inertia::render('Organisasi', []);
     }
 
-    public function perKepengurusan()
+    public function perKepengurusan(string $periode)
     {
-        return Inertia::render('SejarahPerKepengurusan', []);
+        return Inertia::render('SejarahPerKepengurusan', [
+            "periode" => (string) $periode
+        ]);
     }
 
     public function sejarahKepengurusan()

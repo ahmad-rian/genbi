@@ -288,7 +288,7 @@ export default function Home({ news }: Props) {
                                     <h3 className="text-white font-semibold md:mb-5 mb-3 md:text-base text-sm uppercase">
                                     {item.kategori_artikel.nama}
                                     </h3>
-                                    <Link href="/news/read">
+                                    <Link href={`/artikel/${item.slug}`}>
                                     <h2 className="uppercase font-bold md:text-3xl text-xl text-white ">
                                         {item.title}
                                     </h2>

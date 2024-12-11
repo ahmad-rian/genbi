@@ -2,6 +2,7 @@ import { useTheme } from '@/Hooks/useTheme';
 import MainLayout from '@/Layouts/MainLayout';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const fadeInUpAnimation = {
   initial: { opacity: 0, y: 20 },
@@ -12,6 +13,41 @@ const fadeInUpAnimation = {
 
 const SejarahKepengurusan = () => {
     const { isDark } = useTheme();
+    const [sejarahKepengurusan, setSejarahKepengurusan] = useState();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://genbi-data.test/api/sejarah-kepengurusan`
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+            setSejarahKepengurusan(result.data)
+        } else {
+            setError(result.message); // Tangkap error jika ada
+            console.error("Error fetching data:", result.message);
+        }
+
+      } catch (error) {
+        setError(error.message); // Tangkap error jika ada
+        console.error("Fetch error:", error);
+      }finally{
+        setLoading(false); // Hentikan loading
+      }
+    };
+
+    useEffect(() => {
+        fetchData()
+    }, []);
 
     const styles = {
         gradient: isDark
@@ -26,12 +62,21 @@ const SejarahKepengurusan = () => {
             : 'bg-blue-600 text-white hover:bg-blue-700'
     };
 
-    const kepengurusan = [
-        {
-            nama:"Kepengurusan GenBI Purwokerto 2024-2025",
-            periode:"2024-2025"
-        }
-    ]
+    if (loading) return(
+        <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
+            <img
+                src='../images/logo.png'
+                className="lg:w-1/4 w-[80%] h-[40%]"
+                alt='icon-splash'
+            />
+            <div className="flex items-center justify-center">
+                <img src="../images/Loader.svg" alt="loader image" className='w-10 mr-5' />
+                <p>Sedang Memuat Data</p>
+            </div>
+        </div>
+    );
+
+    if (error) return <p>Error: {error}</p>;
 
   return (
     <MainLayout title="SejarahKepengurusan">
@@ -47,8 +92,8 @@ const SejarahKepengurusan = () => {
             </div>
 
             <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center">
-                {kepengurusan.map((item, index) => (
-                    <Link key={index} href={`/organisasi/struktur/${item.periode}`} className="p-4 bg-white rounded-lg shadow-md">
+                {sejarahKepengurusan.map((item, index) => (
+                    <Link key={index} href={`/sejarah-kepengurusan/${item.periode}`} className="p-4 bg-white rounded-lg shadow-md">
                         <img
                         src="../images/logo.png"
                         alt="Logo GenBI Purwokerto"
