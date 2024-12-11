@@ -177,7 +177,7 @@ export default function Home({ news }: Props) {
     const fetchArtikel = async () => {
 
         try{
-            const response = await fetch("http://genbi-data.test/api/artikel/homeArtikel");
+            const response = await fetch("https://data.genbipurwokerto.com/api/artikel/homeArtikel");
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -273,7 +273,7 @@ export default function Home({ news }: Props) {
                             <div className="grid lg:grid-cols-5 gap-10 items-center lg:px-20 md:px-10 px-5 pt-10">
                                 <div className="h-[200px] md:h-[350px] w-full rounded-md overflow-hidden lg:col-span-2">
                                     <img
-                                    src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                    src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                                     alt={item.title}
                                     className="object-cover h-full w-full"
                                     data-aos-once="true"
@@ -321,7 +321,7 @@ export default function Home({ news }: Props) {
                             {artikel.map((item, index) => (
                                 <div className="mt-5">
                                     <img
-                                    src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                    src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                                     alt={item.title}
                                     className="h-[200px] sm:h-[250px] object-cover w-full rounded"
                                     />

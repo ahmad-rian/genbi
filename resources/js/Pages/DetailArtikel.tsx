@@ -33,7 +33,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
 
     const fetchDataRandom = async () => {
         try{
-            const responseRandomArtikel = await fetch("http://genbi-data.test/api/artikel/rekomendasi-per-page")
+            const responseRandomArtikel = await fetch("https://data.genbipurwokerto.com/api/artikel/rekomendasi-per-page")
 
             if (!responseRandomArtikel.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -59,7 +59,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://genbi-data.test/api/artikel/${slug}`
+          `https://data.genbipurwokerto.com/api/artikel/${slug}`
         );
 
         if (!response.ok) {
@@ -129,7 +129,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
                 </div>
                 <div className="py-8 lg:col-span-2 relative z-10 lg:order-2 order-1">
                 <img
-                    src={artikel.thumbnail ? `http://genbi-data.test/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                    src={artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
                     className="w-full h-[350px] rounded object-cover"
                     alt={artikel.title}
                 />
@@ -145,7 +145,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
                 <div>
                 <div className="bg-gray-50 dark:bg-gray-950 p-10 rounded">
                     <img
-                    src={artikel.user.foto ? `http://genbi-data.test/storage/${artikel.user.foto}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                    src={artikel.user.foto ? `https://data.genbipurwokerto.com/storage/${artikel.user.foto}` : "../images/NO IMAGE AVAILABLE.jpg"}
                     className="w-[70px] rounded"
                     alt="avatar"
                     />
@@ -172,7 +172,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
                 {artikelRandom.map((item, index) => (
                     <Link href={`/artikel/${item.slug}`} key={index}>
                         <img
-                            src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                            src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
                             alt={item.title}
                             className="h-[250px] object-cover w-full rounded"
                         />

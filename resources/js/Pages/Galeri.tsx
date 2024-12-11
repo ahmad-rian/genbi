@@ -24,7 +24,7 @@ const Galeri = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://genbi-data.test/api/galeri`
+          `https://data.genbipurwokerto.com/api/galeri`
         );
 
         if (!response.ok) {
@@ -98,7 +98,7 @@ const Galeri = () => {
                 {galeri.map((item, index) => (
                     <Link key={index} href={`/galeri/${item.slug}`} className="p-4 bg-white rounded-lg shadow-sm">
                         <img
-                        src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                        src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                         alt={item.title}
                         className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
                         />

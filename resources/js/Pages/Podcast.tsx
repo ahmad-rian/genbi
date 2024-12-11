@@ -149,7 +149,7 @@ export default function Home() {
     // Fungsi untuk fetch data
     const fetchData = async () => {
         try {
-            const response = await fetch("http://genbi-data.test/api/podcast");
+            const response = await fetch("https://data.genbipurwokerto.com/api/podcast");
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

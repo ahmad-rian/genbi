@@ -24,7 +24,7 @@ export default function GenBIPoint() {
     // Fungsi untuk fetch data
     const fetchData = async () => {
         try {
-            const response = await fetch("http://genbi-data.test/api/sotm");
+            const response = await fetch("https://data.genbipurwokerto.com/api/sotm");
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -36,11 +36,11 @@ export default function GenBIPoint() {
             // Proses data ke dalam format yang diinginkan
             const deputiImages = data.data
             .filter((item) => item.jenis === "deputi")
-            .map((item) => ({ src: `http://genbi-data.test/storage/${item.image}` }));
+            .map((item) => ({ src: `https://data.genbipurwokerto.com/storage/${item.image}` }));
 
             const staffImages = data.data
             .filter((item) => item.jenis === "staff")
-            .map((item) => ({ src: `http://genbi-data.test/storage/${item.image}` }));
+            .map((item) => ({ src: `https://data.genbipurwokerto.com/storage/${item.image}` }));
 
             // Simpan ke state
             setLightboxDeputi(deputiImages);
@@ -178,7 +178,7 @@ export default function GenBIPoint() {
                             className="flex justify-center items-center cursor-pointer"
                             >
                                 <img
-                                    src={"http://genbi-data.test/storage/" + item.image}
+                                    src={"https://data.genbipurwokerto.com/storage/" + item.image}
                                     className="rounded-xl lg:h-[500px] h-[350px] w-full object-cover bg-gray-300"
                                 />
                             </div>
@@ -215,7 +215,7 @@ export default function GenBIPoint() {
                             className="flex justify-center items-center cursor-pointer"
                             >
                                 <img
-                                    src={"http://genbi-data.test/storage/" + item.image}
+                                    src={"https://data.genbipurwokerto.com/storage/" + item.image}
                                     className="rounded-xl lg:h-[500px] h-[350px] w-full object-cover bg-gray-300"
                                 />
                             </div>

@@ -17,7 +17,7 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://genbi-data.test/api/struktur/${periode}/${namaBidang}`
+          `https://data.genbipurwokerto.com/api/struktur/${periode}/${namaBidang}`
         );
         const result = await response.json();
 
@@ -78,7 +78,7 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
                     <div className="order-1 space-y-6 sticky top-28">
                         <h1 className="text-3xl font-bold mb-8">Detail Struktur</h1>
                         <img
-                        src={`http://genbi-data.test/storage/${struktur.foto}`}
+                        src={`https://data.genbipurwokerto.com/storage/${struktur.foto}`}
                         alt={struktur.jabatan}
                         className="lg:w-full lg:h-[550px] rounded-xl bg-slate-700 bg-cover"
                         />

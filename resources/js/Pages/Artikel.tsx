@@ -43,7 +43,7 @@ const Artikel = () => {
     const [eror, setEror] = useState();
     const [countTrandingArtikel, setCountTrandingArtikel] = useState(1);
 
-    const link = "http://genbi-data.test/api/artikel?page=";
+    const link = "https://data.genbipurwokerto.com/api/artikel?page=";
 
 
     // Fetch artikel
@@ -86,7 +86,7 @@ const Artikel = () => {
     // Fetch rekomendasi artikel
     const fetchRekomendasi = async () => {
         try{
-            const response = await fetch("http://genbi-data.test/api/artikel/rekomendasi")
+            const response = await fetch("https://data.genbipurwokerto.com/api/artikel/rekomendasi")
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -107,7 +107,7 @@ const Artikel = () => {
 
     const fetchTrendingArtikel = async () => {
         try {
-            const response = await fetch("http://genbi-data.test/api/artikel/trending-monthly");
+            const response = await fetch("https://data.genbipurwokerto.com/api/artikel/trending-monthly");
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -192,7 +192,7 @@ const Artikel = () => {
                 key={index}
                 className="lg:col-span-3 lg:h-[600px] md:h-[400px] h-[300px] bg-cover relative z-10 flex items-end md:p-10 p-4 after:content-[''] after:absolute after:inset-0 after:bg-black/40 after:-z-10 bg-bottom rounded overflow-hidden"
                 style={{
-                    backgroundImage: item.thumbnail !== null ? `url(http://genbi-data.test/storage/${item.thumbnail})` : `url(${backgroundImageArtikel})`,
+                    backgroundImage: item.thumbnail !== null ? `url(https://data.genbipurwokerto.com/storage/${item.thumbnail})` : `url(${backgroundImageArtikel})`,
                 }}
                 >
                 <div className="w-[80%]">
@@ -216,7 +216,7 @@ const Artikel = () => {
                 {artikelBaru.map((item, index) => (
                     <Link href={`/artikel/${item.slug}`} key={index}>
                         <img
-                        src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                        src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                         alt={item.title}
                         className="bg-gray-300 rounded-xl h-[200px] object-cover"
                         />
@@ -258,7 +258,7 @@ const Artikel = () => {
                                     <SwiperSlide key={index}>
                                         <Link href={`/artikel/${item.slug}`}>
                                             <img
-                                                src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                                src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                                                 alt={item.title}
                                                 className="bg-gray-300 rounded-xl h-[200px] object-cover w-full"
                                             />
@@ -295,7 +295,7 @@ const Artikel = () => {
                             >
                                 <div className="md:col-span-2">
                                     <img
-                                    src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                    src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                                     className="bg-gray-300 w-full h-[250px] rounded object-cover"
                                     alt={item.title}
                                     />
@@ -334,7 +334,7 @@ const Artikel = () => {
                     {artikelRekomendasi.map((item) => (
                         <Link href={`/artikel/${item.slug}`} key={item.id}>
                             <img
-                            src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                            src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                             alt={item.title}
                             className="bg-gray-300 rounded-xl h-[200px] object-cover"
                             />

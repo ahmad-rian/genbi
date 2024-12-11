@@ -21,7 +21,7 @@ const SejarahKepengurusan = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://genbi-data.test/api/sejarah-kepengurusan`
+          `https://data.genbipurwokerto.com/api/sejarah-kepengurusan`
         );
 
         if (!response.ok) {

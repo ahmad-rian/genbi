@@ -25,7 +25,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://genbi-data.test/api/galeri/${slug}`
+          `https://data.genbipurwokerto.com/api/galeri/${slug}`
         );
 
         if (!response.ok) {
@@ -36,7 +36,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
 
         if (result.success) {
             const galeriImage = result.data.image_galeri
-            .map((item) => ({ src: `http://genbi-data.test/storage/${item.nama}` }));
+            .map((item) => ({ src: `https://data.genbipurwokerto.com/storage/${item.nama}` }));
 
             // Simpan ke state
             setLightboxGaleri(galeriImage)
@@ -106,7 +106,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
                 </div>
                 <div className="py-8 lg:col-span-2 relative z-10 lg:order-2 order-1">
                     <img
-                        src={artikel.thumbnail ? `http://genbi-data.test/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                        src={artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
                         className="w-full h-[350px] rounded object-cover"
                         alt="asdlknasd"
                     />
@@ -121,7 +121,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
                         className="cursor-pointer w-full h-[300px] rounded"
                     >
                         <img
-                            src={item.nama ? `http://genbi-data.test/storage/${item.nama}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                            src={item.nama ? `https://data.genbipurwokerto.com/storage/${item.nama}` : "../images/NO IMAGE AVAILABLE.jpg"}
                             className="w-full h-full object-cover"
                             alt={`Galeri ke ${index}`}
                         />

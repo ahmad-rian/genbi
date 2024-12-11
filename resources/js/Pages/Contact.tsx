@@ -25,7 +25,7 @@ const Contact = () => {
 
 
         try {
-            const response = await fetch('http://genbi-data.test/api/kontak', {
+            const response = await fetch('https://data.genbipurwokerto.com/api/kontak', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',

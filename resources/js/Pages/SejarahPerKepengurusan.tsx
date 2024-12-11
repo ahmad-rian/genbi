@@ -78,7 +78,7 @@ const SejarahPerKepengurusan = React.FC<SejarahPerKepengurusanProps> = ({periode
 
     const fetchStruktur = async () => {
         try {
-            const response = await fetch(`http://genbi-data.test/api/struktur/${periode}`);
+            const response = await fetch(`https://data.genbipurwokerto.com/api/struktur/${periode}`);
             const result = await response.json();
             if (result.success) {
             setStruktur(result.data);
