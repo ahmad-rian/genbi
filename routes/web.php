@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\{
 };
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Operator\OperatorDashboardController;
 use App\Http\Controllers\OrganisasiController;
@@ -29,11 +30,16 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
 Route::get('/organisasi', [OrganisasiController::class, 'index'])->name('organisasi');
+Route::get('/organisasi/struktur', [OrganisasiController::class, 'sejarahKepengurusan'])->name('sejarah-kepengurusan');
+Route::get('/organisasi/struktur/{periode}', [OrganisasiController::class, 'perKepengurusan'])->name('perperiode-sejarah-kepengurusan');
 Route::get('/organisasi/struktur/{periode}/{bidang}', [OrganisasiController::class, 'detailBidang'])->name('detailBidang');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/genbi-point', [HomeController::class, 'genbiPoint'])->name('genbi-point');
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel');
+Route::get('/artikel/{slug}', [ArtikelController::class, 'show'])->name('detail-artikel');
 Route::get('/podcast', [PodcastController::class, 'index'])->name('podcast');
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
+Route::get('/galeri/{slug}', [GaleriController::class, 'show'])->name('detail-galeri');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

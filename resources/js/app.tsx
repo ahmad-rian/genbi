@@ -5,7 +5,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ThemeProvider } from './Contexts/ThemeContext';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'GenBI Purwokerto';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -17,7 +17,7 @@ createInertiaApp({
         const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const initialTheme = savedTheme ?? (systemDark ? 'dark' : 'light');
-        
+
         document.documentElement.classList.toggle('dark', initialTheme === 'dark');
         document.documentElement.style.setProperty('color-scheme', initialTheme);
 

@@ -12,6 +12,16 @@ class OrganisasiController extends Controller
         return Inertia::render('Organisasi', []);
     }
 
+    public function perKepengurusan()
+    {
+        return Inertia::render('SejarahPerKepengurusan', []);
+    }
+
+    public function sejarahKepengurusan()
+    {
+        return Inertia::render('SejarahKepengurusan', []);
+    }
+
     public function detailBidang(string $periode, string $namaBidang)
     {
         $validatedData = [

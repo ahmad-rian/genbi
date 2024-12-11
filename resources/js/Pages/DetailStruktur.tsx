@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from '@/Layouts/MainLayout';
+import NotFound from "@/Components/NotFound";
 
 interface DetailStrukturProps {
   periode: string;
@@ -41,7 +42,7 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
 
   if (loading) return <p>Loading...</p>;
 
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <NotFound/>;
 
   // Manipulasi format jabatan
   const bidang = struktur.jabatan.split(" ")[1]; // Mengambil kata setelah "Deputi"
@@ -67,7 +68,7 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
                         <img
                         src={`http://genbi-data.test/storage/${struktur.foto}`}
                         alt={struktur.jabatan}
-                        className="lg:w-full lg:h-[500px] rounded-xl bg-slate-700 bg-cover"
+                        className="lg:w-full lg:h-[550px] rounded-xl bg-slate-700 bg-cover"
                         />
                     </div>
 

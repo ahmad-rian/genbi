@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
@@ -18,6 +18,7 @@ import {
   MdKeyboardDoubleArrowRight,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
+import { changeDate } from '@/Utils/changeDate';
 
 interface NewsItem {
     id: number;
@@ -167,7 +168,66 @@ export default function Home({ news }: Props) {
     const { isDark } = useTheme();
     const [tabActive, setTabActive] = useState("news");
     const [moreNews, setMoreNews] = useState(false);
+    const [artikel, setArtikel] = useState([]);
+    const [artikelPalingBaru, setArtikelPalingBaru] = useState();
+    const [eror, setEror] = useState("");
+    const [loading, setLoading] = useState(true);
 
+    // Fetch artikel
+    const fetchArtikel = async () => {
+
+        try{
+            const response = await fetch("http://genbi-data.test/api/artikel/homeArtikel");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                const allArtikel = data.data;
+
+                // Periksa tipe data
+                if (!Array.isArray(allArtikel)) {
+                    throw new Error("Artikel data is not an array");
+                }
+
+                setArtikelPalingBaru(allArtikel.slice(0, 1)); // Artikel paling baru
+                setArtikel(allArtikel.slice(1)); // Artikel ke-2 dan seterusnya
+            }
+        }
+        catch(error) {
+            setEror(error)
+            console.error("Error fetching artikel:", error);
+        }finally{
+            setLoading(false)
+        };
+    };
+
+    // Initial fetch
+    useEffect(() => {
+        fetchArtikel();
+    }, []);
+
+    console.log('====================================');
+    console.log(artikelPalingBaru);
+    console.log('====================================');
+
+    if (loading) return(
+        <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
+            <img
+                src='/images/logo.png'
+                className="lg:w-1/4 w-[80%] h-[40%]"
+                alt='icon-splash'
+            />
+            <div className="flex items-center justify-center">
+                <img src="./images/Loader.svg" alt="loader image" className='w-10 mr-5' />
+                <p>Sedang Memuat Data</p>
+            </div>
+        </div>
+    );
+
+    if (eror) return <p>Error: {eror}</p>;
 
 
     return (
@@ -212,149 +272,104 @@ export default function Home({ news }: Props) {
 
             {tabActive == "news" ? (
                 <section className="mb-20 bg-blue-600">
-                    <div className="grid lg:grid-cols-5 gap-10 items-center lg:px-20 md:px-10 px-5 pt-10">
-                    <div className="h-[200px] md:h-[350px] w-full rounded-md overflow-hidden lg:col-span-2">
-                        <img
-                        src="/images/header/3.jpg"
-                        alt=""
-                        className="object-cover h-full w-full"
-                        data-aos-once="true"
-                        data-aos="fade-left"
-                        />
-                    </div>
-                    <div
-                        className="lg:col-span-3"
-                        data-aos-once="true"
-                        data-aos="fade-right"
-                    >
-                        <h5 className="text-white font-semibold md:mb-5 mb-3 md:text-base text-sm">
-                        RAGAM BERITA
-                        </h5>
-                        <Link href="/news/read">
-                        <h2 className="font-bold md:text-3xl text-xl text-white ">
-                            {"INDONESIA DENGAN KEBERAGAMAN BUDAYA NUSANTARA YANG MENDUNIA"}
-                        </h2>
+                    {artikelPalingBaru.map((item, index) => (
+                        <Link href={`/artikel/${item.slug}`} key={index}>
+                            <div className="grid lg:grid-cols-5 gap-10 items-center lg:px-20 md:px-10 px-5 pt-10">
+                                <div className="h-[200px] md:h-[350px] w-full rounded-md overflow-hidden lg:col-span-2">
+                                    <img
+                                    src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                    alt={item.title}
+                                    className="object-cover h-full w-full"
+                                    data-aos-once="true"
+                                    data-aos="fade-left"
+                                    />
+                                </div>
+                                <div
+                                    className="lg:col-span-3"
+                                    data-aos-once="true"
+                                    data-aos="fade-right"
+                                >
+                                    <h3 className="text-white font-semibold md:mb-5 mb-3 md:text-base text-sm uppercase">
+                                    {item.kategori_artikel.nama}
+                                    </h3>
+                                    <Link href="/news/read">
+                                    <h2 className="uppercase font-bold md:text-3xl text-xl text-white ">
+                                        {item.title}
+                                    </h2>
+                                    </Link>
+                                    <p className="mt-5 md:text-base text-[12px] text-white">
+                                        {item.excerpt}
+                                    </p>
+                                    <div className="flex gap-5 mt-10 text-slate-200 md:text-base text-sm">
+                                    <span className="flex gap-2 items-center">
+                                        <FaEye />
+                                        <small>{item.views} kali dilihat</small>
+                                    </span>
+                                    <span className="flex gap-2 items-center">
+                                        <FaCalendar />
+                                        <small>{changeDate(new Date(item.published_at))}</small>
+                                    </span>
+                                    <span className="flex gap-2 items-center">
+                                        <FaUser />
+                                        <small>Penulis : {item.user.name}</small>
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
                         </Link>
-                        <p className="mt-5 md:text-base text-[12px] text-white">
-                            Temukan keindahan ragam budaya di Indonesia, tempat di mana tradisi dan keberagaman menjadi kekuatan bersama. Dari tarianhingga kuliner setiap elemen mencerminkan kekayaan dan keunikan yang membuat Indonesia istimewa. Mari menjelajahi dan merayakankeberagaman yang memperkaya bumi Nusantara.
-                        </p>
-                        <div className="flex gap-5 mt-10 text-slate-200 md:text-base text-sm">
-                        <span className="flex gap-2 items-center">
-                            <FaEye />
-                            <small>2.000 views</small>
-                        </span>
-                        <span className="flex gap-2 items-center">
-                            <FaHeart />
-                            <small>2.000 suka</small>
-                        </span>
-                        <span className="flex gap-2 items-center">
-                            <FaComment />
-                            <small>2.000 komentar</small>
-                        </span>
-                        </div>
+                    ))}
+                        {moreNews ? (
+                        <>
+                            <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-10 md:px-20 px-5 mt-10">
+                            {artikel.map((item, index) => (
+                                <div className="mt-5">
+                                    <img
+                                    src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                    alt={item.title}
+                                    className="h-[200px] sm:h-[250px] object-cover w-full rounded"
+                                    />
 
-                    </div>
-                    </div>
-                    {moreNews ? (
-                    <>
-                        <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-10 md:px-20 px-5 mt-10">
-                        <div className="mt-5">
-                            <img
-                            src="/images/festivalbali.jpeg"
-                            alt="news1"
-                            className="h-[200px] sm:h-[250px] object-cover w-full rounded"
-                            />
+                                    <Link href={`/artikel/${item.slug}`}>
+                                    <h3 className="mt-3 text-xl font-bold text-white">
+                                        {item.title}
+                                    </h3>
+                                    </Link>
+                                    <div className="my-3 md:my-5 flex gap-5">
+                                    <span className="flex gap-2 items-center text-white">
+                                        <FaUser />
+                                        <small>{item.user.name}</small>
+                                    </span>
+                                    <span className="flex gap-2 items-center text-white">
+                                        <FaCalendar />
+                                        <small>{changeDate(new Date(item.published_at))}</small>
+                                    </span>
+                                    </div>
+                                    <p className="text-white line-clamp-4 mt-2 text-sm">
+                                        {item.excerpt}
+                                    </p>
+                                </div>
+                            ))}
 
-                            <Link href="/news/read">
-                            <h3 className="mt-3 text-xl font-bold text-white">
-                                {"Bali Arts Festival"}
-                            </h3>
+                            </section>
+                            <div className="flex flex-wrap justify-center text-center pb-10 ">
+                            <button
+                                className="w-full sm:w-[unset] mx-3 sm:mx-0 bg-white border-2 border-white hover:bg-slate-200 hover:border-blue-400 text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center justify-center sm:gap-2 "
+                                onClick={() => {
+                                setMoreNews(false);
+                                }}
+                            >
+                                {"Lebih Sedikit"}
+                                <MdKeyboardDoubleArrowUp className="ml-5" />
+                            </button>
+                            <Link
+                                href={"/artikel"}
+                                className="w-full sm:w-[unset] mx-3 sm:mx-0 border-2 border-white hover:bg-white text-white hover:text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center sm:gap-2 justify-center md:ml-5"
+                            >
+                                {"Semua Berita"}
+                                <MdKeyboardDoubleArrowRight className="ml-5" />
                             </Link>
-                            <div className="my-3 md:my-5 flex gap-5">
-                            <span className="flex gap-2 items-center text-white">
-                                <FaUser />
-                                <small>Rifki Romadhan</small>
-                            </span>
-                            <span className="flex gap-2 items-center text-white">
-                                <FaCalendar />
-                                <small>15 Mei 2024</small>
-                            </span>
                             </div>
-                            <p className="text-white mt-2 text-sm">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab aut mollitia corrupti ducimus illum necessitatibus provident reiciendis accusamus quia quibusdam id, ullam deserunt deleniti aliquid quod eligendi laboriosam, delectus quisquam placeat corporis inventore? Ipsum, mollitia. Fugiat sapiente quisquam architecto est ex consectetur, labore repudiandae, assumenda quae maxime incidunt ipsam dolorem laborum voluptatum, animi iusto unde vel eveniet beatae eius praesentium. Nulla cupiditate, omnis sunt laboriosam commodi fugit exercitationem rerum vero assumenda voluptas, similique deserunt ullam, magni officiis. Commodi saepe dicta labore natus ipsa, ab numquam corrupti doloribus atque dolores magnam aperiam vero consequatur! Nobis quaerat delectus a similique odit officiis?
-                            </p>
-                        </div>
-
-                        <div className="mt-5">
-                            <img
-                            src="/images/dalangcilik.jpg"
-                            alt="news2"
-                            className="h-[200px] sm:h-[250px] object-cover w-full rounded"
-                            />
-                            <Link href="/news/read">
-                            <h3 className="mt-3 text-xl font-bold text-white">
-                                {"Festival Dalang Cilik"}
-                            </h3>
-                            </Link>
-                            <div className="my-3 md:my-5 flex gap-5">
-                            <span className="flex gap-2 items-center text-white">
-                                <FaUser />
-                                <small>Rifki Romadhan</small>
-                            </span>
-                            <span className="flex gap-2 items-center text-white">
-                                <FaCalendar />
-                                <small>15 Mei 2024</small>
-                            </span>
-                            </div>
-                            <p className="text-white mt-2 text-sm">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab aut mollitia corrupti ducimus illum necessitatibus provident reiciendis accusamus quia quibusdam id, ullam deserunt deleniti aliquid quod eligendi laboriosam, delectus quisquam placeat corporis inventore? Ipsum, mollitia. Fugiat sapiente quisquam architecto est ex consectetur, labore repudiandae, assumenda quae maxime incidunt ipsam dolorem laborum voluptatum, animi iusto unde vel eveniet beatae eius praesentium. Nulla cupiditate, omnis sunt laboriosam commodi fugit exercitationem rerum vero assumenda voluptas, similique deserunt ullam, magni officiis. Commodi saepe dicta labore natus ipsa, ab numquam corrupti doloribus atque dolores magnam aperiam vero consequatur! Nobis quaerat delectus a similique odit officiis?
-                            </p>
-                        </div>
-
-                        <div className="mt-5">
-                            <img
-                            src="/images/babarit.jpeg"
-                            alt="news3"
-                            className="h-[200px] sm:h-[250px] object-cover w-full rounded"
-                            />
-                            <Link href="/news/read">
-                            <h3 className="mt-3 text-xl font-bold text-white">
-                                {"Festival Babarit"}
-                            </h3>
-                            </Link>
-                            <div className="my-3 md:my-5 flex gap-5">
-                            <span className="flex gap-2 items-center text-white">
-                                <FaUser />
-                                <small>Rifki Romadhan</small>
-                            </span>
-                            <span className="flex gap-2 items-center text-white">
-                                <FaCalendar />
-                                <small>15 Mei 2024</small>
-                            </span>
-                            </div>
-                            <p className="text-white mt-2 text-sm">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab aut mollitia corrupti ducimus illum necessitatibus provident reiciendis accusamus quia quibusdam id, ullam deserunt deleniti aliquid quod eligendi laboriosam, delectus quisquam placeat corporis inventore? Ipsum, mollitia. Fugiat sapiente quisquam architecto est ex consectetur, labore repudiandae, assumenda quae maxime incidunt ipsam dolorem laborum voluptatum, animi iusto unde vel eveniet beatae eius praesentium. Nulla cupiditate, omnis sunt laboriosam commodi fugit exercitationem rerum vero assumenda voluptas, similique deserunt ullam, magni officiis. Commodi saepe dicta labore natus ipsa, ab numquam corrupti doloribus atque dolores magnam aperiam vero consequatur! Nobis quaerat delectus a similique odit officiis?
-                            </p>
-                        </div>
-                        </section>
-                        <div className="flex flex-wrap justify-center text-center pb-10 ">
-                        <button
-                            className="w-full sm:w-[unset] mx-3 sm:mx-0 bg-white border-2 border-white hover:bg-slate-200 hover:border-blue-400 text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center justify-center sm:gap-2 "
-                            onClick={() => {
-                            setMoreNews(false);
-                            }}
-                        >
-                            {"Lebih Sedikit"}
-                            <MdKeyboardDoubleArrowUp className="ml-5" />
-                        </button>
-                        <Link
-                            href={"/news"}
-                            className="w-full sm:w-[unset] mx-3 sm:mx-0 border-2 border-white hover:bg-white text-white hover:text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center sm:gap-2 justify-center md:ml-5"
-                        >
-                            {"Semua Berita"}
-                            <MdKeyboardDoubleArrowRight className="ml-5" />
-                        </Link>
-                        </div>
                     </>
                     ) : (
                     <div className="text-center pb-10 lg:block">

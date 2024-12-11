@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ArtikelController extends Controller
+class GaleriController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Artikel', []);
+        return Inertia::render('Galeri', []);
     }
 
     public function show(string $slug)
@@ -18,6 +18,6 @@ class ArtikelController extends Controller
             'slug' => (string) $slug,
         ];
 
-        return Inertia::render('DetailArtikel', $validatedData);
+        return Inertia::render('DetailGaleri', $validatedData);
     }
 }

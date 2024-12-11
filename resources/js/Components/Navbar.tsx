@@ -26,7 +26,7 @@ const NAV_ITEMS = [
             { path: '/genbi-point', label: 'GenBI Point', icon: FaStar },
             { path: '/tentang', label: 'Tentang GenBI', icon: FaInfoCircle },
             { path: '/organisasi', label: 'Organisasi', icon: FaBuilding },
-            { path: '/sejarah-kepengurusan', label: 'Sejarah Kepengurusan', icon: FaHistory }
+            { path: '/organisasi/struktur', label: 'Sejarah Kepengurusan', icon: FaHistory }
         ]
     },
     {
@@ -36,7 +36,7 @@ const NAV_ITEMS = [
         dropdown: [
             { path: '/artikel', label: 'Artikel', icon: BookOpen },
             { path: '/podcast', label: 'Podcast', icon: FaPodcast },
-            { path: '/gallery', label: 'Galeri', icon: IconGallery }
+            { path: '/galeri', label: 'Galeri', icon: IconGallery }
         ]
     },
     { path: '/contact', label: 'Kontak', icon: FaEnvelope }
