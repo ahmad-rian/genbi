@@ -35,7 +35,7 @@ const SejarahKepengurusan = () => {
 
   return (
     <MainLayout title="SejarahKepengurusan">
-        <div className="lg:py-0 py-8 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
+        <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
             <div className="container mx-auto relative z-10">
                 <motion.div {...fadeInUpAnimation} className="text-center mb-8">
                     <h1 className={`text-2xl sm:text-3xl font-bold ${styles.text}`}>Sejarah Kepengurusan GenBI</h1>
@@ -52,7 +52,7 @@ const SejarahKepengurusan = () => {
                         <img
                         src="../images/logo.png"
                         alt="Logo GenBI Purwokerto"
-                        className="w-full lg:h-[350px] h-[200px] bg-cover rounded-lg mb-8"
+                        className="w-full lg:h-[350px] h-[250px] bg-cover rounded-lg mb-8"
                         />
                         <h2 className={`text-lg font-bold mb-2`}>{item.nama}</h2>
 

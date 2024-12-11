@@ -81,7 +81,7 @@ const Galeri = () => {
 
   return (
     <MainLayout title="Galeri">
-        <div className="lg:py-0 py-8 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
+        <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
             <div className="container mx-auto relative z-10">
                 <motion.div {...fadeInUpAnimation} className="text-center mb-8">
                     <h1 className={`text-2xl sm:text-3xl font-bold ${styles.text}`}>Galeri Kegiatan GenBI</h1>
@@ -98,7 +98,7 @@ const Galeri = () => {
                         <img
                         src={item.thumbnail ? `http://genbi-data.test/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
                         alt={item.title}
-                        className="w-full h-[270px] bg-cover rounded-lg mb-8"
+                        className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
                         />
                         <h2 className={`text-lg font-bold mb-2`}>{item.title}</h2>
 

@@ -284,7 +284,7 @@ const Navbar = () => {
 
     // Check if path is active
     const isPathActive = useCallback((path) => {
-        return path === '/' ? url === path : url.startsWith(path);
+        return  path === '/' ? url === path : url.startsWith(path);
     }, [url]);
 
     // Scroll handler with debounce

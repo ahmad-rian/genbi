@@ -277,7 +277,7 @@ const Artikel = () => {
             </section>
             <hr className="my-10 dark:border-gray-800" />
             <section className="grid lg:grid-cols-4 gap-20 mt-10">
-                <div className="lg:col-span-3 md:w-auto w-[95%] mb-32">
+                <div className="lg:col-span-3 md:w-auto w-full mb-32">
                     {/* Artikel ke-4 dan seterusnya */}
                     <div className="mb-20">
                         {loadingArtikel && (
@@ -291,7 +291,7 @@ const Artikel = () => {
                             <Link
                             href={`/artikel/${item.slug}`}
                             key={index}
-                            className="md:grid md:grid-cols-5 items-center lg:gap-10 md:gap-5 md:mb-5 mb-16"
+                            className="md:grid md:grid-cols-5 items-center lg:gap-10 md:gap-5"
                             >
                                 <div className="md:col-span-2">
                                     <img
@@ -300,14 +300,14 @@ const Artikel = () => {
                                     alt={item.title}
                                     />
                                 </div>
-                                <div className="md:col-span-3">
+                                <div className="md:col-span-3 mb-10 md:mb-0">
                                     <small className="text-purple-500 font-semibold">
                                     {item.kategori_artikel.nama}
                                     </small>
-                                    <h3 className="text-xl font-bold mb-3 dark:text-gray-200">
+                                    <h3 className="text-xl line-clamp-3 font-bold mb-3 dark:text-gray-200">
                                         {item.title}
                                     </h3>
-                                    <p className="text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px]">
+                                    <p className="text-gray-700 line-clamp-4 dark:text-gray-300 lg:text-base md:text-sm text-[12px]">
                                     {item.excerpt}
                                     </p>
                                     <div className="mt-5 md:flex gap-10">
