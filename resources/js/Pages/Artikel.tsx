@@ -291,7 +291,7 @@ const Artikel = () => {
                             <Link
                             href={`/artikel/${item.slug}`}
                             key={index}
-                            className="md:grid md:grid-cols-5 items-center lg:gap-10 md:gap-5"
+                            className="md:grid md:grid-cols-5 items-center lg:gap-10 md:gap-5  md:mb-5 mb-16"
                             >
                                 <div className="md:col-span-2">
                                     <img
