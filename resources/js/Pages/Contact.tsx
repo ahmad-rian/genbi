@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import { motion } from 'framer-motion';
 import { FaInstagram, FaYoutube, FaMapMarkerAlt, FaEnvelope, FaPhone, FaTiktok } from 'react-icons/fa';
@@ -6,6 +6,52 @@ import { useTheme } from '@/Hooks/useTheme';
 
 const Contact = () => {
   const { isDark } = useTheme();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+    const [nama, setNama] = useState("");
+    const [email, setEmail] = useState("");
+    const [judul, setJudul] = useState("");
+    const [pesan, setPesan] = useState("");
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        setSuccessMessage('');
+
+
+        try {
+            const response = await fetch('http://genbi-data.test/api/kontak', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({nama, email, judul, pesan}),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send your message. Please try again later.');
+            }
+
+            const data = await response.json();
+            setSuccessMessage('Pesan Anda berhasil dikirim!');
+            setNama("")
+            setEmail("")
+            setJudul("")
+            setPesan("")
+
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
   const darkModeClasses = {
     bg: isDark ? 'bg-gray-900' : 'bg-white',
@@ -88,13 +134,15 @@ const Contact = () => {
               transition={{ duration: 0.5 }}
               className={`p-8 rounded-lg ${isDark ? 'bg-gray-800 border border-gray-700' : 'bg-gray-50'}`}
             >
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 {/* Name Input */}
                 <div>
                   <label htmlFor="name" className={`block text-sm font-medium mb-1 ${darkModeClasses.textSecondary}`}>
                     Nama Kamu <span className="text-blue-500">*</span>
                   </label>
                   <input
+                    value={nama}
+                    onChange={(e)=> setNama(e.target.value)}
                     type="text"
                     id="name"
                     className={`w-full px-4 py-2 rounded-md border focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${darkModeClasses.inputBg}`}
@@ -108,6 +156,8 @@ const Contact = () => {
                     Email <span className="text-blue-500">*</span>
                   </label>
                   <input
+                    value={email}
+                    onChange={(e)=> setEmail(e.target.value)}
                     type="email"
                     id="email"
                     className={`w-full px-4 py-2 rounded-md border focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${darkModeClasses.inputBg}`}
@@ -121,6 +171,8 @@ const Contact = () => {
                     Judul <span className="text-blue-500">*</span>
                   </label>
                   <input
+                    value={judul}
+                    onChange={(e)=> setJudul(e.target.value)}
                     type="text"
                     id="subject"
                     className={`w-full px-4 py-2 rounded-md border focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${darkModeClasses.inputBg}`}
@@ -134,6 +186,8 @@ const Contact = () => {
                     Pesan Kamu <span className="text-blue-500">*</span>
                   </label>
                   <textarea
+                    value={pesan}
+                    onChange={(e)=> setPesan(e.target.value)}
                     id="message"
                     rows={6}
                     className={`w-full px-4 py-2 rounded-md border focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all resize-none ${darkModeClasses.inputBg}`}
@@ -142,9 +196,14 @@ const Contact = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition-colors font-medium">
-                  Kirim Pesan
+                <button
+                    disabled={loading}
+                    type="submit"
+                    className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition-colors font-medium">
+                  {loading ? 'Mengirim...' : 'Kirim Pesan'}
                 </button>
+                {error && <p className="text-red-500 mt-2">{error}</p>}
+                {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
               </form>
             </motion.div>
           </div>

@@ -65,6 +65,20 @@ const Galeri = () => {
             : 'bg-blue-600 text-white hover:bg-blue-700'
     };
 
+    if (loading) return(
+        <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
+            <img
+                src='./images/logo.png'
+                className="lg:w-1/4 w-[80%] h-[40%]"
+                alt='icon-splash'
+            />
+            <div className="flex items-center justify-center">
+                <img src="./images/Loader.svg" alt="loader image" className='w-10 mr-5' />
+                <p>Sedang Memuat Data</p>
+            </div>
+        </div>
+    );
+
   return (
     <MainLayout title="Galeri">
         <div className="lg:py-0 py-8 px-4 relative min-h-screen lg:pt-28 lg:pb-20">

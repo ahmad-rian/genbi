@@ -209,10 +209,6 @@ export default function Home({ news }: Props) {
         fetchArtikel();
     }, []);
 
-    console.log('====================================');
-    console.log(artikelPalingBaru);
-    console.log('====================================');
-
     if (loading) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img

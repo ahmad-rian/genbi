@@ -88,7 +88,19 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
         fetchDataRandom()
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return(
+        <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
+            <img
+                src='../images/logo.png'
+                className="lg:w-1/4 w-[80%] h-[40%]"
+                alt='icon-splash'
+            />
+            <div className="flex items-center justify-center">
+                <img src="../images/Loader.svg" alt="loader image" className='w-10 mr-5' />
+                <p>Sedang Memuat Data</p>
+            </div>
+        </div>
+    );
 
     if (error) return <p>Error: {eror}</p>;
 
@@ -164,7 +176,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
                             alt={item.title}
                             className="h-[250px] object-cover w-full rounded"
                         />
-                        <h3 className="mt-3 text-xl font-bold dark:text-gray-200">
+                        <h3 className="mt-3 line-clamp-2 text-xl font-bold dark:text-gray-200">
                             {item.title}
                         </h3>
                         <div className="my-5 flex gap-5">
@@ -177,7 +189,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
                             <small>{changeDate(new Date(item.published_at))}</small>
                             </span>
                         </div>
-                        <p className="text-gray-700 dark:text-gray-300 mt-2 text-sm">
+                        <p className="text-gray-700 line-clamp-4 dark:text-gray-300 mt-2 text-sm">
                             {item.excerpt}
                         </p>
                     </Link>
