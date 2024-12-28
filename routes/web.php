@@ -27,7 +27,10 @@ use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/event', [EventController::class, 'index'])->name('event');
+Route::get('/event/{slug}', [EventController::class, 'show'])->name('detailEvent');
+
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
 Route::get('/organisasi', [OrganisasiController::class, 'index'])->name('organisasi');
 

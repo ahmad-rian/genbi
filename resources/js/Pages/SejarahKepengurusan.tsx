@@ -92,7 +92,9 @@ const SejarahKepengurusan = () => {
             </div>
 
             <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center">
-                {sejarahKepengurusan.map((item, index) => (
+                {
+                //@ts-ignore
+                sejarahKepengurusan.map((item, index) => (
                     <Link key={index} href={`/sejarah-kepengurusan/${item.periode}`} className="p-4 bg-white rounded-lg shadow-md">
                         <img
                         src="../images/logo.png"

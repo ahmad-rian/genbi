@@ -35,12 +35,12 @@ export default function GenBIPoint() {
 
             // Proses data ke dalam format yang diinginkan
             const deputiImages = data.data
-            .filter((item) => item.jenis === "deputi")
-            .map((item) => ({ src: `https://data.genbipurwokerto.com/storage/${item.image}` }));
+            .filter((item:any) => item.jenis === "deputi")
+            .map((item:any) => ({ src: `https://data.genbipurwokerto.com/storage/${item.image}` }));
 
             const staffImages = data.data
-            .filter((item) => item.jenis === "staff")
-            .map((item) => ({ src: `https://data.genbipurwokerto.com/storage/${item.image}` }));
+            .filter((item:any) => item.jenis === "staff")
+            .map((item:any) => ({ src: `https://data.genbipurwokerto.com/storage/${item.image}` }));
 
             // Simpan ke state
             setLightboxDeputi(deputiImages);
@@ -171,7 +171,9 @@ export default function GenBIPoint() {
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {SOTMDeputi.map((item, index) => (
+                        {
+                        //@ts-ignore
+                        SOTMDeputi.map((item:any, index:any) => (
                             <div
                             key={index}
                             onClick={() => setOpenLightboxDeputi(true)}
@@ -208,7 +210,9 @@ export default function GenBIPoint() {
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {SOTMStaff.map((item, index) => (
+                        {
+                        //@ts-ignore
+                        SOTMStaff.map((item:any, index:any) => (
                             <div
                             key={index}
                             onClick={() => setOpenLightboxStaff(true)}

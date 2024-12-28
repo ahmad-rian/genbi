@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { Instagram, Youtube, Phone, Mail, MapPin } from 'lucide-react';
@@ -25,8 +24,8 @@ const Footer = () => (
           </p>
           <div className="mt-6 flex space-x-4">
             {/* Changed Link to anchor tag for external links */}
-            <a 
-              href="https://www.instagram.com/genbipurwokerto/" 
+            <a
+              href="https://www.instagram.com/genbipurwokerto/"
               className="text-blue-100 hover:text-white transition-all duration-300 hover:scale-110"
               target="_blank"
               rel="noopener noreferrer"
@@ -34,8 +33,8 @@ const Footer = () => (
               <span className="sr-only">Instagram</span>
               <Instagram size={24} />
             </a>
-            <a 
-              href="https://www.youtube.com/@genbipurwokerto1177" 
+            <a
+              href="https://www.youtube.com/@genbipurwokerto1177"
               className="text-blue-100 hover:text-white transition-all duration-300 hover:scale-110"
               target="_blank"
               rel="noopener noreferrer"
@@ -43,8 +42,8 @@ const Footer = () => (
               <span className="sr-only">YouTube</span>
               <Youtube size={24} />
             </a>
-            <a 
-              href="https://www.tiktok.com/@genbipurwokerto" 
+            <a
+              href="https://www.tiktok.com/@genbipurwokerto"
               className="text-blue-100 hover:text-white transition-all duration-300 hover:scale-110"
               target="_blank"
               rel="noopener noreferrer"
@@ -84,8 +83,8 @@ const Footer = () => (
           <h3 className="text-lg font-semibold">Contact Us</h3>
           <ul className="space-y-4">
             <li>
-              <a 
-                href="mailto:genbipurwokerto22@gmail.com" 
+              <a
+                href="mailto:genbipurwokerto22@gmail.com"
                 className="flex items-center group space-x-3 text-blue-100 hover:text-white transition duration-300"
               >
                 <Mail className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
@@ -93,8 +92,8 @@ const Footer = () => (
               </a>
             </li>
             <li>
-              <a 
-                href="tel:+6289667443651" 
+              <a
+                href="tel:+6289667443651"
                 className="flex items-center group space-x-3 text-blue-100 hover:text-white transition duration-300"
               >
                 <Phone className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
@@ -102,9 +101,9 @@ const Footer = () => (
               </a>
             </li>
             <li>
-              <a 
-                href="https://maps.app.goo.gl/9iGh4hGHk8z4L2vy8" 
-                target="_blank" 
+              <a
+                href="https://maps.app.goo.gl/9iGh4hGHk8z4L2vy8"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start group space-x-3 text-blue-100 hover:text-white transition duration-300"
               >

@@ -7,6 +7,7 @@ interface DetailStrukturProps {
   namaBidang: string;
 }
 
+//@ts-ignore
 const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) => {
     const [struktur, setStruktur] = useState(null);
     const [members, setMembers] = useState([]);
@@ -72,22 +73,22 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
   return (
     <MainLayout title={`Detail Struktur ${namaBidang} Periode ${periode}`}>
         <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <section className="py-20">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-10 min-h-screen items-start">
+            <section className="md:py-20 py-5">
+                <div className="grid grid-cols-1 lg:grid-cols-3 md:gap-12 lg:gap-10 min-h-screen items-start">
                     {/* Bagian Kiri: Detail Struktur */}
-                    <div className="order-1 space-y-6 sticky top-28">
-                        <h1 className="text-3xl font-bold mb-8">Detail Struktur</h1>
+                    <div className="order-1 space-y-6 md:sticky top-28">
+                        <h1 className="text-3xl font-bold mb-8 md:text-left text-center">Detail Struktur</h1>
                         <img
                         src={`https://data.genbipurwokerto.com/storage/${struktur.foto}`}
                         alt={struktur.jabatan}
-                        className="lg:w-full lg:h-[550px] rounded-xl bg-slate-700 bg-cover"
+                        className="lg:w-full w-full lg:h-[550px] h-[450px] rounded-xl bg-slate-700 bg-cover"
                         />
                     </div>
 
                     {/* Bagian Kanan: Informasi dan Member */}
                     <div className="order-2 relative col-span-2">
                         <div className="flex justify-center items-center">
-                        <h2 className="text-3xl font-bold inline-flex items-center gap-4 text-blue-800">
+                        <h2 className="text-lg mt-4 text-center font-bold inline-flex items-center gap-4 text-blue-800">
                             <div className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full" />
                             {formattedBidang}
                             <div className="h-1 w-12 bg-gradient-to-r from-blue-500 to-transparent rounded-full" />

@@ -11,4 +11,12 @@ class EventController extends Controller
     {
         return Inertia::render('Event', []);
     }
+
+
+    public function show(string $slug)
+    {
+        return Inertia::render('DetailEvent', [
+            'slug' => (string) $slug,
+        ]);
+    }
 }

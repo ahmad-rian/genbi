@@ -2,7 +2,7 @@ import MainLayout from '@/Layouts/MainLayout';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/Hooks/useTheme';
 import { useEffect, useState } from 'react';
-import { FaCalendar, FaMapMarkedAlt, FaUser } from 'react-icons/fa';
+import { FaCalendar, FaMapMarkedAlt } from 'react-icons/fa';
 import { changeDate } from '@/Utils/changeDate';
 import { Link } from '@inertiajs/react';
 

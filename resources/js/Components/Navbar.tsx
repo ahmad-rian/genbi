@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -67,8 +67,10 @@ const NAV_ITEMS = [
 // ];
 
 // Memoized Components
+//@ts-ignore
 const MobileMenuItem = memo(({ href, icon: Icon, label, isDark, onClick, isActive }) => (
     <Link
+    //@ts-ignore
         href={href}
         className={`flex items-center space-x-3 p-3 rounded-xl ${
             isActive
@@ -91,6 +93,7 @@ const MobileMenuItem = memo(({ href, icon: Icon, label, isDark, onClick, isActiv
 ));
 
 // Desktop Navigation Item
+//@ts-ignore
 const DesktopNavItem = memo(({ item, isActive, isDark, activeDropdown, onDropdownToggle }) => {
     const hasDropdown = item.dropdown;
 
@@ -358,6 +361,7 @@ const Navbar = () => {
                                 {NAV_ITEMS.map((item) => (
                                     <DesktopNavItem
                                         key={item.id || item.path}
+                                        //@ts-ignore
                                         item={item}
                                         isActive={item.dropdown
                                             ? isDropdownItemActive(item.dropdown)
@@ -557,6 +561,7 @@ const Navbar = () => {
                                                                     {item.dropdown.map((dropItem) => (
                                                                         <MobileMenuItem
                                                                             key={dropItem.path}
+                                                                            //@ts-ignore
                                                                             href={dropItem.path}
                                                                             icon={dropItem.icon}
                                                                             label={dropItem.label}
@@ -571,6 +576,7 @@ const Navbar = () => {
                                                     </div>
                                                 ) : (
                                                     <MobileMenuItem
+                                                    //@ts-ignore
                                                         href={item.path}
                                                         icon={item.icon}
                                                         label={item.label}
@@ -588,6 +594,7 @@ const Navbar = () => {
                                         {user ? (
                                             <div className="space-y-2">
                                                 <MobileMenuItem
+                                                //@ts-ignore
                                                     href="/dashboard"
                                                     icon={FaTachometerAlt}
                                                     label="Dashboard"
@@ -596,6 +603,7 @@ const Navbar = () => {
                                                     isActive={url === '/dashboard'}
                                                 />
                                                 <MobileMenuItem
+                                                //@ts-ignore
                                                     href="/profile"
                                                     icon={FaUser}
                                                     label="Profile"

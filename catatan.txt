@@ -288,3 +288,18 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
+GenBI Purwokerto
+VITE_APP_NAME
+
+
+composer self-update --rollback
+
+set CURL_SSL_BACKEND=openssl
+curl -v https://repo.packagist.org
+
+composer config --global disable-tls true
+composer config --global secure-http false

@@ -3,8 +3,21 @@
 @tailwind utilities;
 
 * {
-    font-family: "DM Sans", sans-serif;
+    font-family: "figtree","DM Sans", sans-serif;
     font-optical-sizing: auto;
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #025496;
+  /* border-radius: 5px; */
 }
 
 .animate-scroll-to-t {

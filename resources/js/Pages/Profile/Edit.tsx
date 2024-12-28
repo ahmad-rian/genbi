@@ -1,12 +1,15 @@
 import { PageProps } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head} from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import Navbar from '@/Components/Navbar';
 
+
 export default function Edit({
+    //@ts-ignore
     mustVerifyEmail,
+    //@ts-ignore
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (

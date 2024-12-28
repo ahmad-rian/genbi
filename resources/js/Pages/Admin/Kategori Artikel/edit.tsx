@@ -3,22 +3,14 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Textarea } from '@/Components/ui/textarea';
-import { useState } from 'react';
 
 export default function Edit({ kategoriArtikel }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData } = useForm({
         nama: kategoriArtikel.nama || '',
         thumbnail: kategoriArtikel.thumbnail,
         deskripsi: kategoriArtikel.deskripsi || '',
     });
 
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        setFormData({
-            ...formData,
-            [name]: files ? files[0] : value,
-        });
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();

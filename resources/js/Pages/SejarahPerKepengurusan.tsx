@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '@/Layouts/MainLayout';
 import { useTheme } from '@/Hooks/useTheme';
-import { Link } from '@inertiajs/react';
 import ProfileCard from '@/Components/ProfileCard';
 
 
@@ -18,58 +17,9 @@ const fadeInUpAnimation = {
   viewport: { once: true }
 };
 
-// Types
-interface ScholarshipData {
-  count: number;
-  university: string;
-}
-
-interface University {
-  name: string;
-  logo: string;
-  shortName: string;
-}
-
-interface PresidentProfile {
-  name: string;
-  role: string;
-  university: string;
-  quote: string;
-  image: string;
-  universityShort: string;
-  type: 'president' | 'secretary' | 'treasure';
-}
-
-// Constants
-const SCHOLARSHIP_DATA: ScholarshipData[] = [
-  { count: 50, university: 'UIN SAIZU' },
-  { count: 75, university: 'UNSOED' },
-  { count: 50, university: 'UMP' },
-];
-
-const UNIVERSITIES: University[] = [
-  {
-    name: 'UIN Prof. K.H. Saifuddin Zuhri',
-    shortName: 'UIN SAIZU',
-    logo: './images/Logo/UIN.png'
-  },
-  {
-    name: 'Universitas Jenderal Soedirman',
-    shortName: 'UNSOED',
-    logo: './images/Logo/UNSOED.png'
-  },
-  {
-    name: 'Universitas Muhammadiyah Purwokerto',
-    shortName: 'UMP',
-    logo: './images/Logo/UMP.png'
-  }
-];
-
-
-
-
 
 // Main Component
+//@ts-ignore
 const SejarahPerKepengurusan = React.FC<SejarahPerKepengurusanProps> = ({periode}) => {
     const { isDark } = useTheme();
     const [struktur, setStruktur] = useState([]);

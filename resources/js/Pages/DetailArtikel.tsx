@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FaCalendar, FaUser } from "react-icons/fa";
 
 import MainLayout from '@/Layouts/MainLayout';
-import NotFound from "@/Components/NotFound";
 import { estimateReadingTime } from "@/Utils/estimateReadingTime";
 import { changeDate } from './../Utils/changeDate';
 import { Link } from "@inertiajs/react";
@@ -13,12 +12,15 @@ interface DetailArtikelProps {
   slug: string;
 }
 
+//@ts-ignore
 const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
     const [artikel, setArtikel] = useState([]);
     const [artikelRandom, setArtikelRandom] = useState([]);
     const [loading, setLoading] = useState(true);
+    //@ts-ignore
     const [loadingRandomArtikel, setLoadingRandomArtikel] = useState(true);
     const [error, setError] = useState(null);
+    //@ts-ignore
     const [errorRandomArtikel, setErrorRandomArtikel] = useState(null);
 
     const ArticleContent = ({ content }) => {
@@ -36,7 +38,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
             const responseRandomArtikel = await fetch("https://data.genbipurwokerto.com/api/artikel/rekomendasi-per-page")
 
             if (!responseRandomArtikel.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`HTTP error! Status: ${responseRandomArtikel.status}`);
             }
 
             const resultRandomArtikel = await responseRandomArtikel.json();
@@ -105,55 +107,79 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
     if (error) return <p>Error: {error}</p>;
 
   return (
-    <MainLayout title={artikel.title ? artikel.title : "Detail Artikel"}>
+    <MainLayout title={
+        //@ts-ignore
+        artikel.title ? artikel.title : "Detail Artikel"}>
         <main className="container mx-auto pb-20">
             <div className="grid lg:grid-cols-5 pt-20 pb-10 md:px-20 px-5 mb-8 items-center bg-gray-100 dark:bg-gray-950 relative">
                 <span className="h-full lg:w-[700px] w-full absolute right-0 lg:bg-gradient-to-l bg-gradient-to-b from-blue-700/30 to-blue-700/0"></span>
                 <div className="lg:col-span-3 order-2 lg:order-1 relative z-10 lg:text-left text-center">
                     <p className="font-semibold mb-2 text-blue-700 md:md:text-base text-[13px] text-sm">
-                        {artikel.kategori_artikel.nama}
+                        {
+                        //@ts-ignore
+                        artikel.kategori_artikel.nama}
                     </p>
                     <h1 className="lg:leading-[2.7rem] font-bold md:text-3xl text-xl mb-8 text-gray-900 dark:text-gray-200 h-auto">
-                        {artikel.title}
+                        {
+                        //@ts-ignore
+                        artikel.title}
                     </h1>
                     <p className="mr-3 md:text-sm text-[12px] text-gray-800 dark:text-gray-300">
                         Ditulis oleh{" "}
-                        <span className="text-blue-700 font-semibold">{artikel.user.name}</span> |{" "}
+                        <span className="text-blue-700 font-semibold">{
+                        //@ts-ignore
+                        artikel.user.name}</span> |{" "}
                         <span className="text-gray-500 dark:text-gray-400 italic">
-                        Diperbaharui pada {changeDate(new Date(artikel.updated_at))}
+                        Diperbaharui pada {changeDate(new Date(
+                            //@ts-ignore
+                            artikel.updated_at))}
                         </span>
                     </p>
                     <p className="mr-3 text-sm text-gray-800 dark:text-gray-300">
-                        Diterbitkan pada {changeDate(new Date(artikel.published_at))} | {estimateReadingTime(artikel.content)} Menit Baca
+                        Diterbitkan pada {changeDate(new Date(
+                            //@ts-ignore
+                            artikel.published_at))} | {estimateReadingTime(
+                            //@ts-ignore
+                            artikel.content)} Menit Baca
                     </p>
                 </div>
-                <div className="py-8 lg:col-span-2 relative z-10 lg:order-2 order-1">
+                <div className="py-4 md:py-8 lg:col-span-2 relative z-10 lg:order-2 order-1">
                 <img
-                    src={artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
-                    className="w-full h-[350px] rounded object-cover"
-                    alt={artikel.title}
+                    src={
+                        //@ts-ignore
+                        artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                    className="w-full h-[200px] md:h-[350px] rounded object-cover"
+                    alt={
+                        //@ts-ignore
+                        artikel.title}
                 />
                 </div>
             </div>
 
-            <main className="grid lg:grid-cols-3 md:px-20 px-5 gap-20 mt-20 mb-20">
+            <main className="grid lg:grid-cols-3 md:px-20 px-4 md:gap-20 md:mt-20 md:mb-20">
                 <div className="lg:col-span-2 text-gray-800 dark:text-gray-200">
 
-                <ArticleContent content={artikel.content} />
+                <ArticleContent content={
+                    //@ts-ignore
+                    artikel.content} />
 
                 </div>
                 <div>
                 <div className="bg-gray-50 dark:bg-gray-950 p-10 rounded">
                     <img
-                    src={artikel.user.foto ? `https://data.genbipurwokerto.com/storage/${artikel.user.foto}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                    src={
+                        //@ts-ignore
+                        artikel.user.foto ? `https://data.genbipurwokerto.com/storage/${artikel.user.foto}` : "../images/NO IMAGE AVAILABLE.jpg"}
                     className="w-[70px] rounded"
                     alt="avatar"
                     />
                     <h1 className="font-bold mt-4 text-gray-800 dark:text-gray-300">
-                    {artikel.user.name}
+                    {//@ts-ignore
+                    artikel.user.name}
                     </h1>
                     <p className="text-sm mt-2 text-gray-700 dark:text-gray-400">
-                        {artikel.user.deskripsi}
+                        {//@ts-ignore
+                        artikel.user.deskripsi}
                     </p>
 
                 </div>

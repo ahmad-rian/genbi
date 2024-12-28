@@ -89,7 +89,7 @@ export default function AdminLayout({
                   "flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
                   route().current(item.href) && "bg-accent text-accent-foreground"
                 )}
-                onClick={(e) => {
+                onClick={() => {
                   if (window.innerWidth < 1024) {
                     const closeButton = document.querySelector('[aria-label="Close"]')
                     if (closeButton instanceof HTMLElement) {

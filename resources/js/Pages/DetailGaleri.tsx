@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FaCalendar, FaMapMarkedAlt, FaUser } from "react-icons/fa";
+import { FaCalendar, FaMapMarkedAlt} from "react-icons/fa";
 
 import MainLayout from '@/Layouts/MainLayout';
-import NotFound from "@/Components/NotFound";
-import { estimateReadingTime } from "@/Utils/estimateReadingTime";
 import { changeDate } from './../Utils/changeDate';
-import { Link } from "@inertiajs/react";
 import Lightbox from "yet-another-react-lightbox";
 
 
@@ -14,9 +11,9 @@ interface DetailGaleriProps {
   slug: string;
 }
 
+//@ts-ignore
 const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
     const [artikel, setArtikel] = useState([]);
-    const [artikelRandom, setArtikelRandom] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [openGaleri, setOpenGaleri] = useState(false);
@@ -75,46 +72,54 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
     if (error) return <p>Error: {error}</p>;
 
   return (
+    //@ts-ignore
     <MainLayout title={artikel.title ? artikel.title : "Detail Artikel"}>
-        <span
-            className="w-[1000px] z-60 h-[1000px] rounded-full absolute -left-[500px] -top-[500px] -rotate-[60deg]"
-            style={{
-            backgroundImage:
-                "radial-gradient(169.40% 89.55% at 94.76% 6.29%, rgba(29,79,217, 0.70) 0%, rgba(239, 68, 68, 0.0) 100%)",
-            }}
-        ></span>
         <main className="container mx-auto pb-20">
 
-            <div className="grid lg:grid-cols-5 pt-20 pb-10 md:px-20 px-5 mb-8 items-center bg-gray-100 dark:bg-gray-950 relative gap-6">
-                <div className="lg:col-span-3 order-2 lg:order-1 relative z-10 lg:text-left text-center">
-                    <h1 className="lg:leading-[2.7rem] font-bold md:text-3xl text-xl mb-8 text-gray-900 dark:text-gray-200 h-auto">
-                        {/* {artikel.title} */}
-                        asdlknasd
-                    </h1>
-                    <p className="text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px] line-clamp-3">{artikel.deskripsi}</p>
+            <div className="grid lg:grid-cols-5 pt-20 pb-10 md:px-20 px-5 mb-8 items-center bg-gray-100 dark:bg-gray-950 relative md:gap-6">
+                <span className="h-full lg:w-[700px] w-full absolute right-0 lg:bg-gradient-to-l bg-gradient-to-b from-blue-700/30 to-blue-700/0"></span>
 
-                    <div className="mt-5 md:flex gap-10">
+                <div className="lg:col-span-3 order-2 lg:order-1 relative z-10">
+                    <h1 className="lg:leading-[2.7rem] font-bold md:text-3xl lg:text-left text-center mb-2 text-xl text-gray-900 dark:text-gray-200">
+                        {//@ts-ignore
+                        artikel.title}
+                    </h1>
+
+                    <div className="md:flex gap-10 md:mb-8 mb-4">
                         <p className="flex md:mb-0 mb-2 md:text-base text-[12px] gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
                             <FaMapMarkedAlt />
-                            <span>Tempat : {artikel.tempat}</span>
+                            <span>Tempat : {
+                            //@ts-ignore
+                            artikel.tempat}</span>
                         </p>
                         <p className="flex gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
                             <FaCalendar />
-                            <span>{changeDate(new Date(artikel.waktu))}</span>
+                            <span>{changeDate(new Date(
+                                //@ts-ignore
+                                artikel.waktu))}</span>
                         </p>
                     </div>
+
+                    <p className="text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[15px]">{
+                    //@ts-ignore
+                    artikel.deskripsi}</p>
                 </div>
-                <div className="py-8 lg:col-span-2 relative z-10 lg:order-2 order-1">
+                <div className="md:py-8 py-0 pt-8 pb-3 lg:col-span-2 relative z-10 lg:order-2 order-1">
                     <img
-                        src={artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
-                        className="w-full h-[350px] rounded object-cover"
-                        alt="asdlknasd"
+                        src={
+                            //@ts-ignore
+                            artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                        className="w-full h-[200px] md:h-[350px] rounded object-cover"
+                        alt={//@ts-ignore
+                        artikel.title}
                     />
                 </div>
             </div>
 
             <main className="grid lg:grid-cols-3 md:px-20 px-5 gap-10 mt-20 mb-20">
-                {artikel.image_galeri.map((item, index) => (
+                {
+                //@ts-ignore
+                artikel.image_galeri.map((item, index) => (
                     <div
                         key={index}
                         onClick={() => setOpenGaleri(true)}

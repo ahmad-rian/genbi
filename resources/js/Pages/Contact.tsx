@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import { motion } from 'framer-motion';
 import { FaInstagram, FaYoutube, FaMapMarkerAlt, FaEnvelope, FaPhone, FaTiktok } from 'react-icons/fa';
@@ -37,7 +37,6 @@ const Contact = () => {
                 throw new Error('Failed to send your message. Please try again later.');
             }
 
-            const data = await response.json();
             setSuccessMessage('Pesan Anda berhasil dikirim!');
             setNama("")
             setEmail("")

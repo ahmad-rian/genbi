@@ -17,6 +17,7 @@ interface PageProps {
 }
 
 export function useAuth() {
+    //@ts-ignore
     const { props } = usePage<PageProps>();
     const auth = props.auth || { user: null };
 

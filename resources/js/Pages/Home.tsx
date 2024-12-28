@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
@@ -9,10 +9,8 @@ import AboutSection from '@/Components/AboutSection';
 import {
   IconCalendar,
   IconPaper,
-  IconTicket,
-  IconLocation,
 } from "@irsyadadl/paranoid";
-import { FaCalendar, FaChevronLeft, FaChevronRight, FaComment, FaEye, FaHeart, FaUser } from 'react-icons/fa';
+import { FaCalendar, FaEye, FaUser } from 'react-icons/fa';
 import {
   MdKeyboardDoubleArrowDown,
   MdKeyboardDoubleArrowRight,
@@ -164,6 +162,7 @@ const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
     );
 };
 
+//@ts-ignore
 export default function Home({ news }: Props) {
     const { isDark } = useTheme();
     const [tabActive, setTabActive] = useState("news");
@@ -192,6 +191,7 @@ export default function Home({ news }: Props) {
                     throw new Error("Artikel data is not an array");
                 }
 
+                //@ts-ignore
                 setArtikelPalingBaru(allArtikel.slice(0, 1)); // Artikel paling baru
                 setArtikel(allArtikel.slice(1)); // Artikel ke-2 dan seterusnya
             }
@@ -268,7 +268,9 @@ export default function Home({ news }: Props) {
 
             {tabActive == "news" ? (
                 <section className="mb-20 bg-blue-600">
-                    {artikelPalingBaru.map((item, index) => (
+                    {
+                    //@ts-ignore
+                    artikelPalingBaru.map((item:any, index:any) => (
                         <Link href={`/artikel/${item.slug}`} key={index}>
                             <div className="grid lg:grid-cols-5 gap-10 items-center lg:px-20 md:px-10 px-5 pt-10">
                                 <div className="h-[200px] md:h-[350px] w-full rounded-md overflow-hidden lg:col-span-2">
@@ -318,7 +320,7 @@ export default function Home({ news }: Props) {
                         {moreNews ? (
                         <>
                             <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-10 md:px-20 px-5 mt-10">
-                            {artikel.map((item, index) => (
+                            {artikel.map((item) => (
                                 <div className="mt-5">
                                     <img
                                     src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}

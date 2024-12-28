@@ -5,7 +5,6 @@ import { ScrollArea } from "@/Components/ui/scroll-area"
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
 } from "@/Components/ui/sheet"
 import { Menu } from "lucide-react"
 
@@ -22,9 +21,9 @@ export default function Sidebar({ className, children, title, footer }: SidebarP
   return (
     <>
       {/* Mobile Trigger */}
-      <Button 
-        variant="ghost" 
-        size="icon" 
+      <Button
+        variant="ghost"
+        size="icon"
         className="fixed top-4 left-4 lg:hidden z-40"
         onClick={() => setOpen(true)}
       >

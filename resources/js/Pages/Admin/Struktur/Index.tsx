@@ -39,7 +39,7 @@ interface Props {
     status?: string;
   };
 }
-
+//@ts-ignore
 export default function Index({ struktur, filters }: Props) {
   const handleDelete = (id: number) => {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {

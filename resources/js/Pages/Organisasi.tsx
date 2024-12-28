@@ -20,16 +20,6 @@ interface University {
   shortName: string;
 }
 
-interface PresidentProfile {
-  name: string;
-  role: string;
-  university: string;
-  quote: string;
-  image: string;
-  universityShort: string;
-  type: 'president' | 'secretary' | 'treasure';
-}
-
 // Constants
 const SCHOLARSHIP_DATA: ScholarshipData[] = [
   { count: 50, university: 'UIN SAIZU' },
@@ -362,7 +352,9 @@ const Organization: React.FC = () => {
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {SCHOLARSHIP_DATA.map((item, index) => (
+              {
+              //@ts-ignore
+              SCHOLARSHIP_DATA.map((item, index) => (
                 <AnimatedCount
                   key={item.university}
                   count={item.count}

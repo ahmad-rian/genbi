@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Head, useForm } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import AdminLayout from "@/Layouts/AdminLayout";
@@ -29,7 +28,7 @@ export default function Create({kategori}) {
     setData('thumbnail', e.target.files[0]);
   };
 
-  const handleEditorChange = (content, editor) => {
+  const handleEditorChange = (content) => {
     setData('content', content); // Update content with the editor's value
   };
 

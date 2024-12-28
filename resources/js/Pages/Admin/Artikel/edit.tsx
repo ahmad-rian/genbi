@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Head, useForm } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import AdminLayout from "@/Layouts/AdminLayout";
@@ -14,8 +13,7 @@ export default function Edit({ artikel, kategori }) {
     is_published: artikel.is_published,
     thumbnail: artikel.thumbnail,
   });
-
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
 
     put(route('admin.artikel.update', artikel.id),  {
@@ -25,12 +23,12 @@ export default function Edit({ artikel, kategori }) {
     });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e:any) => {
     setData('thumbnail', e.target.files[0]);
   };
 
 
-  const handleEditorChange = (content, editor) => {
+  const handleEditorChange = (content:any) => {
     setData('content', content);
   };
 
