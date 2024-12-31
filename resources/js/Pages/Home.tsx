@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import { Link } from '@inertiajs/react';
+import { Link, Head } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { Play, ArrowRight, Award, Users, Target } from 'lucide-react';
 import { useTheme } from '@/Hooks/useTheme';
@@ -10,7 +10,7 @@ import {
   IconCalendar,
   IconPaper,
 } from "@irsyadadl/paranoid";
-import { FaCalendar, FaEye, FaUser } from 'react-icons/fa';
+import { FaCalendar, FaEye, FaMapMarkedAlt, FaUser } from 'react-icons/fa';
 import {
   MdKeyboardDoubleArrowDown,
   MdKeyboardDoubleArrowRight,
@@ -18,16 +18,7 @@ import {
 } from "react-icons/md";
 import { changeDate } from '@/Utils/changeDate';
 
-interface NewsItem {
-    id: number;
-    title: string;
-    date: string;
-    image: string;
-}
 
-interface Props {
-    news: NewsItem[];
-}
 
 const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
     const features = [
@@ -163,14 +154,17 @@ const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
 };
 
 //@ts-ignore
-export default function Home({ news }: Props) {
+export default function Home() {
     const { isDark } = useTheme();
     const [tabActive, setTabActive] = useState("news");
     const [moreNews, setMoreNews] = useState(false);
     const [artikel, setArtikel] = useState([]);
+    const [event, setEvent] = useState([]);
     const [artikelPalingBaru, setArtikelPalingBaru] = useState();
     const [eror, setEror] = useState("");
+    const [erorEvent, setErorEvent] = useState("");
     const [loading, setLoading] = useState(true);
+    const [loadingEvent, setLoadingEvent] = useState(true);
 
     // Fetch artikel
     const fetchArtikel = async () => {
@@ -204,12 +198,36 @@ export default function Home({ news }: Props) {
         };
     };
 
+    // Fetch event
+    const fetchEvent = async () => {
+
+        try{
+            const response = await fetch("https://data.genbipurwokerto.com/api/event/homeEvent");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                setEvent(data.data)
+            }
+        }
+        catch(error) {
+            setErorEvent(error)
+            console.error("Error fetching artikel:", error);
+        }finally{
+            setLoadingEvent(false)
+        };
+    };
+
     // Initial fetch
     useEffect(() => {
         fetchArtikel();
+        fetchEvent();
     }, []);
 
-    if (loading) return(
+    if (loading && loadingEvent) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='/images/logo.png'
@@ -223,11 +241,28 @@ export default function Home({ news }: Props) {
         </div>
     );
 
-    if (eror) return <p>Error: {eror}</p>;
+    if (eror || erorEvent) return <p>Error: {eror}</p>;
 
 
     return (
         <MainLayout>
+            <Head>
+                <meta name="description" content="Selamat datang di GenBI Purwokerto, komunitas penerima beasiswa Bank Indonesia yang aktif menginspirasi dan berkontribusi untuk negeri. Temukan informasi kegiatan, program, dan kontribusi kami dalam membangun generasi muda yang berprestasi dan peduli terhadap masyarakat." />
+                <meta name="keywords" content="genbi, genbi purwokerto,bank indonesia,bank indonesia purwokerto,beasiswa bank indonesia,genbi jawa tengah, genbi jateng,generasi baru indonesia, komunitas genbi,kegiatan sosial,pendidikan,investasi cerdas,energi untuk negeri,generasi muda berprestasi,genbi event,ekonomi kreatif,genbi purwokerto website."></meta>
+
+                {/* <!-- Open Graph Meta Tags --> */}
+                <meta property="og:title" content="GenBI Purwokerto - Generasi Baru Indonesia" />
+                <meta property="og:description" content="GenBI Purwokerto adalah komunitas generasi muda yang diprakarsai oleh Bank Indonesia untuk mendukung pengembangan pendidikan, sosial, dan ekonomi di wilayah Purwokerto dan sekitarnya." />
+                <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+                <meta property="og:url" content="https://genbipurwokerto.com" />
+                <meta property="og:type" content="website" />
+
+                {/* <!-- Twitter Meta Tags --> */}
+                <meta name="twitter:title" content="GenBI Purwokerto - Generasi Baru Indonesia" />
+                <meta name="twitter:description" content="GenBI Purwokerto adalah komunitas generasi muda yang diprakarsai oleh Bank Indonesia untuk mendukung pengembangan pendidikan, sosial, dan ekonomi di wilayah Purwokerto dan sekitarnya." />
+                <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+                <meta name="twitter:card" content="summary_large_image" />
+            </Head>
             <Hero />
 
             {/* Bagian Tentang Kami */}
@@ -298,7 +333,7 @@ export default function Home({ news }: Props) {
                                     <p className="mt-5 md:text-base text-[12px] text-white">
                                         {item.excerpt}
                                     </p>
-                                    <div className="flex gap-5 mt-10 text-slate-200 md:text-base text-sm">
+                                    <div className="flex gap-5 mt-10 text-white md:text-base text-sm">
                                     <span className="flex gap-2 items-center">
                                         <FaEye />
                                         <small>{item.views} kali dilihat</small>
@@ -384,9 +419,37 @@ export default function Home({ news }: Props) {
                     )}
                 </section>
             ) : (
-                <section className="bg-blue-600 py-10 flex items-center justify-center flex-col">
-                    <img src="./images/under-construction.png" className="h-[300px] lg:h-full" alt="image under construction" />
-                    <h1 className="text-5xl text-white font-bold text-center">Dalam Pengembangan</h1>
+                <section className="bg-blue-600 py-10 lg:px-10 px-3 grid lg:grid-cols-3 grid-cols-1 gap-0 md:gap-10 items-center">
+                    {event.length > 0 && event.map((item, index) => (
+                        <Link key={index} href={`/event/${item.slug}`} className="bg-white rounded-lg shadow-sm mb-5 md:mb-0">
+                            <img
+                            src={item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                            alt={item.nama}
+                            className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
+                            />
+                            <h2 className={`px-4 text-lg font-bold mb-2`}>{item.nama}</h2>
+
+                            <p className="px-4 text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px] line-clamp-3">{item.excerpt}</p>
+
+                            <div className="mt-5 md:flex gap-10 px-4 pb-4">
+                                <p className="flex md:mb-0 mb-2 md:text-base text-[12px] gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
+                                    <FaMapMarkedAlt />
+                                    <span>{item.tempat}</span>
+                                </p>
+                                <p className="flex gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
+                                    <FaCalendar />
+                                    <span>{changeDate(new Date(item.tanggal))}</span>
+                                </p>
+                            </div>
+
+                            <div
+                            className={`p-5 rounded-b-lg text-center
+                                ${item.status === "Event Sudah Berakhir" ? "bg-red-100 text-red-500" : "bg-green-100 text-green-600"}
+                            `}>
+                                <p className={`dark:text-gray-300 lg:text-base md:text-sm text-[12px] font-semibold`}>{item.status}</p>
+                            </div>
+                        </Link>
+                    ))}
                 </section>
             )}
 

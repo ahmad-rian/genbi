@@ -4,6 +4,7 @@ import { FaCalendar, FaMapMarkedAlt} from "react-icons/fa";
 import MainLayout from '@/Layouts/MainLayout';
 import { changeDate } from './../Utils/changeDate';
 import Lightbox from "yet-another-react-lightbox";
+import { Head } from "@inertiajs/react";
 
 
 
@@ -13,7 +14,7 @@ interface DetailGaleriProps {
 
 //@ts-ignore
 const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
-    const [artikel, setArtikel] = useState([]);
+    const [galeri, setGaleri] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [openGaleri, setOpenGaleri] = useState(false);
@@ -37,7 +38,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
 
             // Simpan ke state
             setLightboxGaleri(galeriImage)
-            setArtikel(result.data)
+            setGaleri(result.data)
         } else {
             setError(result.message); // Tangkap error jika ada
             console.error("Error fetching data:", result.message);
@@ -73,7 +74,43 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
 
   return (
     //@ts-ignore
-    <MainLayout title={artikel.title ? artikel.title : "Detail Artikel"}>
+    <MainLayout title={galeri.title ? galeri.title : "Detail Artikel"}>
+        <Head>
+            <meta name="description" content={`Lihat detail dari galeri ${
+                //@ts-ignore
+                galeri.title} foto dan video yang mencatatkan momen berharga dari kegiatan GenBI Purwokerto.`} />
+            <meta name="keywords" content="detail galeri, galeri genbi purwokerto, foto genbi purwokerto, video genbi purwokerto" />
+            <meta property="og:title" content={`
+                Detail Galeri ${
+                    //@ts-ignore
+                    galeri.title
+                } - GenBI Purwokerto
+                `} />
+            <meta property="og:description" content={`
+                Lihat detail dari galeri ${
+                    //@ts-ignore
+                    galeri.title} foto dan video GenBI Purwokerto yang mencatatkan momen berharga dari berbagai kegiatan.
+                    `} />
+            <meta property="og:image" content={`https://data.genbipurwokerto.com/storage/galeri/${
+                //@ts-ignore
+                galeri.thumbnail
+            }`} />
+            <meta property="og:url" content={`https://genbipurwokerto.com/${slug}`} />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content={`
+                Detail Galeri ${
+                    //@ts-ignore
+                    galeri.title
+                } - GenBI Purwokerto
+                `} />
+            <meta name="twitter:description" content="Lihat detail dari galeri foto dan video GenBI Purwokerto." />
+            <meta name="twitter:image" content={`https://data.genbipurwokerto.com/storage/galeri/${
+                //@ts-ignore
+                galeri.thumbnail
+            }`} />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
         <main className="container mx-auto pb-20">
 
             <div className="grid lg:grid-cols-5 pt-20 pb-10 md:px-20 px-5 mb-8 items-center bg-gray-100 dark:bg-gray-950 relative md:gap-6">
@@ -82,7 +119,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
                 <div className="lg:col-span-3 order-2 lg:order-1 relative z-10">
                     <h1 className="lg:leading-[2.7rem] font-bold md:text-3xl lg:text-left text-center mb-2 text-xl text-gray-900 dark:text-gray-200">
                         {//@ts-ignore
-                        artikel.title}
+                        galeri.title}
                     </h1>
 
                     <div className="md:flex gap-10 md:mb-8 mb-4">
@@ -90,28 +127,28 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
                             <FaMapMarkedAlt />
                             <span>Tempat : {
                             //@ts-ignore
-                            artikel.tempat}</span>
+                            galeri.tempat}</span>
                         </p>
                         <p className="flex gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
                             <FaCalendar />
                             <span>{changeDate(new Date(
                                 //@ts-ignore
-                                artikel.waktu))}</span>
+                                galeri.waktu))}</span>
                         </p>
                     </div>
 
                     <p className="text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[15px]">{
                     //@ts-ignore
-                    artikel.deskripsi}</p>
+                    galeri.deskripsi}</p>
                 </div>
                 <div className="md:py-8 py-0 pt-8 pb-3 lg:col-span-2 relative z-10 lg:order-2 order-1">
                     <img
                         src={
                             //@ts-ignore
-                            artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                            galeri.thumbnail ? `https://data.genbipurwokerto.com/storage/${galeri.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
                         className="w-full h-[200px] md:h-[350px] rounded object-cover"
                         alt={//@ts-ignore
-                        artikel.title}
+                        galeri.title}
                     />
                 </div>
             </div>
@@ -119,7 +156,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
             <main className="grid lg:grid-cols-3 md:px-20 px-5 gap-10 mt-20 mb-20">
                 {
                 //@ts-ignore
-                artikel.image_galeri.map((item, index) => (
+                galeri.image_galeri.map((item, index) => (
                     <div
                         key={index}
                         onClick={() => setOpenGaleri(true)}

@@ -1,6 +1,6 @@
 import { useTheme } from '@/Hooks/useTheme';
 import MainLayout from '@/Layouts/MainLayout';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
@@ -80,6 +80,20 @@ const SejarahKepengurusan = () => {
 
   return (
     <MainLayout title="SejarahKepengurusan">
+        <Head>
+            <meta name="description" content="Pelajari sejarah kepengurusan GenBI Purwokerto dan bagaimana organisasi ini berkembang dalam memberikan kontribusi kepada masyarakat." />
+            <meta name="keywords" content="sejarah kepengurusan, genbi purwokerto, perkembangan organisasi, kontribusi genbi" />
+            <meta property="og:title" content="Sejarah Kepengurusan - GenBI Purwokerto" />
+            <meta property="og:description" content="Pelajari sejarah kepengurusan GenBI Purwokerto dan bagaimana organisasi ini berkembang." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content="https://genbipurwokerto.com/sejarah-kepengurusan" />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content="Sejarah Kepengurusan - GenBI Purwokerto" />
+            <meta name="twitter:description" content="Pelajari sejarah kepengurusan GenBI Purwokerto dan bagaimana organisasi ini berkembang." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
         <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
             <div className="container mx-auto relative z-10">
                 <motion.div {...fadeInUpAnimation} className="text-center mb-8">

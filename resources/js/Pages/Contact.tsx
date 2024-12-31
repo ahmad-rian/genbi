@@ -3,6 +3,7 @@ import MainLayout from '@/Layouts/MainLayout';
 import { motion } from 'framer-motion';
 import { FaInstagram, FaYoutube, FaMapMarkerAlt, FaEnvelope, FaPhone, FaTiktok } from 'react-icons/fa';
 import { useTheme } from '@/Hooks/useTheme';
+import { Head } from '@inertiajs/react';
 
 const Contact = () => {
   const { isDark } = useTheme();
@@ -63,6 +64,20 @@ const Contact = () => {
 
   return (
     <MainLayout title="Contact">
+        <Head>
+            <meta name="description" content="Hubungi GenBI Purwokerto untuk informasi lebih lanjut mengenai program, kegiatan, dan kontribusi kami dalam mendukung pendidikan dan pemberdayaan masyarakat." />
+            <meta name="keywords" content="kontak, hubungi genbi purwokerto, informasi genbi, program genbi purwokerto, beasiswa bank indonesia" />
+            <meta property="og:title" content="Kontak - GenBI Purwokerto" />
+            <meta property="og:description" content="Hubungi GenBI Purwokerto untuk informasi lebih lanjut mengenai program, kegiatan, dan kontribusi kami." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content="https://genbipurwokerto.com/kontak" />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content="Kontak - GenBI Purwokerto" />
+            <meta name="twitter:description" content="Hubungi GenBI Purwokerto untuk informasi lebih lanjut mengenai program, kegiatan, dan kontribusi kami." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
       <div className={`min-h-screen ${darkModeClasses.bg}`}>
         <div className="container mx-auto px-4 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

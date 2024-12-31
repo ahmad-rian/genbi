@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '@/Layouts/MainLayout';
 import { useTheme } from '@/Hooks/useTheme';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 
 
@@ -278,6 +278,20 @@ const Organization: React.FC = () => {
 
   return (
     <MainLayout title="Organisasi">
+        <Head>
+            <meta name="description" content="Pelajari lebih lanjut tentang struktur organisasi GenBI Purwokerto dan peran-peran penting dalam mendukung kegiatan sosial dan pemberdayaan masyarakat." />
+            <meta name="keywords" content="organisasi, genbi purwokerto, struktur organisasi, kepengurusan genbi, peran staff genbi" />
+            <meta property="og:title" content="Organisasi - GenBI Purwokerto" />
+            <meta property="og:description" content="Pelajari lebih lanjut tentang struktur organisasi GenBI Purwokerto." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content="https://genbipurwokerto.com/organisasi" />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content="Organisasi - GenBI Purwokerto" />
+            <meta name="twitter:description" content="Pelajari lebih lanjut tentang struktur organisasi GenBI Purwokerto." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
       <div className={isDark ? 'bg-gray-900 min-h-screen' : 'bg-gray-50 min-h-screen'}>
         <div className="container mx-auto px-4 pb-16 pt-16 lg:pt-32">
           {/* Header Section */}

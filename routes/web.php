@@ -22,11 +22,13 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Operator\OperatorDashboardController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\PodcastController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TentangController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/event', [EventController::class, 'index'])->name('event');
 Route::get('/event/{slug}', [EventController::class, 'show'])->name('detailEvent');

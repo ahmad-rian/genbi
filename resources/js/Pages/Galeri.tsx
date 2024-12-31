@@ -4,7 +4,7 @@ import { useTheme } from '@/Hooks/useTheme';
 import { useEffect, useState } from 'react';
 import { FaCalendar, FaMapMarkedAlt } from 'react-icons/fa';
 import { changeDate } from '@/Utils/changeDate';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 
 const fadeInUpAnimation = {
@@ -83,6 +83,19 @@ const Galeri = () => {
 
   return (
     <MainLayout title="Galeri">
+        <Head>
+            <meta name="description" content="Lihat galeri foto dan video dokumentasi kegiatan GenBI Purwokerto, yang memperlihatkan berbagai momen berharga dari acara dan program yang telah kami jalankan." />
+            <meta name="keywords" content="galeri, foto, video, dokumentasi, kegiatan genbi, acara genbi purwokerto" />
+            <meta property="og:title" content="Galeri - GenBI Purwokerto" />
+            <meta property="og:description" content="Lihat galeri foto dan video dokumentasi kegiatan GenBI Purwokerto." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content="https://genbipurwokerto.com/galeri" />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content="Galeri - GenBI Purwokerto" />
+            <meta name="twitter:description" content="Lihat galeri foto dan video dokumentasi kegiatan GenBI Purwokerto." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
         <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
             <div className="container mx-auto relative z-10">
                 <motion.div {...fadeInUpAnimation} className="text-center mb-8">

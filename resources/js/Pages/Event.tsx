@@ -4,7 +4,7 @@ import { useTheme } from '@/Hooks/useTheme';
 import { useEffect, useState } from 'react';
 import { FaCalendar, FaMapMarkedAlt } from 'react-icons/fa';
 import { changeDate } from '@/Utils/changeDate';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 
 const fadeInUpAnimation = {
@@ -25,7 +25,7 @@ const Event = () => {
         const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://genbi-data.test/api/event`
+          `https://data.genbipurwokerto.com/api/event`
         );
 
         if (!response.ok) {
@@ -97,6 +97,20 @@ const Event = () => {
 
   return (
     <MainLayout title="Event">
+        <Head>
+            <meta name="description" content="Jelajahi berbagai acara dan kegiatan yang diadakan oleh GenBI Purwokerto untuk memberdayakan generasi muda dan masyarakat sekitar." />
+            <meta name="keywords" content="event, acara, genbi purwokerto, kegiatan genbi, acara sosial, program genbi" />
+            <meta property="og:title" content="Event - GenBI Purwokerto" />
+            <meta property="og:description" content="Jelajahi berbagai acara dan kegiatan yang diadakan oleh GenBI Purwokerto." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content="https://genbipurwokerto.com/event" />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content="Event - GenBI Purwokerto" />
+            <meta name="twitter:description" content="Jelajahi berbagai acara dan kegiatan yang diadakan oleh GenBI Purwokerto." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
         <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
             <div className="container mx-auto relative z-10">
                 <motion.div {...fadeInUpAnimation} className="text-center mb-8">
@@ -134,38 +148,47 @@ const Event = () => {
                     </div>
                 </motion.div>
 
-                {!loading && !error && filteredEvents.length >= 1 && (
-                    <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center">
-                    {filteredEvents.map((item, index) => (
-                        <Link key={index} href={`/event/${item.slug}`} className="bg-white rounded-lg shadow-sm">
-                            <img
-                            src={item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "./images/NO IMAGE AVAILABLE.jpg"}
-                            alt={item.nama}
-                            className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
-                            />
-                            <h2 className={`px-4 text-lg font-bold mb-2`}>{item.nama}</h2>
+                {filteredEvents.length >= 1 ? (
+                    <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center lg:px-10 px-3">
+                        {filteredEvents.map((item, index) => (
+                            <Link key={index} href={`/event/${item.slug}`} className="bg-white rounded-lg shadow-sm">
+                                <img
+                                src={item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                alt={item.nama}
+                                className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
+                                />
+                                <h2 className={`px-4 text-lg font-bold mb-2`}>{item.nama}</h2>
 
-                            <p className="text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px] line-clamp-3">{item.excerpt}</p>
+                                <p className="px-4 text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px] line-clamp-3">{item.excerpt}</p>
 
-                            <div className="mt-5 md:flex gap-10 px-4 pb-4">
-                                <p className="flex md:mb-0 mb-2 md:text-base text-[12px] gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
-                                    <FaMapMarkedAlt />
-                                    <span>{item.tempat}</span>
-                                </p>
-                                <p className="flex gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
-                                    <FaCalendar />
-                                    <span>{changeDate(new Date(item.tanggal))}</span>
-                                </p>
-                            </div>
+                                <div className="mt-5 md:flex gap-10 px-4 pb-4">
+                                    <p className="flex md:mb-0 mb-2 md:text-base text-[12px] gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
+                                        <FaMapMarkedAlt />
+                                        <span>{item.tempat}</span>
+                                    </p>
+                                    <p className="flex gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
+                                        <FaCalendar />
+                                        <span>{changeDate(new Date(item.tanggal))}</span>
+                                    </p>
+                                </div>
 
-                            <div
-                            className={`p-5 rounded-b-lg text-center
-                                ${item.status === "Event Sudah Berakhir" ? "bg-red-100 text-red-500" : "bg-green-100 text-green-600"}
-                            `}>
-                                <p className={`dark:text-gray-300 lg:text-base md:text-sm text-[12px] font-semibold`}>{item.status}</p>
-                            </div>
-                        </Link>
-                    ))}
+                                <div
+                                className={`p-5 rounded-b-lg text-center
+                                    ${item.status === "Event Sudah Berakhir" ? "bg-red-100 text-red-500" : "bg-green-100 text-green-600"}
+                                `}>
+                                    <p className={`dark:text-gray-300 lg:text-base md:text-sm text-[12px] font-semibold`}>{item.status}</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                ):(
+                    <div className="mt-16 flex justify-center items-center flex-col">
+                        <img
+                            src='./images/kosong.svg'
+                            className="lg:w-[10%] w-[80%] h-[40%]"
+                            alt='icon-splash'
+                        />
+                        <h1 className="text-xl lg:text-3xl text-center font-semibold mt-5 lg:mt-8 text-red-500">Belum Ada Event</h1>
                     </div>
                 )}
             </div>

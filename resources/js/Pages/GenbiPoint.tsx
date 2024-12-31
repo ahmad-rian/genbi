@@ -7,6 +7,7 @@ import { IconCalendarDays, IconClipboard, IconListBullets, IconTrophy } from '@i
 
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import { Head } from '@inertiajs/react';
 
 
 export default function GenBIPoint() {
@@ -105,6 +106,20 @@ export default function GenBIPoint() {
 
     return (
         <MainLayout title="GenBI Point">
+            <Head>
+                <meta name="description" content="GenBI Point adalah bagian dari GenBI Purwokerto yang mendukung generasi muda untuk berprestasi dan berkontribusi melalui berbagai kegiatan sosial dan edukasi. Temukan lebih banyak tentang Deputi dan Staff kami." />
+                <meta name="keywords" content="genbi point, genbi purwokerto, deputi, staff, kontribusi sosial, kegiatan edukasi, generasi muda berprestasi" />
+                <meta property="og:title" content="GenBI Point - GenBI Purwokerto" />
+                <meta property="og:description" content="GenBI Point mendukung generasi muda untuk berprestasi dan berkontribusi melalui berbagai kegiatan sosial dan edukasi." />
+                <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+                <meta property="og:url" content="https://genbipurwokerto.com/genbi-point" />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="GenBI Point - GenBI Purwokerto" />
+                <meta name="twitter:description" content="GenBI Point mendukung generasi muda untuk berprestasi dan berkontribusi melalui berbagai kegiatan sosial dan edukasi." />
+                <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+                <meta name="twitter:card" content="summary_large_image" />
+            </Head>
+
             <HeroGenBIPoint />
 
             <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">

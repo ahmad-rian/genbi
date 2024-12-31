@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 import MainLayout from '@/Layouts/MainLayout';
 
@@ -171,6 +171,25 @@ const Artikel = () => {
   return (
 
     <MainLayout title="Artikel">
+
+        <Head>
+            <meta name="description" content="Temukan berbagai artikel menarik seputar kegiatan, program, dan kontribusi GenBI Purwokerto dalam membangun generasi muda berprestasi dan peduli terhadap masyarakat. Baca artikel-artikel kami yang menginspirasi di bidang pendidikan, sosial, ekonomi, dan banyak lagi." />
+            <meta name="keywords" content="artikel, genbi artikel, genbi purwokerto artikel, beasiswa bank indonesia, genbi jawa tengah, generasi baru indonesia, komunitas genbi, pendidikan, kegiatan sosial, ekonomi kreatif, genbi event, generasi muda berprestasi, energi untuk negeri" />
+
+            {/* <!-- Open Graph Meta Tags --> */}
+            <meta property="og:title" content="Artikel GenBI Purwokerto - Generasi Baru Indonesia" />
+            <meta property="og:description" content="Temukan artikel menarik tentang GenBI Purwokerto yang berfokus pada pengembangan generasi muda berprestasi, serta kontribusi kami dalam pendidikan, sosial, dan ekonomi." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content="https://genbipurwokerto.com/artikel" />
+            <meta property="og:type" content="website" />
+
+            {/* <!-- Twitter Meta Tags --> */}
+            <meta name="twitter:title" content="Artikel GenBI Purwokerto - Generasi Baru Indonesia" />
+            <meta name="twitter:description" content="Temukan artikel menarik tentang GenBI Purwokerto yang berfokus pada pengembangan generasi muda berprestasi, serta kontribusi kami dalam pendidikan, sosial, dan ekonomi." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
 
 
         <header className="relative overflow-x-hidden mt-5 md:mt-10 mx-auto grid lg:grid-cols-4 gap-10 pt-20 lg:px-20 md:px-5 px-3">

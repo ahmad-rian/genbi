@@ -3,6 +3,7 @@ import { useTheme } from '@/Hooks/useTheme';
 import { motion } from 'framer-motion';
 import { Play, ArrowRight, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Head } from '@inertiajs/react';
 
 const fadeInUpAnimation = {
   initial: { opacity: 0, y: 20 },
@@ -196,6 +197,20 @@ export default function Home() {
 
   return (
     <MainLayout title="Podcast">
+        <Head>
+            <meta name="description" content="Dengarkan podcast GenBI Purwokerto yang membahas berbagai topik inspiratif mengenai generasi muda, ekonomi, sosial, dan pendidikan." />
+            <meta name="keywords" content="podcast, genbi purwokerto, podcast genbi, generasi muda, ekonomi, sosial, pendidikan" />
+            <meta property="og:title" content="Podcast - GenBI Purwokerto" />
+            <meta property="og:description" content="Dengarkan podcast GenBI Purwokerto yang membahas berbagai topik inspiratif mengenai generasi muda, ekonomi, sosial, dan pendidikan." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content="https://genbipurwokerto.com/podcast" />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content="Podcast - GenBI Purwokerto" />
+            <meta name="twitter:description" content="Dengarkan podcast GenBI Purwokerto yang membahas berbagai topik inspiratif mengenai generasi muda, ekonomi, sosial, dan pendidikan." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
       <div className="py-8 px-4 relative min-h-screen pt-20">
         <div className={`absolute inset-0 ${styles.gradient}`} />
         <div className="container mx-auto relative z-10">

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import MainLayout from '@/Layouts/MainLayout';
 import { useTheme } from '@/Hooks/useTheme';
 import ProfileCard from '@/Components/ProfileCard';
+import { Head } from '@inertiajs/react';
 
 
 interface SejarahPerKepengurusanProps {
@@ -77,7 +78,22 @@ const SejarahPerKepengurusan = React.FC<SejarahPerKepengurusanProps> = ({periode
     if (error) return <p>Error: {error}</p>;
 
   return (
-    <MainLayout title={`Struktur GenBI Purwokerto ${periode}`}>
+    <MainLayout title={`Struktur GenBI Purwokerto ${periode} - GenBI Purwokerto`}>
+        <Head>
+            <meta name="description" content="Pelajari sejarah setiap kepengurusan yang telah ada di GenBI Purwokerto dan kontribusi yang telah diberikan dalam perkembangan organisasi." />
+            <meta name="keywords" content="sejarah kepengurusan, genbi purwokerto, sejarah organisasi genbi, kontribusi genbi purwokerto" />
+            <meta property="og:title" content={`Struktur GenBI Purwokerto ${periode} - GenBI Purwokerto`} />
+            <meta property="og:description" content="Pelajari sejarah setiap kepengurusan yang telah ada di GenBI Purwokerto dan kontribusinya." />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content={`https://genbipurwokerto.com/sejarah-kepengurusan/${periode}`} />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content={`Struktur GenBI Purwokerto ${periode} - GenBI Purwokerto`} />
+            <meta name="twitter:description" content="Pelajari sejarah setiap kepengurusan yang telah ada di GenBI Purwokerto dan kontribusinya." />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
+
       <div className={isDark ? 'bg-gray-900 min-h-screen' : 'bg-gray-50 min-h-screen'}>
         <div className="container mx-auto lg:py-0 py-8 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
             <div className="mx-auto relative z-10">

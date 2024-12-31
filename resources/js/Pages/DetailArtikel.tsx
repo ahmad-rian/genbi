@@ -4,8 +4,10 @@ import { FaCalendar, FaUser } from "react-icons/fa";
 import MainLayout from '@/Layouts/MainLayout';
 import { estimateReadingTime } from "@/Utils/estimateReadingTime";
 import { changeDate } from './../Utils/changeDate';
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 
+import ShareButton from "@/Components/ShareButton";
+import { getRandomColor } from "@/Utils/getRandomColor";
 
 
 interface DetailArtikelProps {
@@ -15,6 +17,7 @@ interface DetailArtikelProps {
 //@ts-ignore
 const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
     const [artikel, setArtikel] = useState([]);
+    const [komentar, setKomentar] = useState([]);
     const [artikelRandom, setArtikelRandom] = useState([]);
     const [loading, setLoading] = useState(true);
     //@ts-ignore
@@ -22,6 +25,19 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
     const [error, setError] = useState(null);
     //@ts-ignore
     const [errorRandomArtikel, setErrorRandomArtikel] = useState(null);
+
+    const [nama, setNama] = useState("");
+    const [email, setEmail] = useState("");
+    const [komen, setKomen] = useState("");
+    //@ts-ignore
+    const [komenEror, setKomenEror] = useState("");
+    //@ts-ignore
+    const [loadingKomen, setLoadingKomen] = useState(false);
+    //@ts-ignore
+    const [successMessage, setSuccessMessage] = useState("");
+    //@ts-ignore
+    const [warnaProfile, setWarnaProfile] = useState(getRandomColor());
+
 
     const ArticleContent = ({ content }) => {
         return (
@@ -72,6 +88,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
 
         if (result.success) {
             setArtikel(result.data)
+            setKomentar(result.data.komentar)
         } else {
             setError(result.message); // Tangkap error jika ada
             console.error("Error fetching data:", result.message);
@@ -90,7 +107,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
         fetchDataRandom()
     }, []);
 
-    if (loading) return(
+    if (loading && loadingRandomArtikel) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='../images/logo.png'
@@ -104,12 +121,102 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
         </div>
     );
 
-    if (error) return <p>Error: {error}</p>;
+    if (error || errorRandomArtikel) return <p>Error: {error || errorRandomArtikel}</p>;
+
+    const getInitials = (nama) => {
+        const words = nama.split(" ");
+        const initials = words.map((word) => word[0].toUpperCase()).join("");
+        return initials.length > 2 ? initials.slice(0, 2) : initials; // Maksimal 2 huruf
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoadingKomen(true)
+
+        try {
+            // Validasi nama
+            if (!nama.trim()) {
+                //@ts-ignore
+                setKomenEror("Nama tidak boleh kosong.");
+            }
+
+            // Validasi email
+            if (!email.trim()) {
+                //@ts-ignore
+                setKomenEror("Email tidak boleh kosong.");
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                //@ts-ignore
+                setKomenEror("Format email tidak valid.");
+            }
+
+            // Validasi komentar
+            if (!komen.trim()) {
+                //@ts-ignore
+                setKomenEror("Komentar tidak boleh kosong.");
+            }
+
+            const response = await fetch('https://data.genbipurwokerto.com/api/komen', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                //@ts-ignore
+                body: JSON.stringify({artikel_id:artikel.id, nama, email, komen}),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send your message. Please try again later.');
+            }
+
+            setSuccessMessage('Pesan Anda berhasil dikirim!');
+
+            setNama("")
+            setEmail("")
+            setKomen("")
+
+            fetchData()
+
+        } catch (error) {
+            setKomenEror(error.message);
+        } finally {
+            setLoadingKomen(false);
+        }
+    }
 
   return (
     <MainLayout title={
         //@ts-ignore
         artikel.title ? artikel.title : "Detail Artikel"}>
+
+        <Head>
+            <meta name="description" content={
+                //@ts-ignore
+                artikel.excerpt} />
+            <meta name="keywords" content={
+                //@ts-ignore
+                artikel.keyword} />
+            <meta property="og:title" content="Detail Artikel - GenBI Purwokerto" />
+            <meta property="og:description" content={
+                //@ts-ignore
+                artikel.excerpt} />
+            <meta property="og:image" content={
+                //@ts-ignore
+                artikel.thumbnail} />
+            <meta property="og:url" content={`https://genbipurwokerto.com/${slug}`} />
+            <meta property="og:type" content="article" />
+            <meta name="twitter:title" content="Detail Artikel - GenBI Purwokerto" />
+            <meta name="twitter:description" content={
+                //@ts-ignore
+                artikel.excerpt} />
+            <meta name="twitter:image" content={`https://data.genbipurwokerto.com/storage/artikel/${
+                //@ts-ignore
+                artikel.thumbnail
+            }`} />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
+
         <main className="container mx-auto pb-20">
             <div className="grid lg:grid-cols-5 pt-20 pb-10 md:px-20 px-5 mb-8 items-center bg-gray-100 dark:bg-gray-950 relative">
                 <span className="h-full lg:w-[700px] w-full absolute right-0 lg:bg-gradient-to-l bg-gradient-to-b from-blue-700/30 to-blue-700/0"></span>
@@ -156,47 +263,152 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
                 </div>
             </div>
 
-            <main className="grid lg:grid-cols-3 md:px-20 px-4 md:gap-20 md:mt-20 md:mb-20">
+            <main className="grid grid-cols-1 lg:grid-cols-3 md:px-20 px-4 md:gap-20 md:mt-20 md:mb-20">
                 <div className="lg:col-span-2 text-gray-800 dark:text-gray-200">
 
-                <ArticleContent content={
-                    //@ts-ignore
-                    artikel.content} />
-
-                </div>
-                <div>
-                <div className="bg-gray-50 dark:bg-gray-950 p-10 rounded">
-                    <img
-                    src={
+                    <ArticleContent content={
                         //@ts-ignore
-                        artikel.user.foto ? `https://data.genbipurwokerto.com/storage/${artikel.user.foto}` : "../images/NO IMAGE AVAILABLE.jpg"}
-                    className="w-[70px] rounded"
-                    alt="avatar"
-                    />
-                    <h1 className="font-bold mt-4 text-gray-800 dark:text-gray-300">
-                    {//@ts-ignore
-                    artikel.user.name}
-                    </h1>
-                    <p className="text-sm mt-2 text-gray-700 dark:text-gray-400">
-                        {//@ts-ignore
-                        artikel.user.deskripsi}
-                    </p>
+                        artikel.content} />
+
+                    <ShareButton />
+
 
                 </div>
+
+                <div>
+                    <div className="bg-gray-50 dark:bg-gray-950 lg:p-10 p-5 rounded">
+                        <img
+                        src={
+                            //@ts-ignore
+                            artikel.user.foto ? `https://data.genbipurwokerto.com/storage/${artikel.user.foto}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                        className="w-[70px] rounded"
+                        alt="avatar"
+                        />
+                        <h1 className="font-bold mt-4 text-gray-800 dark:text-gray-300">
+                        {//@ts-ignore
+                        artikel.user.name}
+                        </h1>
+                        <p className="text-sm mt-2 text-gray-700 dark:text-gray-400">
+                            {//@ts-ignore
+                            artikel.user.deskripsi}
+                        </p>
+
+                    </div>
                 </div>
             </main>
 
-            <hr className="w-[90%] mx-auto dark:border-gray-900" />
+            <hr className="w-[90%] mx-auto" />
 
-            <section className="lg:grid hidden grid-cols-3 gap-10 px-20 mt-10">
-                <div className="col-span-3">
-                <h3 className="text-2xl inline-block font-semibold transition-all hover:pr-3 border-b-4 border-blue-700 dark:text-gray-200">
-                    BERITA LAINNYA
-                </h3>
+            <div className="grid grid-cols-1 lg:gap-10 gap-4 md:px-20 px-5 mb-8 items-center mt-10">
+                <div className="mb-5">
+                    <h2 className="text-2xl inline-block font-semibold transition-all hover:pr-3 border-b-4 border-blue-700 dark:text-gray-200">
+                        KOMENTAR
+                    </h2>
+                </div>
+
+                {komentar.map((item, index) => (
+                    <div className="" key={index}>
+                        <div className="flex items-center mb-3">
+                             <div className={`w-[50px] h-[50px] text-white flex items-center justify-center rounded-full mr-3 ${warnaProfile}`} >
+                                <span className="font-bold">{getInitials(item.nama)}</span>
+                            </div>
+                            <div className="">
+                                <h4 className="text-lg font-bold">{item.nama}</h4>
+                                <p className="text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px]">{item.email}</p>
+                            </div>
+                        </div>
+                        <p className="text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px] whitespace-pre-wrap">{item.komentar}</p>
+                    </div>
+                ))}
+
+                {/* Form Komentar */}
+                <form onSubmit={handleSubmit} className="bg-gray-100 dark:bg-gray-800 p-5 rounded-lg">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    {/* Nama */}
+                        <div>
+                            <label
+                            htmlFor="nama"
+                            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                            >
+                            Nama
+                            </label>
+                            <input
+                            type="text"
+                            id="nama"
+                            name="nama"
+                            value={nama}
+                            onChange={(e)=> setNama(e.target.value)}
+                            placeholder="Masukkan nama Anda"
+                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
+                            />
+                        </div>
+
+                        {/* Email */}
+                        <div>
+                            <label
+                            htmlFor="email"
+                            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                            >
+                            Email
+                            </label>
+                            <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={email}
+                            onChange={(e)=> setEmail(e.target.value)}
+                            placeholder="Masukkan email Anda"
+                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Komentar */}
+                    <div className="mb-4">
+                    <label
+                        htmlFor="komentar"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                        Komentar
+                    </label>
+                    <textarea
+                        id="komentar"
+                        name="komentar"
+                        value={komen}
+                        onChange={(e)=> setKomen(e.target.value)}
+                        placeholder="Tulis komentar Anda..."
+                        rows={4}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    ></textarea>
+                    </div>
+
+                    {/* Tombol Submit */}
+                    <button
+                        disabled={loadingKomen}
+                        type="submit"
+                        className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+                        >
+                        {loadingKomen ? 'Mengirim...' : 'Kirim Komentar'}
+                    </button>
+                    {komenEror && <p className="text-red-500 mt-2">{komenEror}</p>}
+                    {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
+                </form>
+            </div>
+
+
+
+
+            <hr className="w-[90%] mx-auto" />
+
+            <section className="grid grid-cols-1 lg:grid-cols-3 lg:gap-10 gap-0 px-3 lg:px-20 mt-10">
+                <div className="lg:col-span-3 mb-5">
+                    <h2 className="text-2xl inline-block font-semibold transition-all hover:pr-3 border-b-4 border-blue-700 dark:text-gray-200">
+                        BERITA LAINNYA
+                    </h2>
                 </div>
 
                 {artikelRandom.map((item, index) => (
-                    <Link href={`/artikel/${item.slug}`} key={index}>
+                    <Link href={`/artikel/${item.slug}`} key={index} className="mb-5 lg:mb-0">
                         <img
                             src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"}
                             alt={item.title}

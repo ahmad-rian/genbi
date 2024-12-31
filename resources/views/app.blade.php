@@ -3,7 +3,14 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta property="og:site_name" content="GenBI Purwokerto"/>
+    <meta name="author" content="GenBI Purwokerto,Rifki Romadhan,Ahmad Rian">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index,follow">
+    {{-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> --}}
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
@@ -56,7 +63,5 @@
     <!-- End Google Tag Manager (noscript) -->
     @inertia
 </body>
-
-<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
 
 </html>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from '@/Layouts/MainLayout';
 import NotFound from "@/Components/NotFound";
+import { Head } from "@inertiajs/react";
 
 interface DetailStrukturProps {
   periode: string;
@@ -72,6 +73,20 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
 
   return (
     <MainLayout title={`Detail Struktur ${namaBidang} Periode ${periode}`}>
+        <Head>
+            <meta name="description" content={`Pelajari lebih lanjut mengenai struktur ${namaBidang} organisasi GenBI Purwokerto periode ${periode} dan bagaimana peran setiap anggotanya mendukung program kami.`} />
+            <meta name="keywords" content="struktur organisasi, genbi purwokerto, peran staff, struktur genbi, kepengurusan genbi purwokerto" />
+            <meta property="og:title" content={`Detail Struktur ${namaBidang} Periode ${periode}`} />
+            <meta property="og:description" content={`Pelajari lebih lanjut mengenai struktur ${namaBidang} organisasi GenBI Purwokerto periode ${periode} dan bagaimana peran setiap anggotanya mendukung program kami.`} />
+            <meta property="og:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta property="og:url" content={`https://genbipurwokerto.com/organisasi/struktur/${periode}/${namaBidang}`} />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:title" content={`Detail Struktur ${namaBidang} Periode ${periode}`} />
+            <meta name="twitter:description" content={`Pelajari lebih lanjut mengenai struktur ${namaBidang} organisasi GenBI Purwokerto periode ${periode} dan bagaimana peran setiap anggotanya mendukung program kami.`} />
+            <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+        </Head>
+
         <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
             <section className="md:py-20 py-5">
                 <div className="grid grid-cols-1 lg:grid-cols-3 md:gap-12 lg:gap-10 min-h-screen items-start">
