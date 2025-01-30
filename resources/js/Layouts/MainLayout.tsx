@@ -16,7 +16,6 @@ export default function MainLayout({ children, title = 'Home' }: MainLayoutProps
     return (
         <div className={isDark ? 'dark' : ''}>
             <Head title={title} >
-                <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
             </Head>
 
             <div className="min-h-screen relative transition-colors duration-300">

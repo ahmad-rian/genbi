@@ -33,10 +33,8 @@ const Artikel = () => {
     const [artikelRekomendasi, setArtikelRekomendasi] = useState([]);
     const [artikelTrending, setArtikelTrending] = useState([]);
 
-    const [lastPage, setLastPage] = useState(1);
     const [loadingArtikel, setLoadingArtikel] = useState(true);
-    const [loadingRekomendasi, setLoadingRekomendasi] = useState(true);
-    const [loadingTrendingArtikel, setLoadingTrendingArtikel] = useState(true);
+    const [lastPage, setLastPage] = useState(1);
     const [eror, setEror] = useState();
     const [countTrandingArtikel, setCountTrandingArtikel] = useState(1);
 
@@ -76,7 +74,6 @@ const Artikel = () => {
         catch(error) {
             setEror(error)
             console.error("Error fetching artikel:", error);
-        }finally{
         };
     };
 
@@ -97,8 +94,6 @@ const Artikel = () => {
         }catch(error){
             setEror(error)
             console.error("Error fetching rekomendasi:", error)
-        }finally{
-            setLoadingRekomendasi(false)
         }
     };
 
@@ -117,8 +112,6 @@ const Artikel = () => {
         } catch (error) {
             console.error("Error fetching trending artikel:", error);
             setEror(error);
-        }finally{
-            setLoadingTrendingArtikel(false)
         }
     };
 
@@ -151,7 +144,7 @@ const Artikel = () => {
         return () => window.removeEventListener("scroll", handleScroll)
     }, []);
 
-    if (loadingArtikel && loadingRekomendasi && loadingTrendingArtikel) return(
+    if (artikelPalingBaru.length <= 0 && artikelBaru.length <= 0 && artikel.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='/images/logo.png'
@@ -168,7 +161,7 @@ const Artikel = () => {
     if (eror) return <p>Error: {eror}</p>;
 
 
-  return (
+  if (artikelPalingBaru.length > 0 && artikelBaru.length > 0 && artikel.length > 0) return (
 
     <MainLayout title="Artikel">
 
@@ -192,9 +185,9 @@ const Artikel = () => {
 
 
 
-        <header className="relative overflow-x-hidden mt-5 md:mt-10 mx-auto grid lg:grid-cols-4 gap-10 pt-20 lg:px-20 md:px-5 px-3">
+        <header className="relative overflow-x-hidden mx-auto grid lg:grid-cols-4 gap-10 pt-24 lg:px-20 md:px-5 px-3 max-w-[1500px]">
             <span
-                className="w-[100%] h-[100%] rounded-full absolute -left-[500px] -top-[500px] -rotate-[60deg]"
+                className="w-[100%] h-[100%] rounded-full absolute -left-[500px] -top-[500px] -rotate-[60deg] animate-spin-slow"
                 style={{
                 backgroundImage:
                     "radial-gradient(169.40% 89.55% at 94.76% 6.29%, rgba(29,79,217, 0.70) 0%, rgba(239, 68, 68, 0.0) 100%)",
@@ -242,7 +235,7 @@ const Artikel = () => {
             </div>
         </header>
 
-        <main className="mx-auto mt-20 lg:px-20 md:px-10 px-3">
+        <main className="mx-auto mt-20 lg:px-20 md:px-10 px-3 max-w-[1500px]">
             <section>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-10">
                     <div className="col-span-4">

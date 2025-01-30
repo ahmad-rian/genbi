@@ -14,11 +14,10 @@ export default function GenBIPoint() {
     const { isDark } = useTheme();
     const [openLightboxDeputi, setOpenLightboxDeputi] = useState(false);
     const [openLightboxStaff, setOpenLightboxStaff] = useState(false);
-    const [SOTMDeputi, setSOTMDeputi] = useState();
-    const [SOTMStaff, setSOTMStaff] = useState();
+    const [SOTMDeputi, setSOTMDeputi] = useState([]);
+    const [SOTMStaff, setSOTMStaff] = useState([]);
     const [lightboxDeputi, setLightboxDeputi] = useState([]);
     const [lightboxStaff, setLightboxStaff] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -51,15 +50,13 @@ export default function GenBIPoint() {
             setSOTMStaff(staff);
         } catch (err) {
             setError(err.message); // Tangkap error jika ada
-        } finally {
-            setLoading(false); // Hentikan loading
         }
     };
 
     fetchData();
     }, []); // Array kosong memastikan ini hanya dijalankan sekali
 
-    if (loading) return(
+    if (SOTMDeputi.length <= 0 && SOTMStaff.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='./images/logo.png'
@@ -104,7 +101,7 @@ export default function GenBIPoint() {
     ];
 
 
-    return (
+    if (SOTMDeputi.length > 0 && SOTMStaff.length > 0) return (
         <MainLayout title="GenBI Point">
             <Head>
                 <meta name="description" content="GenBI Point adalah bagian dari GenBI Purwokerto yang mendukung generasi muda untuk berprestasi dan berkontribusi melalui berbagai kegiatan sosial dan edukasi. Temukan lebih banyak tentang Deputi dan Staff kami." />
@@ -120,7 +117,9 @@ export default function GenBIPoint() {
                 <meta name="twitter:card" content="summary_large_image" />
             </Head>
 
-            <HeroGenBIPoint />
+            <section className="bg-white flex justify-center">
+                <HeroGenBIPoint />
+            </section>
 
             <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
                 <section className="mb-24">

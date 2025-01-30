@@ -18,7 +18,6 @@ const fadeInUpAnimation = {
 const Event = () => {
     const { isDark } = useTheme();
     const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [tabActive, setTabActive] = useState("Semua Kegiatan");
 
@@ -44,8 +43,6 @@ const Event = () => {
       } catch (error) {
         setError(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoading(false); // Hentikan loading
       }
     };
 
@@ -79,7 +76,7 @@ const Event = () => {
             : 'bg-blue-600 text-white hover:bg-blue-700'
     };
 
-    if (loading) return(
+    if (events.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='./images/logo.png'
@@ -95,7 +92,7 @@ const Event = () => {
 
     if (error) return <p>Error: {error}</p>;
 
-  return (
+  if (events.length > 0) return (
     <MainLayout title="Event">
         <Head>
             <meta name="description" content="Jelajahi berbagai acara dan kegiatan yang diadakan oleh GenBI Purwokerto untuk memberdayakan generasi muda dan masyarakat sekitar." />
@@ -155,7 +152,7 @@ const Event = () => {
                                 <img
                                 src={item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "./images/NO IMAGE AVAILABLE.jpg"}
                                 alt={item.nama}
-                                className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
+                                className="w-full h-[200px] md:h-[300px] object-cover rounded-lg mb-8"
                                 />
                                 <h2 className={`px-4 text-lg font-bold mb-2`}>{item.nama}</h2>
 

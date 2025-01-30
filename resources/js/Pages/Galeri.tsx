@@ -17,7 +17,6 @@ const fadeInUpAnimation = {
 const Galeri = () => {
     const { isDark } = useTheme();
     const [galeri, setGaleri] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
 
@@ -43,8 +42,6 @@ const Galeri = () => {
       } catch (error) {
         setError(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoading(false); // Hentikan loading
       }
     };
 
@@ -65,7 +62,7 @@ const Galeri = () => {
             : 'bg-blue-600 text-white hover:bg-blue-700'
     };
 
-    if (loading) return(
+    if (galeri.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='./images/logo.png'
@@ -81,7 +78,7 @@ const Galeri = () => {
 
     if (error) return <p>Error: {error}</p>;
 
-  return (
+  if (galeri.length > 0) return (
     <MainLayout title="Galeri">
         <Head>
             <meta name="description" content="Lihat galeri foto dan video dokumentasi kegiatan GenBI Purwokerto, yang memperlihatkan berbagai momen berharga dari acara dan program yang telah kami jalankan." />
@@ -96,7 +93,7 @@ const Galeri = () => {
             <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
             <meta name="twitter:card" content="summary_large_image" />
         </Head>
-        <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
+        <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20 flex flex-col items-center">
             <div className="container mx-auto relative z-10">
                 <motion.div {...fadeInUpAnimation} className="text-center mb-8">
                     <h1 className={`text-2xl sm:text-3xl font-bold ${styles.text}`}>Galeri Kegiatan GenBI</h1>
@@ -107,7 +104,7 @@ const Galeri = () => {
                 </motion.div>
             </div>
 
-            <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center">
+            <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center lg:px-10 px-3 max-w-[1500px]">
                 {galeri.map((item, index) => (
                     <Link key={index} href={`/galeri/${item.slug}`} className="p-4 bg-white rounded-lg shadow-sm">
                         <img

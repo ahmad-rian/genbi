@@ -143,7 +143,6 @@ const PodcastCard = ({ title, videoId, youtubeUrl, date, description, textClass,
 export default function Home() {
     const { isDark } = useTheme();
     const [podcasts, setPodcasts] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -158,15 +157,13 @@ export default function Home() {
             setPodcasts(data.data); // Simpan data ke state
         } catch (err) {
             setError(err.message); // Tangkap error jika ada
-        } finally {
-            setLoading(false); // Hentikan loading
         }
     };
 
     fetchData();
     }, []); // Array kosong memastikan ini hanya dijalankan sekali
 
-    if (loading) return(
+    if (podcasts.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='./images/logo.png'
@@ -195,7 +192,7 @@ export default function Home() {
       : 'bg-blue-600 text-white hover:bg-blue-700'
   };
 
-  return (
+  if (podcasts.length > 0) return (
     <MainLayout title="Podcast">
         <Head>
             <meta name="description" content="Dengarkan podcast GenBI Purwokerto yang membahas berbagai topik inspiratif mengenai generasi muda, ekonomi, sosial, dan pendidikan." />

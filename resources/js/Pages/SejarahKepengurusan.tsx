@@ -13,8 +13,7 @@ const fadeInUpAnimation = {
 
 const SejarahKepengurusan = () => {
     const { isDark } = useTheme();
-    const [sejarahKepengurusan, setSejarahKepengurusan] = useState();
-    const [loading, setLoading] = useState(true);
+    const [sejarahKepengurusan, setSejarahKepengurusan] = useState([]);
     const [error, setError] = useState(null);
 
 
@@ -40,8 +39,6 @@ const SejarahKepengurusan = () => {
       } catch (error) {
         setError(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoading(false); // Hentikan loading
       }
     };
 
@@ -62,7 +59,7 @@ const SejarahKepengurusan = () => {
             : 'bg-blue-600 text-white hover:bg-blue-700'
     };
 
-    if (loading) return(
+    if (sejarahKepengurusan.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='../images/logo.png'
@@ -78,7 +75,7 @@ const SejarahKepengurusan = () => {
 
     if (error) return <p>Error: {error}</p>;
 
-  return (
+  if (sejarahKepengurusan.length > 0) return (
     <MainLayout title="SejarahKepengurusan">
         <Head>
             <meta name="description" content="Pelajari sejarah kepengurusan GenBI Purwokerto dan bagaimana organisasi ini berkembang dalam memberikan kontribusi kepada masyarakat." />
@@ -94,8 +91,8 @@ const SejarahKepengurusan = () => {
             <meta name="twitter:card" content="summary_large_image" />
         </Head>
 
-        <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20">
-            <div className="container mx-auto relative z-10">
+        <div className="lg:py-0 py-20 px-4 relative min-h-screen lg:pt-28 lg:pb-20 flex flex-col items-center">
+            <div className="container mx-auto relative">
                 <motion.div {...fadeInUpAnimation} className="text-center mb-8">
                     <h1 className={`text-2xl sm:text-3xl font-bold ${styles.text}`}>Sejarah Kepengurusan GenBI</h1>
                     <p className={`mt-3 text-base sm:text-lg ${styles.text} opacity-80`}>
@@ -105,7 +102,7 @@ const SejarahKepengurusan = () => {
                 </motion.div>
             </div>
 
-            <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center">
+            <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center lg:px-10 px-3 max-w-[1500px]">
                 {
                 //@ts-ignore
                 sejarahKepengurusan.map((item, index) => (

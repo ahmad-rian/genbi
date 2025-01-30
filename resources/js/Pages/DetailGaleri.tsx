@@ -15,7 +15,6 @@ interface DetailGaleriProps {
 //@ts-ignore
 const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
     const [galeri, setGaleri] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [openGaleri, setOpenGaleri] = useState(false);
     const [lightboxGaleri, setLightboxGaleri] = useState([]);
@@ -47,8 +46,6 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
       } catch (error) {
         setError(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoading(false); // Hentikan loading
       }
     };
 
@@ -56,7 +53,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
         fetchData()
     }, []);
 
-    if (loading) return(
+    if (galeri.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='../images/logo.png'
@@ -72,7 +69,7 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
 
     if (error) return <p>Error: {error}</p>;
 
-  return (
+  if (galeri.length > 0) return (
     //@ts-ignore
     <MainLayout title={galeri.title ? galeri.title : "Detail Artikel"}>
         <Head>
@@ -91,10 +88,9 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
                     //@ts-ignore
                     galeri.title} foto dan video GenBI Purwokerto yang mencatatkan momen berharga dari berbagai kegiatan.
                     `} />
-            <meta property="og:image" content={`https://data.genbipurwokerto.com/storage/galeri/${
+            <meta property="og:image" content={
                 //@ts-ignore
-                galeri.thumbnail
-            }`} />
+                galeri.thumbnail ? `https://data.genbipurwokerto.com/storage/${galeri.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"} />
             <meta property="og:url" content={`https://genbipurwokerto.com/${slug}`} />
             <meta property="og:type" content="website" />
             <meta name="twitter:title" content={`
@@ -104,10 +100,9 @@ const DetailGaleri = React.FC<DetailGaleriProps> = ({slug}) => {
                 } - GenBI Purwokerto
                 `} />
             <meta name="twitter:description" content="Lihat detail dari galeri foto dan video GenBI Purwokerto." />
-            <meta name="twitter:image" content={`https://data.genbipurwokerto.com/storage/galeri/${
+            <meta name="twitter:image" content={
                 //@ts-ignore
-                galeri.thumbnail
-            }`} />
+                galeri.thumbnail ? `https://data.genbipurwokerto.com/storage/${galeri.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"} />
             <meta name="twitter:card" content="summary_large_image" />
         </Head>
 

@@ -66,7 +66,7 @@ const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
                                 />
                             </div>
 
-                            <h2 className={`text-4xl lg:text-5xl font-bold leading-tight ${
+                            <h2 className={`text-3xl lg:text-5xl font-bold lg:leading-tight ${
                                 isDark ? 'text-white' : 'text-gray-900'
                             }`}>
                                 GenBI Point
@@ -144,7 +144,7 @@ const GenBIPointSection = ({ isDark }: { isDark: boolean }) => {
                         <img
                             src="./images/Hero Image GenBI Point.svg"
                             alt="GenBI Point Illustration"
-                            className="relative w-full h-auto max-w-lg mx-auto transform hover:scale-105 transition-transform duration-500"
+                            className="relative w-full md:h-auto h-[300px] max-w-lg mx-auto transform hover:scale-105 transition-transform duration-500"
                         />
                     </motion.div>
                 </div>
@@ -163,8 +163,6 @@ export default function Home() {
     const [artikelPalingBaru, setArtikelPalingBaru] = useState();
     const [eror, setEror] = useState("");
     const [erorEvent, setErorEvent] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [loadingEvent, setLoadingEvent] = useState(true);
 
     // Fetch artikel
     const fetchArtikel = async () => {
@@ -193,8 +191,6 @@ export default function Home() {
         catch(error) {
             setEror(error)
             console.error("Error fetching artikel:", error);
-        }finally{
-            setLoading(false)
         };
     };
 
@@ -216,8 +212,6 @@ export default function Home() {
         catch(error) {
             setErorEvent(error)
             console.error("Error fetching artikel:", error);
-        }finally{
-            setLoadingEvent(false)
         };
     };
 
@@ -227,7 +221,7 @@ export default function Home() {
         fetchEvent();
     }, []);
 
-    if (loading && loadingEvent) return(
+    if (artikel.length <= 0 && artikelPalingBaru === undefined && event.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='/images/logo.png'
@@ -244,7 +238,7 @@ export default function Home() {
     if (eror || erorEvent) return <p>Error: {eror}</p>;
 
 
-    return (
+    if (artikel.length > 0 && artikelPalingBaru !== undefined && event.length > 0) return (
         <MainLayout>
             <Head>
                 <meta name="description" content="Selamat datang di GenBI Purwokerto, komunitas penerima beasiswa Bank Indonesia yang aktif menginspirasi dan berkontribusi untuk negeri. Temukan informasi kegiatan, program, dan kontribusi kami dalam membangun generasi muda yang berprestasi dan peduli terhadap masyarakat." />
@@ -263,6 +257,7 @@ export default function Home() {
                 <meta name="twitter:image" content="https://genbipurwokerto.com/images/logo.png" />
                 <meta name="twitter:card" content="summary_large_image" />
             </Head>
+
             <Hero />
 
             {/* Bagian Tentang Kami */}
@@ -272,7 +267,7 @@ export default function Home() {
             <GenBIPointSection isDark={isDark} />
 
             <div className="lg:px-4 mt-10">
-                <div className="mx-auto flex max-w-[1350px] space-x-[1px] lg:justify-center lg:space-x-6">
+                <div className="mx-auto flex max-w-[1500px] space-x-[1px] lg:justify-center lg:space-x-6">
 
                     <button
                         className={[ tabActive === "news" ? "bg-blue-600 flex-1 text-white" : "bg-blue-50 text-blue-600 hover:bg-blue-100"  ," flex items-center px-4 py-3 text-sm font-semibold transition-colors md:text-base lg:rounded-t-xl lg:px-6  lg:flex-[unset]"].join("")}
@@ -301,157 +296,159 @@ export default function Home() {
                 </div>
             </div>
 
-            {tabActive == "news" ? (
-                <section className="mb-20 bg-blue-600">
-                    {
-                    //@ts-ignore
-                    artikelPalingBaru.map((item:any, index:any) => (
-                        <Link href={`/artikel/${item.slug}`} key={index}>
-                            <div className="grid lg:grid-cols-5 gap-10 items-center lg:px-20 md:px-10 px-5 pt-10">
-                                <div className="h-[200px] md:h-[350px] w-full rounded-md overflow-hidden lg:col-span-2">
-                                    <img
-                                    src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
-                                    alt={item.title}
-                                    className="object-cover h-full w-full"
-                                    data-aos-once="true"
-                                    data-aos="fade-left"
-                                    />
-                                </div>
-                                <div
-                                    className="lg:col-span-3"
-                                    data-aos-once="true"
-                                    data-aos="fade-right"
-                                >
-                                    <h3 className="text-white font-semibold md:mb-5 mb-3 md:text-base text-sm uppercase">
-                                    {item.kategori_artikel.nama}
-                                    </h3>
-                                    <Link href={`/artikel/${item.slug}`}>
-                                    <h2 className="uppercase font-bold md:text-3xl text-xl text-white ">
-                                        {item.title}
-                                    </h2>
-                                    </Link>
-                                    <p className="mt-5 md:text-base text-[12px] text-white">
-                                        {item.excerpt}
-                                    </p>
-                                    <div className="flex gap-5 mt-10 text-white md:text-base text-sm">
-                                    <span className="flex gap-2 items-center">
-                                        <FaEye />
-                                        <small>{item.views} kali dilihat</small>
-                                    </span>
-                                    <span className="flex gap-2 items-center">
-                                        <FaCalendar />
-                                        <small>{changeDate(new Date(item.published_at))}</small>
-                                    </span>
-                                    <span className="flex gap-2 items-center">
-                                        <FaUser />
-                                        <small>Penulis : {item.user.name}</small>
-                                    </span>
+            <section className="bg-blue-600 flex justify-center">
+                {tabActive == "news" ? (
+                    <div className="max-w-[1500px]">
+                        {
+                        //@ts-ignore
+                        artikelPalingBaru.map((item:any, index:any) => (
+                            <Link href={`/artikel/${item.slug}`} key={index}>
+                                <div className="grid lg:grid-cols-5 gap-10 items-center lg:px-20 md:px-10 px-4 pt-10">
+                                    <div className="h-[200px] md:h-[350px] w-full rounded-md overflow-hidden lg:col-span-2">
+                                        <img
+                                        src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                        alt={item.title}
+                                        className="object-cover h-full w-full"
+                                        data-aos-once="true"
+                                        data-aos="fade-left"
+                                        />
                                     </div>
+                                    <div
+                                        className="lg:col-span-3"
+                                        data-aos-once="true"
+                                        data-aos="fade-right"
+                                    >
+                                        <h3 className="text-white font-semibold md:mb-5 mb-3 md:text-base text-sm uppercase">
+                                        {item.kategori_artikel.nama}
+                                        </h3>
+                                        <Link href={`/artikel/${item.slug}`}>
+                                        <h2 className="uppercase font-bold md:text-3xl text-xl text-white ">
+                                            {item.title}
+                                        </h2>
+                                        </Link>
+                                        <p className="mt-5 md:text-base text-[12px] text-white line-clamp-4">
+                                            {item.excerpt}
+                                        </p>
+                                        <div className="flex gap-5 mt-10 text-white md:text-base text-sm">
+                                        <span className="hidden md:flex gap-2 items-center">
+                                            <FaEye />
+                                            <small>{item.views} kali dilihat</small>
+                                        </span>
+                                        <span className="flex gap-2 items-center">
+                                            <FaCalendar />
+                                            <small>{changeDate(new Date(item.published_at))}</small>
+                                        </span>
+                                        <span className="flex gap-2 items-center">
+                                            <FaUser />
+                                            <small>Penulis : {item.user.name}</small>
+                                        </span>
+                                        </div>
 
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                        {moreNews ? (
-                        <>
-                            <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-10 md:px-20 px-5 mt-10">
-                            {artikel.map((item) => (
-                                <div className="mt-5">
-                                    <img
-                                    src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
-                                    alt={item.title}
-                                    className="h-[200px] sm:h-[250px] object-cover w-full rounded"
-                                    />
-
-                                    <Link href={`/artikel/${item.slug}`}>
-                                    <h3 className="mt-3 text-xl font-bold text-white">
-                                        {item.title}
-                                    </h3>
-                                    </Link>
-                                    <div className="my-3 md:my-5 flex gap-5">
-                                    <span className="flex gap-2 items-center text-white">
-                                        <FaUser />
-                                        <small>{item.user.name}</small>
-                                    </span>
-                                    <span className="flex gap-2 items-center text-white">
-                                        <FaCalendar />
-                                        <small>{changeDate(new Date(item.published_at))}</small>
-                                    </span>
                                     </div>
-                                    <p className="text-white line-clamp-4 mt-2 text-sm">
-                                        {item.excerpt}
-                                    </p>
                                 </div>
-                            ))}
-
-                            </section>
-                            <div className="flex flex-wrap justify-center text-center pb-10 ">
-                            <button
-                                className="w-full sm:w-[unset] mx-3 sm:mx-0 bg-white border-2 border-white hover:bg-slate-200 hover:border-blue-400 text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center justify-center sm:gap-2 "
-                                onClick={() => {
-                                setMoreNews(false);
-                                }}
-                            >
-                                {"Lebih Sedikit"}
-                                <MdKeyboardDoubleArrowUp className="ml-5" />
-                            </button>
-                            <Link
-                                href={"/artikel"}
-                                className="w-full sm:w-[unset] mx-3 sm:mx-0 border-2 border-white hover:bg-white text-white hover:text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center sm:gap-2 justify-center md:ml-5"
-                            >
-                                {"Semua Berita"}
-                                <MdKeyboardDoubleArrowRight className="ml-5" />
                             </Link>
-                            </div>
-                    </>
-                    ) : (
-                    <div className="text-center pb-10 lg:block">
-                        <button
-                        className="bg-white hover:bg-blue-400 text-blue-600 mx-auto text-sm px-5 py-2 mt-10 rounded-full inline-flex items-center gap-2"
-                        onClick={() => {
-                            setMoreNews(true);
-                        }}
-                        >
-                        {"Lihat Lainnya"}
-                        <MdKeyboardDoubleArrowDown />
-                        </button>
+                        ))}
+                            {moreNews ? (
+                            <>
+                                <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-10 md:px-20 px-4 mt-10">
+                                {artikel.map((item) => (
+                                    <div className="mt-5">
+                                        <img
+                                        src={item.thumbnail ? `https://data.genbipurwokerto.com/storage/${item.thumbnail}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                        alt={item.title}
+                                        className="h-[200px] sm:h-[250px] object-cover w-full rounded"
+                                        />
+
+                                        <Link href={`/artikel/${item.slug}`}>
+                                        <h3 className="mt-3 text-xl font-bold text-white">
+                                            {item.title}
+                                        </h3>
+                                        </Link>
+                                        <div className="my-3 md:my-5 flex gap-5">
+                                        <span className="flex gap-2 items-center text-white">
+                                            <FaUser />
+                                            <small>{item.user.name}</small>
+                                        </span>
+                                        <span className="flex gap-2 items-center text-white">
+                                            <FaCalendar />
+                                            <small>{changeDate(new Date(item.published_at))}</small>
+                                        </span>
+                                        </div>
+                                        <p className="text-white line-clamp-4 mt-2 text-sm">
+                                            {item.excerpt}
+                                        </p>
+                                    </div>
+                                ))}
+
+                                </section>
+                                <div className="flex flex-wrap justify-center text-center pb-10 ">
+                                <button
+                                    className="w-full sm:w-[unset] mx-3 sm:mx-0 bg-white border-2 border-white hover:bg-slate-200 hover:border-blue-400 text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center justify-center sm:gap-2 "
+                                    onClick={() => {
+                                    setMoreNews(false);
+                                    }}
+                                >
+                                    {"Lebih Sedikit"}
+                                    <MdKeyboardDoubleArrowUp className="ml-5" />
+                                </button>
+                                <Link
+                                    href={"/artikel"}
+                                    className="w-full sm:w-[unset] mx-3 sm:mx-0 border-2 border-white hover:bg-white text-white hover:text-blue-600 text-sm sm:px-5 py-2 mt-10 rounded-full inline-flex items-center sm:gap-2 justify-center md:ml-5"
+                                >
+                                    {"Semua Berita"}
+                                    <MdKeyboardDoubleArrowRight className="ml-5" />
+                                </Link>
+                                </div>
+                        </>
+                        ) : (
+                        <div className="text-center pb-10 lg:block">
+                            <button
+                            className="bg-white hover:bg-blue-400 text-blue-600 mx-auto text-sm px-5 py-2 mt-10 rounded-full inline-flex items-center gap-2"
+                            onClick={() => {
+                                setMoreNews(true);
+                            }}
+                            >
+                            {"Lihat Lainnya"}
+                            <MdKeyboardDoubleArrowDown />
+                            </button>
+                        </div>
+                        )}
                     </div>
-                    )}
-                </section>
-            ) : (
-                <section className="bg-blue-600 py-10 lg:px-10 px-3 grid lg:grid-cols-3 grid-cols-1 gap-0 md:gap-10 items-center">
-                    {event.length > 0 && event.map((item, index) => (
-                        <Link key={index} href={`/event/${item.slug}`} className="bg-white rounded-lg shadow-sm mb-5 md:mb-0">
-                            <img
-                            src={item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "./images/NO IMAGE AVAILABLE.jpg"}
-                            alt={item.nama}
-                            className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
-                            />
-                            <h2 className={`px-4 text-lg font-bold mb-2`}>{item.nama}</h2>
+                ) : (
+                    <div className="max-w-[1500px] py-10 lg:px-10 px-3 grid lg:grid-cols-3 grid-cols-1 gap-0 md:gap-10 items-center">
+                        {event.length > 0 && event.map((item, index) => (
+                            <Link key={index} href={`/event/${item.slug}`} className="bg-white rounded-lg shadow-sm mb-5 md:mb-0">
+                                <img
+                                src={item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "./images/NO IMAGE AVAILABLE.jpg"}
+                                alt={item.nama}
+                                className="w-full h-[200px] md:h-[270px] object-cover rounded-lg mb-8"
+                                />
+                                <h2 className={`px-4 text-lg font-bold mb-2`}>{item.nama}</h2>
 
-                            <p className="px-4 text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px] line-clamp-3">{item.excerpt}</p>
+                                <p className="px-4 text-gray-700 dark:text-gray-300 lg:text-base md:text-sm text-[12px] line-clamp-3">{item.excerpt}</p>
 
-                            <div className="mt-5 md:flex gap-10 px-4 pb-4">
-                                <p className="flex md:mb-0 mb-2 md:text-base text-[12px] gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
-                                    <FaMapMarkedAlt />
-                                    <span>{item.tempat}</span>
-                                </p>
-                                <p className="flex gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
-                                    <FaCalendar />
-                                    <span>{changeDate(new Date(item.tanggal))}</span>
-                                </p>
-                            </div>
+                                <div className="mt-5 md:flex gap-10 px-4 pb-4">
+                                    <p className="flex md:mb-0 mb-2 md:text-base text-[12px] gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
+                                        <FaMapMarkedAlt />
+                                        <span>{item.tempat}</span>
+                                    </p>
+                                    <p className="flex gap-2 text-sm text-gray-600 dark:text-gray-400 items-center">
+                                        <FaCalendar />
+                                        <span>{changeDate(new Date(item.tanggal))}</span>
+                                    </p>
+                                </div>
 
-                            <div
-                            className={`p-5 rounded-b-lg text-center
-                                ${item.status === "Event Sudah Berakhir" ? "bg-red-100 text-red-500" : "bg-green-100 text-green-600"}
-                            `}>
-                                <p className={`dark:text-gray-300 lg:text-base md:text-sm text-[12px] font-semibold`}>{item.status}</p>
-                            </div>
-                        </Link>
-                    ))}
-                </section>
-            )}
+                                <div
+                                className={`p-5 rounded-b-lg text-center
+                                    ${item.status === "Event Sudah Berakhir" ? "bg-red-100 text-red-500" : "bg-green-100 text-green-600"}
+                                `}>
+                                    <p className={`dark:text-gray-300 lg:text-base md:text-sm text-[12px] font-semibold`}>{item.status}</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
+            </section>
 
             {/* Company Profile Video Section */}
             <section className="py-20 px-4 relative">
@@ -468,7 +465,7 @@ export default function Home() {
                         viewport={{ once: true }}
                         className="text-center mb-16"
                     >
-                        <h2 className={`text-4xl font-bold ${
+                        <h2 className={`md:text-4xl text-3xl font-bold ${
                             isDark ? 'text-white' : 'text-gray-900'
                         }`}>COMPANY PROFILE</h2>
                         <div className="w-16 h-1 bg-blue-600 mx-auto mt-4"></div>
@@ -488,7 +485,7 @@ export default function Home() {
                         }`}>
                             <div className="aspect-video relative">
                                 <iframe
-                                    className="w-full h-full rounded-lg"
+                                    className="w-full h-full rounded-lg bg-slate-500"
                                     src="https://www.youtube.com/embed/x7xMqTNOR9Y"
                                     title="Company Profile GENBI Purwokerto"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

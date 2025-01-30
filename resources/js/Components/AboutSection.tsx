@@ -31,7 +31,9 @@ const features = [
 
 const AboutSection: React.FC<AboutSectionProps> = ({ isDark = false }) => {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className={`relative py-24 overflow-hidden ${
+          isDark ? 'bg-gray-900/95' : 'bg-white/95'
+        }`}>
       {/* Background Pattern */}
       <div className="absolute inset-0 z-0">
         <div className={`absolute inset-0 ${
@@ -50,13 +52,13 @@ const AboutSection: React.FC<AboutSectionProps> = ({ isDark = false }) => {
           viewport={{ once: true }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <h2 className={`text-5xl font-bold mb-6 ${
+          <h2 className={`lg:text-5xl text-3xl font-bold mb-6 ${
             isDark ? 'text-white' : 'text-gray-900'
           }`}>
             Tentang GenBI Purwokerto
           </h2>
           <div className="w-20 h-2 bg-gradient-to-r from-blue-600 to-blue-400 mx-auto mb-8 rounded-full" />
-          <p className={`text-xl leading-relaxed ${
+          <p className={`lg:text-xl md:text-lg text-base leading-relaxed ${
             isDark ? 'text-gray-300' : 'text-gray-600'
           }`}>
             GenBI Purwokerto adalah komunitas penerima beasiswa Bank Indonesia yang bertujuan untuk meningkatkan kepekaan sosial dan menumbuhkan semangat pengabdian kepada masyarakat.
@@ -105,9 +107,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({ isDark = false }) => {
         >
           <Link
             href="/tentang"
-            className={`group inline-flex items-center px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 
-              ${isDark 
-                ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600' 
+            className={`group inline-flex items-center px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300
+              ${isDark
+                ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600'
                 : 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600'
               } text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1`}
           >

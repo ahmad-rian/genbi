@@ -20,7 +20,7 @@ const ShareButton = () => {
   };
 
   return (
-    <div className="p-4 bg-gray-100 rounded-lg">
+    <div className="p-4 bg-gray-100 rounded-lg mt-10">
       <h3 className="text-lg font-semibold mb-4">Bagikan Artikel Ini</h3>
       <div className="flex gap-4 flex-wrap">
         {/* Default Buttons with Icons */}

@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '@/Layouts/MainLayout';
 import { useTheme } from '@/Hooks/useTheme';
-import { Head, Link } from '@inertiajs/react';
-
-
+import { Head } from '@inertiajs/react';
+import ProfileCard from '@/Components/ProfileCard';
 
 
 // Types
@@ -127,116 +126,11 @@ const UniversityCard: React.FC<{ university: University; index: number }> = ({ u
   );
 };
 
-const ProfileCard: React.FC<{ profile, index: number }> = ({ profile, index }) => {
-  const { isDark } = useTheme();
-
-  if (profile.type === "president") {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            className="relative group"
-        >
-            <div className={`rounded-xl overflow-hidden shadow-lg border h-full ${
-            isDark
-                ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700/50'
-                : 'bg-white/70 backdrop-blur-sm border-blue-100/50'
-            }`}>
-
-            <div className="relative h-[460px] overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                <img
-                src={`https://data.genbipurwokerto.com/storage/${profile.foto}`}
-                alt={profile.nama_lengkap}
-                className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-            </div>
-
-            <div className="p-6">
-                <h3 className={`text-xl font-bold mb-2 ${
-                isDark ? 'text-white' : 'text-gray-900'
-                }`}>
-                {profile.nama_lengkap}
-                </h3>
-                <p className={`text-sm mb-4 ${
-                isDark ? 'text-gray-400' : 'text-gray-600'
-                }`}>
-                {profile.jabatan}
-                <br />
-                {profile.university}
-                </p>
-                <div className={`h-px my-4 ${
-                isDark ? 'bg-gray-700' : 'bg-gray-200'
-                }`} />
-                <p className={`italic text-sm ${
-                isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}>
-                {profile.quote}
-                </p>
-            </div>
-            </div>
-        </motion.div>
-    )
-  }
-  return (
-    <Link href={`/organisasi/struktur/${profile.periode}/${profile.jabatan}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.2 }}
-        className="relative group"
-      >
-        <div className={`rounded-xl overflow-hidden shadow-lg border h-full ${
-          isDark
-            ? 'bg-gray-800/70 backdrop-blur-sm border-gray-700/50'
-            : 'bg-white/70 backdrop-blur-sm border-blue-100/50'
-        }`}>
-
-          <div className="relative h-[460px] overflow-hidden group-hover:scale-105 transition-transform duration-500">
-            <img
-              src={`https://data.genbipurwokerto.com/storage/${profile.foto}`}
-              alt={profile.nama_lengkap}
-              className="w-full h-full object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-          </div>
-
-          <div className="p-6">
-            <h3 className={`text-xl font-bold mb-2 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
-              {profile.nama_lengkap}
-            </h3>
-            <p className={`text-sm mb-4 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              {profile.jabatan}
-              <br />
-              {profile.university}
-            </p>
-            <div className={`h-px my-4 ${
-              isDark ? 'bg-gray-700' : 'bg-gray-200'
-            }`} />
-            <p className={`italic text-sm ${
-              isDark ? 'text-gray-300' : 'text-gray-700'
-            }`}>
-              {profile.quote}
-            </p>
-          </div>
-        </div>
-      </motion.div>
-    </Link>
-  );
-};
 
 // Main Component
 const Organization: React.FC = () => {
     const { isDark } = useTheme();
     const [struktur, setStruktur] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
     useEffect(() => {
@@ -252,14 +146,12 @@ const Organization: React.FC = () => {
             } catch (error) {
                 setError(error)
                 console.error("Error fetching struktur:", error);
-            }finally{
-                setLoading(false)
             }
         };
         fetchStruktur();
     }, []);
 
-    if (loading) return(
+    if (struktur.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='./images/logo.png'
@@ -276,7 +168,7 @@ const Organization: React.FC = () => {
 
     if (error) return <p>Error: {error}</p>;
 
-  return (
+  if (struktur.length > 0) return (
     <MainLayout title="Organisasi">
         <Head>
             <meta name="description" content="Pelajari lebih lanjut tentang struktur organisasi GenBI Purwokerto dan peran-peran penting dalam mendukung kegiatan sosial dan pemberdayaan masyarakat." />

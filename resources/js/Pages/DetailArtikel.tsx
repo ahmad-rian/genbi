@@ -16,14 +16,10 @@ interface DetailArtikelProps {
 
 //@ts-ignore
 const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
-    const [artikel, setArtikel] = useState([]);
+    const [artikel, setArtikel] = useState();
     const [komentar, setKomentar] = useState([]);
     const [artikelRandom, setArtikelRandom] = useState([]);
-    const [loading, setLoading] = useState(true);
-    //@ts-ignore
-    const [loadingRandomArtikel, setLoadingRandomArtikel] = useState(true);
     const [error, setError] = useState(null);
-    //@ts-ignore
     const [errorRandomArtikel, setErrorRandomArtikel] = useState(null);
 
     const [nama, setNama] = useState("");
@@ -69,8 +65,6 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
         }catch (error) {
             setErrorRandomArtikel(error.message); // Tangkap error jika ada
             console.error("Fetch error:", error);
-        }finally{
-            setLoadingRandomArtikel(false); // Hentikan loading
         }
     }
 
@@ -97,8 +91,6 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
       } catch (error) {
         setError(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoading(false); // Hentikan loading
       }
     };
 
@@ -107,7 +99,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
         fetchDataRandom()
     }, []);
 
-    if (loading && loadingRandomArtikel) return(
+    if (artikel === undefined && artikelRandom.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='../images/logo.png'
@@ -135,41 +127,30 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
 
         try {
             // Validasi nama
-            if (!nama.trim()) {
-                //@ts-ignore
-                setKomenEror("Nama tidak boleh kosong.");
-            }
+            if (!nama.trim()) throw new Error("Nama tidak boleh kosong.");
 
             // Validasi email
-            if (!email.trim()) {
-                //@ts-ignore
-                setKomenEror("Email tidak boleh kosong.");
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                //@ts-ignore
-                setKomenEror("Format email tidak valid.");
-            }
+            if (!email.trim()) throw new Error("Email tidak boleh kosong.");
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Format email tidak valid.");
 
             // Validasi komentar
-            if (!komen.trim()) {
-                //@ts-ignore
-                setKomenEror("Komentar tidak boleh kosong.");
-            }
+            if (!komen.trim()) throw new Error("Komentar tidak boleh kosong.");
+
 
             const response = await fetch('https://data.genbipurwokerto.com/api/komen', {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 //@ts-ignore
-                body: JSON.stringify({artikel_id:artikel.id, nama, email, komen}),
+                body: JSON.stringify({artikel_id:artikel.id, nama, email, komentar:komen}),
             });
 
             if (!response.ok) {
-                throw new Error('Failed to send your message. Please try again later.');
+                throw new Error('Gagal mengirim komentar, coba lagi nanti.');
             }
 
-            setSuccessMessage('Pesan Anda berhasil dikirim!');
+            setSuccessMessage('Komentar Anda berhasil dikirim!');
 
             setNama("")
             setEmail("")
@@ -184,7 +165,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
         }
     }
 
-  return (
+  if (artikel !== undefined && artikelRandom.length > 0) return (
     <MainLayout title={
         //@ts-ignore
         artikel.title ? artikel.title : "Detail Artikel"}>
@@ -202,17 +183,16 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
                 artikel.excerpt} />
             <meta property="og:image" content={
                 //@ts-ignore
-                artikel.thumbnail} />
+                artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"} />
             <meta property="og:url" content={`https://genbipurwokerto.com/${slug}`} />
             <meta property="og:type" content="article" />
             <meta name="twitter:title" content="Detail Artikel - GenBI Purwokerto" />
             <meta name="twitter:description" content={
                 //@ts-ignore
                 artikel.excerpt} />
-            <meta name="twitter:image" content={`https://data.genbipurwokerto.com/storage/artikel/${
+            <meta name="twitter:image" content={
                 //@ts-ignore
-                artikel.thumbnail
-            }`} />
+                artikel.thumbnail ? `https://data.genbipurwokerto.com/storage/${artikel.thumbnail}` : "../images/NO IMAGE AVAILABLE.jpg"} />
             <meta name="twitter:card" content="summary_large_image" />
         </Head>
 

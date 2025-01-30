@@ -12,7 +12,7 @@
     <meta name="robots" content="index,follow">
     {{-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> --}}
 
-    <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <title inertia>{{ config('app.name', 'GenBI Purwokerto') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -57,6 +57,7 @@
 </head>
 
 <body class="font-sans antialiased">
+    <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PRNT4GSX"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

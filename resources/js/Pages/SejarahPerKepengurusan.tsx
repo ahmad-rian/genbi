@@ -24,7 +24,6 @@ const fadeInUpAnimation = {
 const SejarahPerKepengurusan = React.FC<SejarahPerKepengurusanProps> = ({periode}) => {
     const { isDark } = useTheme();
     const [struktur, setStruktur] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
     const fetchStruktur = async () => {
@@ -39,8 +38,6 @@ const SejarahPerKepengurusan = React.FC<SejarahPerKepengurusanProps> = ({periode
         } catch (error) {
             setError(error)
             console.error("Error fetching struktur:", error);
-        }finally{
-            setLoading(false)
         }
     };
 
@@ -48,7 +45,7 @@ const SejarahPerKepengurusan = React.FC<SejarahPerKepengurusanProps> = ({periode
         fetchStruktur();
     }, []);
 
-    if (loading) return(
+    if (struktur.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='../../images/logo.png'
@@ -77,7 +74,7 @@ const SejarahPerKepengurusan = React.FC<SejarahPerKepengurusanProps> = ({periode
 
     if (error) return <p>Error: {error}</p>;
 
-  return (
+  if (struktur.length > 0) return (
     <MainLayout title={`Struktur GenBI Purwokerto ${periode} - GenBI Purwokerto`}>
         <Head>
             <meta name="description" content="Pelajari sejarah setiap kepengurusan yang telah ada di GenBI Purwokerto dan kontribusi yang telah diberikan dalam perkembangan organisasi." />

@@ -12,7 +12,6 @@ interface DetailStrukturProps {
 const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) => {
     const [struktur, setStruktur] = useState(null);
     const [members, setMembers] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -33,8 +32,6 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
       } catch (error) {
         setError(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoading(false); // Hentikan loading
       }
     };
 
@@ -42,7 +39,7 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
   }, []);
 
 
-  if (loading) return(
+  if (struktur === null) return(
     <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
         <img
             src='../../../images/logo.png'
@@ -71,7 +68,7 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
     return acc;
   }, {});
 
-  return (
+  if (struktur !== null) return (
     <MainLayout title={`Detail Struktur ${namaBidang} Periode ${periode}`}>
         <Head>
             <meta name="description" content={`Pelajari lebih lanjut mengenai struktur ${namaBidang} organisasi GenBI Purwokerto periode ${periode} dan bagaimana peran setiap anggotanya mendukung program kami.`} />
@@ -96,7 +93,7 @@ const DetailStruktur = React.FC<DetailStrukturProps> = ({periode, namaBidang}) =
                         <img
                         src={`https://data.genbipurwokerto.com/storage/${struktur.foto}`}
                         alt={struktur.jabatan}
-                        className="lg:w-full w-full lg:h-[550px] h-[450px] rounded-xl bg-slate-700 bg-cover"
+                        className="lg:w-[90%] w-full lg:h-[550px] h-[450px] rounded-xl bg-slate-700 bg-cover"
                         />
                     </div>
 

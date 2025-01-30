@@ -11,13 +11,13 @@ interface DetailEventProps {
 
 //@ts-ignore
 const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
-    const [event, setEvent] = useState({});
+    const [event, setEvent] = useState();
     const [pemateri, setPemateri] = useState([]);
     const [rekomendasiEvent, setRekomendasiEvent] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [loadingRekomendasiEvent, setLoadingRekomendasiEvent] = useState(true);
     const [error, setError] = useState(null);
     const [errorRekomendasiEvent, setErrorRekomendasiEvent] = useState(null);
+    const [isEventExpired, setIsEventExpired] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const EventContent = ({ content }) => {
         return (
@@ -44,6 +44,14 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
         if (result.success) {
             setEvent(result.data)
             setPemateri(result.data.pemateri)
+
+            // Check if the event's registration date has passed
+            const currentDate = new Date();
+            const registrationEndDate = new Date(result.data.tanggal); // Assuming 'tanggal' is the event registration end date
+            if (currentDate > registrationEndDate) {
+                setIsEventExpired(true); // Mark the event as expired if the current date is greater than the event's date
+            }
+
         } else {
             setError(result.message); // Tangkap error jika ada
             console.error("Error fetching data:", result.message);
@@ -52,8 +60,6 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
       } catch (error) {
         setError(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoading(false); // Hentikan loading
       }
     };
 
@@ -79,8 +85,6 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
       } catch (error) {
         setErrorRekomendasiEvent(error.message); // Tangkap error jika ada
         console.error("Fetch error:", error);
-      }finally{
-        setLoadingRekomendasiEvent(false); // Hentikan loading
       }
     };
 
@@ -91,7 +95,7 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
 
 
 
-    if (loading && loadingRekomendasiEvent) return(
+    if (event === undefined  && rekomendasiEvent.length <= 0) return(
         <div className='flex justify-center items-center flex-col fixed z-[999] right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] w-screen h-screen bg-white gap-3'>
             <img
                 src='../images/logo.png'
@@ -109,7 +113,7 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
 
 
 
-  return (
+  if (event !== undefined  && rekomendasiEvent.length > 0) return (
     <MainLayout title={`Detail Event ${
         //@ts-ignore
         event.nama}`}>
@@ -126,10 +130,9 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
             <meta property="og:description" content={
                 //@ts-ignore
                 event.excerpt} />
-            <meta property="og:image" content={`https://data.genbipurwokerto.com/storage/event/${
+            <meta property="og:image" content={
                 //@ts-ignore
-                event.thumbnail
-            }`} />
+                event.gambar ? `https://data.genbipurwokerto.com/storage/${event.gambar}` : "../images/NO IMAGE AVAILABLE.jpg"} />
             <meta property="og:url" content={`https://genbipurwokerto.com/${slug}`} />
             <meta property="og:type" content="website" />
             <meta name="twitter:title" content={`Detail Event ${
@@ -138,10 +141,9 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
             <meta name="twitter:description" content={
                 //@ts-ignore
                 event.excerpt} />
-            <meta name="twitter:image" content={`https://data.genbipurwokerto.com/storage/event/${
+            <meta name="twitter:image" content={
                 //@ts-ignore
-                event.thumbnail
-            }`} />
+                event.gambar ? `https://data.genbipurwokerto.com/storage/${event.gambar}` : "../images/NO IMAGE AVAILABLE.jpg"} />
             <meta name="twitter:card" content="summary_large_image" />
         </Head>
 
@@ -151,7 +153,7 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
                 <div className="grid lg:grid-cols-5 pt-20 pb-10 md:px-20 px-5 mb-8 items-center bg-gray-100 dark:bg-gray-950 relative md:gap-6">
                     <span className="h-full lg:w-[700px] w-full absolute right-0 lg:bg-gradient-to-l bg-gradient-to-b from-blue-700/30 to-blue-700/0"></span>
 
-                    <div className="lg:col-span-3 order-2 lg:order-1 relative z-10">
+                    <div className="lg:col-span-3 order-2 lg:order-1 relative">
                         <h1 className="lg:leading-[2.7rem] font-bold md:text-3xl lg:text-left text-center mb-2 text-xl text-gray-900 dark:text-gray-200">
                             {//@ts-ignore
                             event.nama}
@@ -176,11 +178,12 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
                         //@ts-ignore
                         event.excerpt}</p>
                     </div>
-                    <div className="md:pb-8 pt-8 pb-3 lg:col-span-2 relative z-10 lg:order-2 order-1">
+                    <div className="md:pb-8 pt-8 pb-3 lg:col-span-2 relative lg:order-2 order-1">
                         <img
+                        // {item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "./images/NO IMAGE AVAILABLE.jpg"}
                             src={
                                 //@ts-ignore
-                                event.gambar ? `https://data.genbipurwokerto.com/storage/${event.gambar}` : "../images/NO IMAGE AVAILABLE.jpg"}
+                                event.image ? `https://data.genbipurwokerto.com/storage/${event.image}` : "../images/NO IMAGE AVAILABLE.jpg"}
                             className="w-full h-[200px] md:h-[350px] rounded object-cover"
                             alt={//@ts-ignore
                             event.nama}
@@ -193,16 +196,20 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
                     <div className="w-full lg:w-2/3 bg-white dark:bg-gray-800 dark:border-gray-950 lg:mr-10 shadow-lg rounded-lg border-2">
                         <h2 className="md:text-2xl text-xl font-semibold md:px-8 px-3 py-3 md:py-4 text-red-500 border-b-2">Detail Event</h2>
                         <div className="flex justify-center">
-                            <iframe
-                            src={
-                                //@ts-ignore
-                                event.link_gmap}
+                            {
                             //@ts-ignore
-                            allowFullScreen=""
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            className="bg-gray-300 w-[95%] sm:w-[95%] h-[250px] mt-5 rounded-md sm:h-[400px]"
-                            ></iframe>
+                            event.link_gmap !== null ? (
+                                <iframe
+                                src={
+                                    //@ts-ignore
+                                    event.link_gmap}
+                                //@ts-ignore
+                                allowFullScreen=""
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                className="bg-gray-300 w-[95%] sm:w-[95%] h-[250px] mt-5 rounded-md sm:h-[400px]"
+                                ></iframe>
+                            ) : ""}
                         </div>
 
                         <div className="sm:text-base dark:text-white text-sm deskripsiFull leading-6 sm:leading-7 font-normal md:p-8 p-3 whitespace-pre-wrap ">
@@ -249,11 +256,49 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
                         </div>
 
                         <div className="grid grid-cols-1">
-                            <a href={
-                            //@ts-ignore
-                            `https://wa.me/${event.contact_person}?text=Hallo kak, saya mendapatkan info dari website GenBI Purwokerto mengenai event ${event.nama}. Saya berencana mendaftar event itu. Bolehkan kakak menunjukan bagaimana cara mendaftar event ${event.nama}`}
+                            {isEventExpired && showModal && (
+                                <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-[999999999999]">
+                                    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                                        <h3 className="text-2xl font-bold text-red-500">Event Sudah Berakhir</h3>
+                                        <p className="mt-2">Pendaftaran untuk event ini sudah ditutup. Terima kasih telah mengunjungi halaman ini.</p>
+                                        <button
+                                            onClick={() => setShowModal(false)}
+                                            className="mt-4 px-6 py-2 bg-red-500 text-white rounded-md"
+                                        >
+                                            Tutup
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
 
-                            className="mt-4 text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded">Daftar</a>
+                            {!isEventExpired && (<a
+                                target='_blank'
+                                href={
+                                    //@ts-ignore
+                                    /^(\+62|62|08)\d+$/.test(event.cta) // Cek apakah cta adalah nomor WA
+                                    ? `https://wa.me/${
+                                        //@ts-ignore
+                                        event.cta.replace(/^0/, "62")}?text=Hallo kak, saya mendapatkan info dari website GenBI Purwokerto mengenai event ${
+                                        //@ts-ignore
+                                        event.nama}. Saya berencana mendaftar event itu. Bolehkan kakak menunjukan bagaimana cara mendaftar event ${
+                                        //@ts-ignore
+                                        event.nama}?`
+                                    :
+                                    //@ts-ignore
+                                    event.cta // Jika bukan nomor, langsung gunakan sebagai link pendaftaran
+                                }
+                                className="mt-4 text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
+                                >
+                                Daftar
+                            </a>)}
+
+                            {isEventExpired && (<button
+                                onClick={() => setShowModal(true)}
+                                className="mt-4 text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
+                                >
+                                Daftar
+                            </button>)}
+
                         </div>
                     </div>
 
@@ -269,7 +314,7 @@ const DetailEvent = React.FC<DetailEventProps> = ({slug}) => {
                                 <img
                                 src={item.image ? `https://data.genbipurwokerto.com/storage/${item.image}` : "../images/NO IMAGE AVAILABLE.jpg"}
                                 alt={item.nama}
-                                className="w-full h-[200px] md:h-[270px] bg-cover rounded-lg mb-8"
+                                className="w-full h-[200px] md:h-[270px] object-cover rounded-lg mb-8"
                                 />
                                 <h2 className={`px-4 text-lg font-bold mb-2`}>{item.nama}</h2>
 

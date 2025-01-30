@@ -19,7 +19,7 @@ const Hero = () => (
     <div className="relative max-w-7xl ">
       <div className="text-center">
         <motion.h1
-          className="text-6xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-tight"
+          className="text-4xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-tight"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -27,7 +27,7 @@ const Hero = () => (
           <span className="text-blue-600">GenBI </span>Purwokerto
         </motion.h1>
         <motion.p
-          className="mt-8 max-w-2xl mx-auto text-xl text-black-600 font-bold"
+          className="md:mt-8 mt-3 max-w-2xl mx-auto md:text-xl text-base text-black-600 font-bold"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
