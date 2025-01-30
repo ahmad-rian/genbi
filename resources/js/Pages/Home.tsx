@@ -267,7 +267,7 @@ export default function Home() {
             <GenBIPointSection isDark={isDark} />
 
             <div className="lg:px-4 mt-10">
-                <div className="mx-auto flex max-w-[1500px] space-x-[1px] lg:justify-center lg:space-x-6">
+                <div className="mx-auto flex max-w-[1700px] space-x-[1px] lg:justify-center lg:space-x-6">
 
                     <button
                         className={[ tabActive === "news" ? "bg-blue-600 flex-1 text-white" : "bg-blue-50 text-blue-600 hover:bg-blue-100"  ," flex items-center px-4 py-3 text-sm font-semibold transition-colors md:text-base lg:rounded-t-xl lg:px-6  lg:flex-[unset]"].join("")}
@@ -298,7 +298,7 @@ export default function Home() {
 
             <section className="bg-blue-600 flex justify-center">
                 {tabActive == "news" ? (
-                    <div className="max-w-[1500px]">
+                    <div className="max-w-[1700px]">
                         {
                         //@ts-ignore
                         artikelPalingBaru.map((item:any, index:any) => (
@@ -415,7 +415,7 @@ export default function Home() {
                         )}
                     </div>
                 ) : (
-                    <div className="max-w-[1500px] py-10 lg:px-10 px-3 grid lg:grid-cols-3 grid-cols-1 gap-0 md:gap-10 items-center">
+                    <div className="max-w-[1700px] py-10 lg:px-10 px-3 grid lg:grid-cols-3 grid-cols-1 gap-0 md:gap-10 items-center">
                         {event.length > 0 && event.map((item, index) => (
                             <Link key={index} href={`/event/${item.slug}`} className="bg-white rounded-lg shadow-sm mb-5 md:mb-0">
                                 <img

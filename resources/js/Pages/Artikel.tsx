@@ -185,7 +185,7 @@ const Artikel = () => {
 
 
 
-        <header className="relative overflow-x-hidden mx-auto grid lg:grid-cols-4 gap-10 pt-24 lg:px-20 md:px-5 px-3 max-w-[1500px]">
+        <section className="relative overflow-x-hidden mx-auto grid lg:grid-cols-4 gap-10 pt-24 lg:px-20 md:px-5 px-3 max-w-[1700px]">
             <span
                 className="w-[100%] h-[100%] rounded-full absolute -left-[500px] -top-[500px] -rotate-[60deg] animate-spin-slow"
                 style={{
@@ -233,7 +233,7 @@ const Artikel = () => {
                     </Link>
                 ))}
             </div>
-        </header>
+        </section>
 
         <main className="mx-auto mt-20 lg:px-20 md:px-10 px-3 max-w-[1500px]">
             <section>

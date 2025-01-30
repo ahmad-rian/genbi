@@ -104,7 +104,7 @@ const Galeri = () => {
                 </motion.div>
             </div>
 
-            <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center lg:px-10 px-3 max-w-[1500px]">
+            <div className="grid lg:grid-cols-3 grid-cols-1 md:gap-10 items-center lg:px-10 px-3 max-w-[1700px]">
                 {galeri.map((item, index) => (
                     <Link key={index} href={`/galeri/${item.slug}`} className="p-4 bg-white rounded-lg shadow-sm">
                         <img

@@ -383,7 +383,7 @@ const DetailArtikel = React.FC<DetailArtikelProps> = ({slug}) => {
             <section className="grid grid-cols-1 lg:grid-cols-3 lg:gap-10 gap-0 px-3 lg:px-20 mt-10">
                 <div className="lg:col-span-3 mb-5">
                     <h2 className="text-2xl inline-block font-semibold transition-all hover:pr-3 border-b-4 border-blue-700 dark:text-gray-200">
-                        BERITA LAINNYA
+                        ARTIKEL LAINNYA
                     </h2>
                 </div>
 

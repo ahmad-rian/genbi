@@ -1,5 +1,5 @@
 const HeroGenBIPoint = () => (
-    <div className="h-full lg:h-screen xl:h-full max-w-[1500px]">
+    <div className="h-full lg:h-screen xl:h-full max-w-[1700px]">
         <div className="lg:mt-20 relative grid lg:grid-cols-2 pt-10 lg:px-10 px-5 lg:max-h-[700px] max-h-screen overflow-y-hidden after:absolute after:bg-gradient-to-t after:from-white after:to-white/10 after:w-full after:h-[130px] after:bottom-0">
             <div className="h-full flex-col justify-center items-center pt-20">
             <h4 className="text-2xl font-semibold text-blue-700 mb-5">
