@@ -75,7 +75,7 @@ const ProfileCard: React.FC<{ profile, index: number }> = ({ profile, index }) =
 
           <div className="relative h-[460px] overflow-hidden group-hover:scale-105 transition-transform duration-500">
             <img
-              src={`http://genbi-data.test/storage/${profile.foto}`}
+              src={`https://data.genbipurwokerto.com/storage/${profile.foto}`}
               alt={profile.nama_lengkap}
               className="w-full h-full object-cover object-center"
             />

@@ -360,7 +360,7 @@ export default function Home() {
                                         />
 
                                         <Link href={`/artikel/${item.slug}`}>
-                                        <h3 className="mt-3 text-xl font-bold text-white">
+                                        <h3 className="mt-3 text-xl font-bold text-white line-clamp-2">
                                             {item.title}
                                         </h3>
                                         </Link>
